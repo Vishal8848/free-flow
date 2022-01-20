@@ -14,10 +14,31 @@
     align-items: center;
     justify-content: flex-start;
 }
-.post-body {
+@media screen and ( max-width : 768px ) {
+    .post {
+        border-radius: 5px;
+    }
+    .post-header {
+        display: block;
+    }
+    .post-header .avatar {
+        transform: translateY(40%);
+    }
+    .post-creator .creator {
+        margin-bottom: -20px;
+    }
+    .post-timestamp {
+        margin-left: 65px;
+    }
+}
+.post-body > .content {
     font-style: italic;
     text-align: justify;
     padding: 20px;
+}
+.post-body > .image {
+    width: 100%;
+    height: 300px;
 }
 .post-actions {
     display: flex;
@@ -44,6 +65,15 @@
     outline: none;
     border-bottom: 1px solid rgba(25, 25, 25, 0.25);
 }
+.post-actions {
+    font-weight: bold;
+}
+.post-actions > div > i {
+    font-weight: normal;
+}
+.post-actions > div:hover * {
+    font-weight: bold;
+}
 [placeholder]:focus::-webkit-input-placeholder {
     transition: text-indent 2.5s ease; 
     text-indent: -100%;
@@ -54,19 +84,105 @@
 .comment {
     width: 100%;
     height: auto;
-    padding: 10px;
+    padding: 5px;
 }
 .comment-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
+.comment-timestamp {
+    font-size: 12.5px;
+    padding-top: 5px;
+}
 .comment-creator {
     display: flex;
+    font-size: 17.5px;
     align-items: center;
     justify-content: flex-start;
 }
 .comment-body {
     padding: 10px;
     text-align: justify;
+}
+
+/* Trending */
+.feed-trending {
+    border-radius: 25px;
+}
+.trend {
+    width: 100%;
+    height: auto;
+}
+@media screen and ( max-width : 768px ) {
+    .feed-trending {
+        border-radius: 5px;
+    }
+}
+.trend-header {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: flex-start;
+}
+.trend-redirect {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    margin-top: 25px;
+    margin-right: 25px;
+}
+.trend-body > .image {
+    width: 100%;
+    height: 200px;
+}
+.trend-body > .content {
+    font-style: italic;
+    text-align: justify;
+    padding: 15px;
+}
+.trend-status {
+    width: 100%;
+    text-align: center;
+}
+.trend-status > i {
+    animation: pulse 1s infinite;
+}
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.25);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Feed Actions */
+.feed-actions {
+    width: 100%;
+    height: auto;
+    border-radius: 25px;
+}
+@media screen and ( max-width : 768px ) {
+    .feed-actions {
+        border-radius: 5px;
+    }
+}
+.feed-actions > .action {
+    color: black;
+    font-size: 20px;
+    text-decoration: none;
+    padding-left: 25px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.feed-actions > .action > i {
+    font-weight: normal;
+}
+.action:hover > i{
+    font-weight: bold;
 }

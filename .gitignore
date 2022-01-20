@@ -26,4 +26,4 @@ yarn-error.log*
 
 # misc
 LOOKUP.md
-avatar.png
+*.png

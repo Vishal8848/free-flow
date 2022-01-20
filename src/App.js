@@ -11,7 +11,11 @@ function App() {
         {/* Home: Default Route */}
         <Route exact path="/" element={<Home/>}/>
 
+        {/* Feed: Posts, Trending and User Interaction */}
         <Route path="/feed" element={<Feed/>} />
+
+        {/* Profile: User, Friends, Actions */}
+        <Route path="/profile" element={<Feed/>} />
         
       </Routes>
 

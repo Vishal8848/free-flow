@@ -1,6 +1,10 @@
 import Avatar from './Avatar'
+import { parseTime } from './Timestamp';
 
 const Comment = ({ line }) => {
+
+    const { date, time }  = parseTime(Date.now())
+
     return ( 
         <div className={`comment ${ line ? 'border-bottom' : '' }`}>
             
@@ -8,13 +12,13 @@ const Comment = ({ line }) => {
             
                 <div className="comment-creator">
                     <Avatar name="Vishal Pranav" scale='sm' theme='primary'/>
-                    <div className="fs-6 fw-bold ps-2">
+                    <div className="creator fw-bold ps-2">
                         Vishal Pranav
                     </div>
                 </div>
             
-                <div className="text-muted">
-                    08:50 PM <i className="fas fa-circle px-1 align-middle" style={{ fontSize: "5px" }}></i> 13 Mar 2021
+                <div className="comment-timestamp text-muted">
+                    { time } <i className="fas fa-circle px-1 align-middle" style={{ fontSize: "5px" }}></i> { date }
                 </div>
             
             </div>
