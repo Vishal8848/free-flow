@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom';
-import Post from '../components/Post'
-import Trending from '../components/Trending';
 import CreatePost from '../components/CreatePost';
-import Chat from '../components/Chat';
+import Trending from '../components/Trending';
 import Updates from '../components/Updates';
+import Chat from '../components/Chat';
+import Post from '../components/Post'
 
 const Feed = () => {
     return ( 
         <div className="container-fluid feed row gx-0 gx-md-4 gy-3 gy-md-2 m-auto justify-content-center">
             <div className="col-md-3 mb-2">
-                <div className="feed-chat border">
+                <div className="feed-chat">
                     <Chat/>
                 </div>
                 <div className="feed-actions mt-3">
@@ -34,10 +34,10 @@ const Feed = () => {
                 </div>
             </div>
             <div className="col-md-5 mb-2">
-                <div className="feed-create">
+                <div className="feed-create border">
                     <CreatePost/>
                 </div>
-                <div className="feed-post">
+                <div className="feed-post mt-3">
                     <span className="feed-title ps-3 text-muted fw-bold">Posts</span>
                     <div className="posts-set">
                         <Post/><br/>

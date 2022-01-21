@@ -4,7 +4,7 @@
 
 /* Post */
 .posts-set {
-    height: 762px;
+    height: 685px;
     overflow-y: auto;
 }
 .post {
@@ -189,23 +189,35 @@
     border-radius: 25px;
     background-color: white;
 }
-@media screen and ( max-width : 768px ) {
-    .feed-chat {
-        border-radius: 5px;
-    }
-}
-.chat {
-    width: 100%;
-    height: auto;
-}
 .chat-header {
     font-size: 20px;
     font-weight: bolder;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
 }
 .chat-create {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+@media screen and ( max-width : 768px ) {
+    .feed-chat {
+        border-radius: 5px;
+    }
+    .chat-header {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+    .chat-create {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
+.chat {
+    width: 100%;
+    min-height: 428px;
 }
 .chat-content {
     height: 0;
@@ -309,23 +321,28 @@
 }
 
 /* Create Post */
-.create-post-trigger {
-    display: none;
-    align-items: center;
+.feed-create {
     border-radius: 25px;
-    background-color: white;
-    justify-content: space-between;
+    background-color: rgba(25, 25, 25, 0.05);
 }
-.create-post {
+.post-trigger {
     display: flex;
     align-items: center;
-    border-radius: 25px;
     background-color: white;
+    border-radius: 25px;
     justify-content: space-between;
 }
-.create-post > div {
-    user-select: none;
+.post-trigger div:hover {
+    cursor: pointer;
+    background-color: rgba(25, 25, 25, 0.05);
 }
-.create-post i {
-    margin-right: -25px;
+.post-trigger i {
+    font-weight: normal;
+    cursor: pointer;
+}
+.post-trigger i:hover {
+    font-weight: bold;
+}
+.feed-create-trigger > div, .feed-create > div {
+    user-select: none;
 }

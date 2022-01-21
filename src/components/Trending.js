@@ -23,7 +23,7 @@ const Trending = () => {
                                 loop: true
                             }}
                             onInit={(type) => {
-                                type.pasteString('<strong>Trending </strong>')
+                                type.pasteString('<strong class="text-danger">Trending </strong>')
                                     .pauseFor(500)
                                     .typeString(timeString)
                                     .pauseFor(3000)
