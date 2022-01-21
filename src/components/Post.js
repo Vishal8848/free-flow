@@ -7,7 +7,7 @@ const Post = () => {
     const { date, time } = parseTime(164266299431223);
 
     return ( 
-        <div className="post border shadow">
+        <div className="post border">
             
             <div className="post-header px-3 px-md-4 py-2 py-md-3 border-bottom">
             
@@ -32,9 +32,9 @@ const Post = () => {
             </div>
             
             <div className="post-actions border-bottom">
-                <div className="py-3 px-2 text-center text-primary"><i className="fas fa-thumbs-up fa-lg me-2"></i> <strong>234</strong> Likes</div>
-                <div className="py-3 px-2 text-center text-danger"><i className="fas fa-heart fa-lg me-2"></i> Save </div>
-                <div className="py-3 px-2 text-center text-success"><i className="fas fa-paper-plane fa-lg me-2"></i> Share</div>
+                <div className="py-3 px-2 text-center text-danger"><i className="fas fa-heart fa-lg me-2"></i> <strong>234</strong> Likes</div>
+                <div className="py-3 px-2 text-center text-success"><i className="fas fa-bookmark fa-lg me-2"></i> Save </div>
+                <div className="py-3 px-2 text-center text-primary"><i className="fas fa-share-square fa-lg me-2"></i> Share</div>
             </div>
             
             <div className="post-comments">

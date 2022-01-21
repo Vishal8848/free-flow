@@ -1,8 +1,16 @@
+.feed-title {
+    text-transform: uppercase;
+}
+
 /* Post */
+.posts-set {
+    height: 762px;
+    overflow-y: auto;
+}
 .post {
     width: 100%;
-    height: auto;
     border-radius: 25px;
+    background-color: white;
 }
 .post-header {
     display: flex;
@@ -15,6 +23,10 @@
     justify-content: flex-start;
 }
 @media screen and ( max-width : 768px ) {
+    .posts-set {
+        height: auto;
+        overflow-y: hidden;
+    }
     .post {
         border-radius: 5px;
     }
@@ -101,12 +113,11 @@
 }
 
 /* Trending */
-.feed-trending {
-    border-radius: 25px;
-}
 .trend {
     width: 100%;
     height: auto;
+    border-radius: 25px;
+    background-color: white;
 }
 @media screen and ( max-width : 768px ) {
     .feed-trending {
@@ -145,27 +156,25 @@
 }
 
 /* Feed Actions */
-.feed-actions {
+.action-set {
     width: 100%;
     height: auto;
     border-radius: 25px;
+    background-color: white;
 }
 @media screen and ( max-width : 768px ) {
-    .feed-actions {
+    .action-set {
         border-radius: 5px;
     }
 }
-.feed-actions > .action {
+.action-set > .action {
     font-size: 20px;
     padding-left: 25px;
     font-weight: bold;
     cursor: pointer;
 }
-.feed-actions > .action i {
+.action-set > .action i {
     font-weight: normal;
-}
-.action:hover {
-    background-color: rgba(25, 25, 25, 0.05);
 }
 .action:hover i{
     font-weight: bold;
@@ -178,6 +187,7 @@
 /* Feed Chat */
 .feed-chat {
     border-radius: 25px;
+    background-color: white;
 }
 @media screen and ( max-width : 768px ) {
     .feed-chat {
@@ -198,8 +208,10 @@
     justify-content: space-between;
 }
 .chat-content {
+    height: 0;
     max-height: 300px;
     overflow-y: auto;
+    animation: pull 0.75s linear forwards;
 }
 .chat-create > .avatar {
     margin-left: 5px;
@@ -220,19 +232,14 @@
 .chat-create input:focus ~ div i {
     animation: volley 1.5s infinite;
 }
-@keyframes volley {
-    0% {
-        margin-left: -35px;
-    }
-    50% {
-        margin-left: -15px;
-    }
-    100% {
-        margin-left: -35px;
-    }
-}
 .chat-header > i {
     animation: pulse 1s infinite;
+}
+.chat-notice {
+    background-color: rgba(25, 25, 25, 0.05);
+    padding-top: 30%;
+    text-align: center;
+    height: 300px;
 }
 
 /* Chat Message */
@@ -262,12 +269,21 @@
 /* Updates */
 .updates {
     width: 100%;
-    max-height: 400px;
+    min-height: 250px;
+    max-height: 340px;
     overflow-y: auto;
     border-radius: 25px;
 }
 .update {
     border-radius: 25px;
+    transform: scale(0);
+    background-color: white;
+    animation: zoom-in 0.25s linear forwards;
+}
+.update-notice {
+    padding-top: 25%;
+    text-align: center;
+    height: 100%;
 }
 .update-by {
     padding: 10px;
@@ -290,4 +306,26 @@
 }
 .update-jist {
     display: block;
+}
+
+/* Create Post */
+.create-post-trigger {
+    display: none;
+    align-items: center;
+    border-radius: 25px;
+    background-color: white;
+    justify-content: space-between;
+}
+.create-post {
+    display: flex;
+    align-items: center;
+    border-radius: 25px;
+    background-color: white;
+    justify-content: space-between;
+}
+.create-post > div {
+    user-select: none;
+}
+.create-post i {
+    margin-right: -25px;
 }

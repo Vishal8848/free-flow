@@ -1,9 +1,12 @@
 import Avatar from "./Avatar";
+import TypeWriter from 'typewriter-effect'
 
 const Trending = () => {
 
+    let timeString = 'an hour ago';
+
     return ( 
-        <div className="trend">
+        <div className="trend border">
             <div className="trend-header px-3 py-2 border-bottom">
                 <Avatar name="Vishal Pranav" scale="md" theme="success"/>
                 <div className="trend-setter ps-3">
@@ -11,7 +14,26 @@ const Trending = () => {
                         Vishal Pranav
                     </div>
                     <div className="trend-time text-muted">
-                        <strong>trending</strong> an hour ago
+                        <TypeWriter
+                            options={{
+                                deleteSpeed: 50,
+                                autoStart: true,
+                                cursor: '',
+                                delay: 100,
+                                loop: true
+                            }}
+                            onInit={(type) => {
+                                type.pasteString('<strong>Trending </strong>')
+                                    .pauseFor(500)
+                                    .typeString(timeString)
+                                    .pauseFor(3000)
+                                    .deleteChars(timeString.length)
+                                    .pauseFor(1000)
+                                    .typeString(timeString)
+                                    .pauseFor(5000)
+                                    .deleteAll()
+                                    .start();
+                            }}/>
                     </div>
                 </div>
                 <div className="trend-redirect text-primary">

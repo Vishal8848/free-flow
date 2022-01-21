@@ -2,7 +2,7 @@ import Avatar from "./Avatar";
 
 const Message = () => {
     return (
-        <div className="message">
+        <div className="message border-bottom">
             <Avatar name="Erling Haaland" scale="sm" theme="success"/>
             <div className="m-content">
                 <div className="m-head">
@@ -25,18 +25,13 @@ const Chat = () => {
     return ( 
         <div className="chat">
             <div className="chat-header p-3 border-bottom">
-                <i className="fas fa-comments me-2 text-success"></i> Public Chat
+                <i className="fas fa-comments me-2 text-success"></i> Live Chat
             </div>
             <div className="chat-content">
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
+                <div className="chat-notice text-muted px-5 border-bottom">
+                    <strong>Chat Messenger</strong><br/>
+                    Your messages are visible to all users online
+                </div>
             </div>
             <div className="chat-create ps-2 py-3">
                 <Avatar name="Vishal Pranav" scale="sm" theme="danger"/>

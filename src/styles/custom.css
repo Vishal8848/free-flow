@@ -4,6 +4,17 @@
     font-family: 'Poppins';
 }
 
+body {
+    background-color: rgba(25, 25, 25, 0.0125);
+}
+
+@media screen and ( min-width : 768px ) {
+    body {
+        max-height: auto;
+        overflow-y: scroll;
+    }
+}
+
 /* Avatar */
 .avatar {
     justify-content: center;
@@ -34,15 +45,53 @@
     font-size: 45px;
 }
 
+/* Scrollbar CSS */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track { 
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(25, 25, 25, 0.1); 
+    box-shadow: inset 0 0 2.5px grey;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(25, 25, 25, 0.15); 
+}
+
 /* Animations */
 [placeholder]:focus::-webkit-input-placeholder {
     transition: text-indent 2s ease; 
     text-indent: -100%;
     opacity: 1;
 }
-
 @keyframes pulse {
     0% {    transform: scale(1);    }
     50% {   transform: scale(1.25); }
     100% {  transform: scale(1);    }
+}
+@keyframes volley {
+    0% {
+        margin-left: -35px;
+    }
+    50% {
+        margin-left: -15px;
+    }
+    100% {
+        margin-left: -35px;
+    }
+}
+@keyframes zoom-in {
+    0% {    transform: scale(0);    }
+    100% {    transform: scale(1);  }
+}
+@keyframes pull {
+    from    {
+        height: 0;
+    }
+    to {
+        height: 300px;
+    }
 }
