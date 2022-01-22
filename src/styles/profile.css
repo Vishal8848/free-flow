@@ -6,13 +6,13 @@
 }
 .profile-header {
     width: 75%;
-    height: 400px;
+    height: auto;
     border-radius: 25px;
     position: relative;
 }
 .profile-bg {
     width: 100%;
-    height: 50%;
+    height: 200px;
     position: relative;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
@@ -32,7 +32,7 @@
         border-radius: 5px;
     }
     .profile-bg {
-        height: 50%;
+        height: 200px;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
     }
@@ -95,7 +95,7 @@
     .profile-pic  {
         width: 150px;
         height: 150px;
-        top: 40%;
+        top: 35%;
         left: 50%;
         margin-left: -75px;
         margin-top: -75px;
@@ -153,5 +153,69 @@
     .profile-desc {
         width: 100%;
         text-align: justify;
+    }
+}
+
+/* Profile Body */
+.profile-body {
+    width: 75%;
+}
+.profile-content {
+    height: 200px;
+    border-radius: 25px;
+}
+@media screen and ( max-width: 768px ) {
+    .profile-body {
+        width: 100%;
+    }
+    .profile-content {
+        border-radius: 5px;
+    }
+}
+
+/* Profile Navigation */
+.profile-nav {
+    border-radius: 25px;
+    width: fit-content;
+    position: absolute;
+    left: 50%;
+    top: inherit;
+    transform: translate(-50%, -50%);
+}
+.pnav-list {
+    display: flex;
+    margin: auto;
+    padding: 0;
+    list-style-type: none;
+}
+.pnav-item {
+    width: 125px;
+    cursor: pointer;
+    font-size: 20px;
+    text-align: center;
+}
+.pnav-item button {
+    display: none;
+}
+.pnav-item i {
+    font-weight: normal;
+}
+.pnav-item:hover, .pnav-item:hover i {
+    font-weight: bold;
+}
+@media screen and ( max-width: 768px ) {
+    .pnav-item {
+        width: 60px;
+    }
+    .pnav-item span {
+        display: none;
+    }
+    .pnav-item i {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
     }
 }

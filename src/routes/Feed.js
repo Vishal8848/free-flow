@@ -7,7 +7,7 @@ import Post from '../components/Post'
 
 const Feed = () => {
     return ( 
-        <div className="container-fluid feed row gx-0 gx-md-4 gy-3 gy-md-2 m-auto justify-content-center">
+        <div className="container-md feed border row gx-0 gx-md-4 gy-3 gy-md-2 m-auto justify-content-center">
             <div className="col-md-3 mb-2">
                 <div className="feed-chat">
                     <Chat/>
@@ -33,7 +33,7 @@ const Feed = () => {
                     </div>
                 </div>
             </div>
-            <div className="col-md-5 mb-2">
+            <div className="col-md-6 mb-2">
                 <div className="feed-create border">
                     <CreatePost/>
                 </div>

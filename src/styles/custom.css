@@ -8,7 +8,7 @@ body {
     background-color: rgba(25, 25, 25, 0.0125);
 }
 
-.container-fluid {
+.container-md {
     margin: 0;
     padding: 0;
 }
