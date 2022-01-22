@@ -8,6 +8,11 @@ body {
     background-color: rgba(25, 25, 25, 0.0125);
 }
 
+.container-fluid {
+    margin: 0;
+    padding: 0;
+}
+
 @media screen and ( min-width : 768px ) {
     body {
         max-height: auto;

@@ -5,6 +5,7 @@ import App from './App';
 // Styles
 import './styles/custom.css'
 import './styles/feed.css'
+import './styles/profile.css'
 
 ReactDOM.render(
   <React.StrictMode>

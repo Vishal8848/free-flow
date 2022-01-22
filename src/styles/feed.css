@@ -282,7 +282,7 @@
 .updates {
     width: 100%;
     min-height: 250px;
-    max-height: 340px;
+    max-height: 320px;
     overflow-y: auto;
     border-radius: 25px;
 }

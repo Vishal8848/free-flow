@@ -26,7 +26,14 @@ const CreatePost = () => {
             <i className="fas fa-paper-plane text-primary fa-lg me-3" onClick={() => createPost()}></i>
         </div>
         <form name="createPost" className="create-form p-3" style={{ display: `${ form ? 'block' : 'none' }` }}>
-            <div className="form-floating">
+            <div className="d-flex align-middle justify-content-start">
+                <label htmlFor="post-visibility" style={{ width: "150px" }} className="pt-3 text-muted text-center">Post Visibility</label>
+                <select id="post-visibility" className="form-select text-muted" style={{ width: "150px", height: "50px" }}>
+                    <option value="public">Public</option>
+                    <option value="private">Friends Only</option>
+                </select>
+            </div>
+            <div className="form-floating mt-3">
                 <input id="post-title" type="text" className="form-control" placeholder="Post Title (optional)"/>
                 <label htmlFor="post-title" className="text-muted">Post Title <small> - optional</small></label>
             </div>

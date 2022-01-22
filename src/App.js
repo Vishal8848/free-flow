@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './routes/Home'
 import Feed from './routes/Feed'
+import Profile from './routes/Profile';
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
         <Route path="/feed" element={<Feed/>} />
 
         {/* Profile: User, Friends, Actions */}
-        <Route path="/profile" element={<Feed/>} />
+        <Route path="/profile" element={<Profile/>} />
         
       </Routes>
 

@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom';
-import CreatePost from '../components/CreatePost';
-import Trending from '../components/Trending';
-import Updates from '../components/Updates';
-import Chat from '../components/Chat';
+import { Link } from 'react-router-dom'
+import CreatePost from '../components/CreatePost'
+import Trending from '../components/Trending'
+import Updates from '../components/Updates'
+import Chat from '../components/Chat'
 import Post from '../components/Post'
 
 const Feed = () => {
