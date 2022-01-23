@@ -46,10 +46,6 @@ const Profile = () => {
                             <i className="fas fa-bookmark fa-lg me-2"></i>
                             <span>Saved</span>
                         </li>
-                        <li className="pnav-item py-3 text-secondary">
-                            <i className="fas fa-sun fa-lg me-2"></i>
-                            <span>Settings</span>
-                        </li>
                     </ul>
                 </div>
 

@@ -1,0 +1,23 @@
+{
+    "_id" : "9AFunYWqqXTezBgmLwns6fU4sIA6",
+    "user_id" : "AAFtnYWqqXTezTgmlwns6fU4sIA3",
+    "visibility" : "private",
+    "title" : "My First Post",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates esse nihil impedit at perspiciatis temporibus dolor dicta dolorem ut, aliquam suscipit quis labore expedita molestias quia doloremque neque exercitationem nostrum.",
+    "imgURL" : "false | https://free-flow-vp.web.app/user_post_id.png",
+    "likes" : [ "U1", "U2", "U3", "..." ],
+    "saved" : [ "U1", "U2", "U3", "..." ],
+    "comments" : [
+        {
+            "commenter" : "AAFtnYWqqXTezTgmlwns6fU4sIA3",
+            "comment" : "ipsum dolor sit amet consectetur adipisicing elit.",
+            "commentedAt" : "1642920340798"
+        },
+        {
+            "commenter" : "kbFtnYMqXTezTgmL0wns6fU4sIqP",
+            "comment" : "Voluptates esse nihil impedit at perspiciatis temporibus.",
+            "commentedAt" : "1642920340798"
+        }
+    ],
+    "createdAt" : "1642920340798"
+}
