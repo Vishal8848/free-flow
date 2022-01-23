@@ -28,28 +28,28 @@ const CreatePost = () => {
         <form name="createPost" className="create-form p-3" style={{ display: `${ form ? 'block' : 'none' }` }}>
             <div className="d-flex align-middle justify-content-start">
                 <label htmlFor="post-visibility" style={{ width: "150px" }} className="pt-3 text-muted text-center">Post Visibility</label>
-                <select id="post-visibility" className="form-select text-muted" style={{ width: "150px", height: "50px" }}>
-                    <option value="public">Public</option>
+                <select id="post-visibility" className="form-select rounded-pill text-muted" style={{ width: "fit-content", height: "50px" }}>
+                    <option value="public">Anyone on Freeflow</option>
                     <option value="private">Friends Only</option>
                 </select>
             </div>
             <div className="form-floating mt-3">
-                <input id="post-title" type="text" className="form-control" placeholder="Post Title (optional)"/>
+                <input id="post-title" type="text" className="form-control rounded-pill" placeholder="Post Title (optional)"/>
                 <label htmlFor="post-title" className="text-muted">Post Title <small> - optional</small></label>
             </div>
             <div className="form-floating mt-3">
-                <textarea id="post-content" maxLength="1000" className="form-control" placeholder="Write down your thoughts" style={{ minHeight: "100px", maxHeight: "200px" }}></textarea>
+                <textarea id="post-content" maxLength="1000" className="form-control" placeholder="Write down your thoughts" style={{ minHeight: "100px", maxHeight: "200px", borderRadius: "25px" }}></textarea>
                 <label htmlFor="post-content" className="text-muted">Write down your thoughts ...</label>
             </div>
             {   image.status &&
                 <div className="image-preview mt-3 text-muted">
                     &nbsp;&nbsp;Preview Image
-                    <img src={image.imageURL} style={{ width: "100%", height: "300px" }} className="mt-2 rounded" alt="" />
+                    <img src={image.imageURL} style={{ width: "100%", height: "300px", borderRadius: "25px" }} className="mt-2 border" alt="" />
                 </div>
             }
             <div className="mt-3">
                 <label htmlFor="post-image" className="text-muted mb-2">&nbsp;&nbsp;{ image.status ? "Image Uploaded" : "Upload Image" }</label>
-                <input id="post-image" className="form-control" onChange={(e) => previewImg(e)} type="file" accept="image/*"/>
+                <input id="post-image" className="form-control rounded-pill" onChange={(e) => previewImg(e)} type="file" accept="image/*"/>
             </div>
         </form>
     </>);

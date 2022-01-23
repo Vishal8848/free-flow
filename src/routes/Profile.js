@@ -1,7 +1,17 @@
+import { useState } from 'react'
 import Details from '../components/Details'
 import Stats from '../components/Stats'
 
 const Profile = () => {
+
+    let [ active, setActive ] = useState([ true, false, false, false ]);
+
+    const setActiveState = (state) => {
+        active = [ false, false, false, false ];
+        active[state] = true;
+        setActive([...active]);
+    }
+
     return ( 
         <div className="container-md border m-auto profile rounded">
             <div className="profile-header m-auto border shadow">
@@ -29,28 +39,30 @@ const Profile = () => {
 
             <div className="profile-body m-auto">
                 <div className="profile-nav bg-light border shadow">
-                    <ul className="pnav-list py-2 px-3">
-                        <li className="pnav-item py-3 text-dark">
-                            <i className="fas fa-user fa-lg me-2"></i>
-                            <span>Profile</span>
+                    <ul className="pnav-list my-2 mx-3">
+                        <li className={`pnav-item py-3 text-dark ${ active[0] ? 'active border' : '' }`} onClick={() => setActiveState(0)}>
+                            <i className="fas fa-user fa-lg"></i>
+                            <span className='ps-2'>Profile</span>
                         </li>
-                        <li className="pnav-item py-3 text-danger">
-                            <i className="fas fa-heart fa-lg me-2"></i>
-                            <span>Friends</span>
+                        <li className={`pnav-item py-3 text-danger ${ active[1] ? 'active border' : '' }`} onClick={() => setActiveState(1)}>
+                            <i className="fas fa-heart fa-lg"></i>
+                            <span className='ps-2'>Friends</span>
                         </li>
-                        <li className="pnav-item py-3 text-primary">
-                            <i className="fas fa-paper-plane fa-lg me-2"></i>
-                            <span>Posts</span>
+                        <li className={`pnav-item py-3 text-primary ${ active[2] ? 'active border' : '' }`} onClick={() => setActiveState(2)}>
+                            <i className="fas fa-paper-plane fa-lg"></i>
+                            <span className='ps-2'>Posts</span>
                         </li>
-                        <li className="pnav-item py-3 text-success">
-                            <i className="fas fa-bookmark fa-lg me-2"></i>
-                            <span>Saved</span>
+                        <li className={`pnav-item py-3 text-success ${ active[3] ? 'active border' : '' }`} onClick={() => setActiveState(3)}>
+                            <i className="fas fa-bookmark fa-lg"></i>
+                            <span className='ps-2'>Saved</span>
                         </li>
                     </ul>
                 </div>
 
                 <div className="profile-content mt-3 p-5 bg-light border shadow">
-                    
+                    <div className="profile-heading">
+
+                    </div>
                 </div>
             </div>
         </div>

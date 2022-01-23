@@ -332,6 +332,11 @@
     border-radius: 25px;
     justify-content: space-between;
 }
+@media screen and ( max-width: 768px ) {
+    .feed-create, .post-trigger {
+        border-radius: 5px;
+    }
+}
 .post-trigger div:hover {
     cursor: pointer;
     background-color: rgba(25, 25, 25, 0.05);

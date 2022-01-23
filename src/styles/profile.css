@@ -193,6 +193,7 @@
     cursor: pointer;
     font-size: 20px;
     text-align: center;
+    border-radius: 25px;
 }
 .pnav-item button {
     display: none;
@@ -201,6 +202,12 @@
     font-weight: normal;
 }
 .pnav-item:hover, .pnav-item:hover i {
+    font-weight: bold;
+}
+.pnav-list > .active {
+    background-color: rgba(25, 25, 25, 0.125);
+}
+.active i, .active span {
     font-weight: bold;
 }
 @media screen and ( max-width: 768px ) {
@@ -215,6 +222,7 @@
         height: 50px;
         display: flex;
         align-items: center;
+        margin-left: 2.5px;
         justify-content: center;
         border-radius: 50%;
     }
