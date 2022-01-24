@@ -1,5 +1,5 @@
-import Avatar from './Avatar'
-import { parseTime } from './Timestamp';
+import Avatar from '../Avatar'
+import { parseTime } from '../Timestamp';
 
 const Comment = ({ line }) => {
 

@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import Details from '../components/Details'
-import Stats from '../components/Stats'
+import Details from '../components/profile/Details'
+import Stats from '../components/profile/Stats'
+import Friend from '../components/profile/Friend'
 
 const Profile = () => {
 
@@ -60,9 +61,16 @@ const Profile = () => {
                 </div>
 
                 <div className="profile-content mt-3 p-5 bg-light border shadow">
-                    <div className="profile-heading">
-
+                    
+                    <div className="row gx-2">
+                        <div className="col-md-6">
+                            <Friend />
+                        </div>
+                        <div className="col-md-6">
+                            <Friend />
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>

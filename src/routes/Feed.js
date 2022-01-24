@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
-import CreatePost from '../components/CreatePost'
-import Trending from '../components/Trending'
-import Updates from '../components/Updates'
-import Chat from '../components/Chat'
-import Post from '../components/Post'
+import CreatePost from '../components/feed/CreatePost'
+import Trending from '../components/feed/Trending'
+import Updates from '../components/feed/Updates'
+import Chat from '../components/feed/Chat'
+import Post from '../components/feed/Post'
 
 const Feed = () => {
     return ( 

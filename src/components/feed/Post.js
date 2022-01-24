@@ -1,6 +1,6 @@
-import Avatar from './Avatar';
+import Avatar from '../Avatar';
 import Comment from './Comment'
-import { parseTime } from './Timestamp'
+import { parseTime } from '../Timestamp'
 
 const Post = () => {
 

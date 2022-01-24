@@ -227,3 +227,22 @@
         border-radius: 50%;
     }
 }
+
+/* Friend */
+.friend {
+    width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.friend-img {
+    width: 75px;
+}
+.friend-desc {
+    width: 100%;
+    height: 75px;
+    padding-top: 10px;
+}
+.friend-action {
+    width: 25px;
+}

@@ -44,10 +44,11 @@ body {
     height: 45px;
     font-size: 17.5px;
 }
-.avatar-lg {
-    width: 100px;
-    height: 100px;
+.avatar-square {
+    width: 75px;
+    height: 75px;
     font-size: 45px;
+    border-radius: 5px;
 }
 
 /* Scrollbar CSS */
