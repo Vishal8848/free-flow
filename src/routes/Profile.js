@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import Details from '../components/profile/Details'
+import Friends from '../components/profile/Friends'
 import Stats from '../components/profile/Stats'
-import Friend from '../components/profile/Friend'
+import User from '../components/profile/User'
 
 const Profile = () => {
 
@@ -60,16 +61,21 @@ const Profile = () => {
                     </ul>
                 </div>
 
-                <div className="profile-content mt-3 p-5 bg-light border shadow">
+                <div className="profile-content mt-3 p-3 bg-light border shadow">
                     
-                    <div className="row gx-2">
-                        <div className="col-md-6">
-                            <Friend />
-                        </div>
-                        <div className="col-md-6">
-                            <Friend />
-                        </div>
+                    <div className="profile-title mt-5">
+                        <span className="fs-3 fw-bold">
+                            { active[0] ? "Profile" : active[1] ? "Friends" : active[2] ? "Posts" : active[3] ? "Saved" : "Profile" }
+                        </span>
+                        <hr className="mt-2 mb-3" />
                     </div>
+
+                    {
+                        active[0] ? <User /> :
+                        active[1] ? <Friends /> :
+                        active[2] ? "Posts" :
+                        active[3] ? "Saved" : <User />
+                    }
 
                 </div>
             </div>

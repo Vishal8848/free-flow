@@ -160,10 +160,6 @@
 .profile-body {
     width: 75%;
 }
-.profile-content {
-    height: 200px;
-    border-radius: 25px;
-}
 @media screen and ( max-width: 768px ) {
     .profile-body {
         width: 100%;
@@ -228,6 +224,17 @@
     }
 }
 
+/* Profile Content */
+.profile-content {
+    height: auto;
+    border-radius: 25px;
+}
+.profile-title {
+    -webkit-text-stroke: 1px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
 /* Friend */
 .friend {
     width: 400px;
@@ -245,4 +252,14 @@
 }
 .friend-action {
     width: 25px;
+}
+
+/* User */
+.user-profile {
+    width: 75%;
+}
+@media screen and ( max-width: 768px ) {
+    .user-profile {
+        width: 100%;
+    }   
 }
