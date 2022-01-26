@@ -10,30 +10,63 @@ const User = () => {
                     <label htmlFor="user-occu">What best describes you?</label>
                     <div className="text-muted ps-2">Eg: Artist, Skater, Gamer, Sportsman...</div>
                 </div>
+
+                <div className="user-dob row">
+                    <div className="col-md-4 mt-3">
+                        <div className="text-muted ps-2">Day</div>
+                        <select name="user-day" id="user-day" className="form-select">
+                            <option value="25">25</option>
+                        </select>
+                    </div>
+                    <div className="col-md-4 mt-3">
+                        <div className="text-muted ps-2">Month</div>
+                        <select name="user-month" id="user-month" className="form-select">
+                            <option value="July">July</option>
+                        </select>
+                    </div>
+                    <div className="col-md-4 mt-3">
+                        <div className="text-muted ps-2">Year</div>
+                        <select name="user-year" id="user-year" className="form-select">
+                            <option value="2001">2001</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div className="form-floating mt-3">
                     <textarea id="user-desc" name="user-desc" maxLength="1000" className="form-control" placeholder="Write down your thoughts" style={{ minHeight: "100px", maxHeight: "200px"}}></textarea>
-                    <label htmlFor="user-desc" className="text-muted">Give an introduction about yourself ...</label>
+                    <label htmlFor="user-desc">Give an introduction about yourself ...</label>
                 </div>
                 
-                <div className="user-location row mt-3">
-                    <div className="col-md-4">
+                <div className="user-location row">
+                    <div className="col-md-4 mt-3">
                         <div className="text-muted ps-2">Country</div>
-                        <select name="user-country" id="user-country" className="selectpicker">
+                        <select name="user-country" id="user-country" className="form-select">
                             <option value="India">India</option>
                         </select>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-4 mt-3">
                         <div className="text-muted ps-2">State</div>
-                        <select name="user-state" id="user-state" className="selectpicker">
+                        <select name="user-state" id="user-state" className="form-select">
                             <option value="TN">TN</option>
                         </select>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-4 mt-3">
                         <div className="text-muted ps-2">City</div>
-                        <select name="user-city" id="user-city" className="selectpicker">
+                        <select name="user-city" id="user-city" className="form-select">
                             <option value="Chennai">Chennai</option>
                         </select>
                     </div>
+                </div>
+
+                <div className="form-floating mt-3">
+                    <input type="text" id="user-occu" name="user-occu" className="form-control" placeholder="Education"/>
+                    <label htmlFor="user-occu">Education <small className="text-muted">- If any</small></label>
+                    <div className="text-muted ps-2">Eg: Delhi Public School</div>
+                </div>
+
+                <div className="user-save mt-3">
+                    <button className="btn btn-success fw-bold"><i className="fas fa-check me-2"></i>Save</button>
+                    <button className="btn btn-warning fw-bold"><i className="fas fa-pencil-alt me-2"></i>Edit</button>
                 </div>
 
             </div>

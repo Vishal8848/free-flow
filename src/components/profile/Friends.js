@@ -1,8 +1,9 @@
 import Avatar from '../Avatar'
 
-const Friend = () => {
+const Friend = ({ side }) => {
+
     return ( 
-        <div className="friend p-2 bg-light rounded border shadow-sm mt-3">
+        <div className={`friend p-2 bg-light rounded border shadow-sm m${side}-md-auto mt-4`}>
             <div className="friend-img">
                 <Avatar name="Vishal Pranav" scale="square" theme="danger"/>
             </div>
@@ -14,12 +15,12 @@ const Friend = () => {
                 <button className="btn rounded-circle py-2 px-3" data-bs-toggle="dropdown">
                     <i className="fas fa-ellipsis-v fa-lg"></i>
                 </button>
-                <ul className="dropdown-menu dropdown-menu-start">
+                <ul className="dropdown-menu dropdown-menu-end bg-light">
                     <li className="dropdown-item">
-                        <i className="far fa-user fa-lg me-2"></i>View Profile
+                        <i className="fas fa-user fa-lg me-2 text-primary"></i>View Profile
                     </li>
                     <li className="dropdown-item">
-                        <i className="far fa-user-slash fa-lg me-2"></i>Unfriend
+                        <i className="fas fa-ban fa-lg me-2 text-danger"></i>Unfriend
                     </li>
                 </ul>
             </div>
@@ -29,20 +30,20 @@ const Friend = () => {
  
 const Friends = () => {
     return(
-        <div className="row gx-2">
+        <div className="friends row">
             <div className="col-md-6">
-                <Friend />
-                <Friend />
-                <Friend />
-                <Friend />
-                <Friend />
+                <Friend side='s' />
+                <Friend side='s' />
+                <Friend side='s' />
+                <Friend side='s' />
+                <Friend side='s' />
             </div>
             <div className="col-md-6">
-                <Friend />
-                <Friend />
-                <Friend />
-                <Friend />
-                <Friend />
+                <Friend side='e' />
+                <Friend side='e' />
+                <Friend side='e' />
+                <Friend side='e' />
+                <Friend side='e' />
             </div>
         </div>
     );

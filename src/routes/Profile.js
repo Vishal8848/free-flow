@@ -1,8 +1,33 @@
 import { useState } from 'react'
+import PostCard from '../components/profile/PostCard'
 import Details from '../components/profile/Details'
 import Friends from '../components/profile/Friends'
 import Stats from '../components/profile/Stats'
 import User from '../components/profile/User'
+
+const Posts = () => {
+    return ( 
+        <div className="post-set">
+            <PostCard />
+            <PostCard />
+            <PostCard />
+            <PostCard />
+            <PostCard />
+        </div>
+    );
+}
+
+const Saved = () => {
+    return ( 
+        <div className="saved-posts">
+            <PostCard save={true}/>
+            <PostCard save={true}/>
+            <PostCard save={true}/>
+            <PostCard save={true}/>
+            <PostCard save={true}/>
+        </div>
+    );
+}
 
 const Profile = () => {
 
@@ -15,7 +40,7 @@ const Profile = () => {
     }
 
     return ( 
-        <div className="container-md border m-auto profile rounded">
+        <div className="container-md m-auto profile rounded">
             <div className="profile-header m-auto border shadow">
 
                 <div className="profile-bg bg-dark border-bottom">
@@ -32,7 +57,7 @@ const Profile = () => {
 
                 <div className="profile-pic border shadow">
                     <div className="profile-initial">VP</div>
-                    <div className="pic-edit fw-bold pt-3">
+                    <div className="pic-edit fw-bold pt-3 rounded-pill">
                         <i className="fas fa-camera fa-lg me-2"></i> Edit Picture
                     </div>
                 </div>
@@ -63,18 +88,17 @@ const Profile = () => {
 
                 <div className="profile-content mt-3 p-3 bg-light border shadow">
                     
-                    <div className="profile-title mt-5">
+                    <div className="profile-title mt-5 mb-3">
                         <span className="fs-3 fw-bold">
                             { active[0] ? "Profile" : active[1] ? "Friends" : active[2] ? "Posts" : active[3] ? "Saved" : "Profile" }
                         </span>
-                        <hr className="mt-2 mb-3" />
                     </div>
 
                     {
                         active[0] ? <User /> :
                         active[1] ? <Friends /> :
-                        active[2] ? "Posts" :
-                        active[3] ? "Saved" : <User />
+                        active[2] ? <Posts/> :
+                        active[3] ? <Saved/> : <User />
                     }
 
                 </div>

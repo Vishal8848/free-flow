@@ -5,7 +5,7 @@
     user-select: none;
 }
 .profile-header {
-    width: 75%;
+    width: 80%;
     height: auto;
     border-radius: 25px;
     position: relative;
@@ -158,7 +158,7 @@
 
 /* Profile Body */
 .profile-body {
-    width: 75%;
+    width: 80%;
 }
 @media screen and ( max-width: 768px ) {
     .profile-body {
@@ -229,6 +229,11 @@
     height: auto;
     border-radius: 25px;
 }
+@media screen and ( max-width : 768px ) {
+    .profile-content {
+        border-radius: 5px;
+    }   
+}
 .profile-title {
     -webkit-text-stroke: 1px;
     text-transform: uppercase;
@@ -240,7 +245,6 @@
     width: 400px;
     display: flex;
     align-items: center;
-    justify-content: center;
 }
 .friend-img {
     width: 75px;
@@ -253,6 +257,13 @@
 .friend-action {
     width: 25px;
 }
+@media screen and ( max-width: 768px ) {
+    .friend {
+        width: 100%;
+        margin: 0 auto !important;
+        margin-top: 25px !important;
+    }
+}
 
 /* User */
 .user-profile {
@@ -262,4 +273,64 @@
     .user-profile {
         width: 100%;
     }   
+}
+.form-select {
+    height: 50px;
+}
+.user-save {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Post Card */
+.post-set, .saved-posts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.postcard {
+    height: auto;
+    width: 30%;
+    border-radius: 25px;
+    background-color: white;
+}
+.postcard-header {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: flex-start;
+}
+.postcard-actions {
+    position: absolute;
+    top: 25%;
+    right: 5%;
+}
+.postcard-actions > i {
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 5px;
+}
+.postcard-body > .image {
+    width: 100%;
+    height: 200px;
+}
+.postcard-body > .content {
+    font-style: italic;
+    text-align: justify;
+    padding: 15px;
+}
+.postcard-status {
+    width: 100%;
+    text-align: center;
+}
+@media screen and ( max-width : 768px ) {
+    .post-set, .saved-posts {
+        display: block;
+    }
+    .postcard {
+        border-radius: 5px;
+        width: 100%;
+    }
 }
