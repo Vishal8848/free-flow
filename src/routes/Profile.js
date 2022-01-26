@@ -33,6 +33,7 @@ const Profile = () => {
 
     let [ active, setActive ] = useState([ true, false, false, false ]);
 
+    // Profile Active Selector
     const setActiveState = (state) => {
         active = [ false, false, false, false ];
         active[state] = true;
@@ -43,6 +44,7 @@ const Profile = () => {
         <div className="container-md m-auto profile rounded">
             <div className="profile-header m-auto border shadow">
 
+                {/* Background */}
                 <div className="profile-bg bg-dark border-bottom">
                     <div className="pic-edit fw-bold pt-3">
                         <i className="fas fa-camera fa-lg ms-3 me-2"></i> 
@@ -51,10 +53,15 @@ const Profile = () => {
                 </div>
 
                 <div className="profile-info bg-light pt-4 pb-5 border">
+                    
+                    {/* Likes, Friends & Posts */}
                     <Stats/>
+
+                    {/* Location, Description & Friends in Common */}
                     <Details/>
                 </div>
 
+                {/* Profile Picture */}
                 <div className="profile-pic border shadow">
                     <div className="profile-initial">VP</div>
                     <div className="pic-edit fw-bold pt-3 rounded-pill">
@@ -65,19 +72,21 @@ const Profile = () => {
             </div>
 
             <div className="profile-body m-auto">
+
+                {/* Profile Navigation */}
                 <div className="profile-nav bg-light border shadow">
                     <ul className="pnav-list my-2 mx-3">
                         <li className={`pnav-item py-3 text-dark ${ active[0] ? 'active border' : '' }`} onClick={() => setActiveState(0)}>
                             <i className="fas fa-user fa-lg"></i>
                             <span className='ps-2'>Profile</span>
                         </li>
-                        <li className={`pnav-item py-3 text-danger ${ active[1] ? 'active border' : '' }`} onClick={() => setActiveState(1)}>
-                            <i className="fas fa-heart fa-lg"></i>
-                            <span className='ps-2'>Friends</span>
-                        </li>
-                        <li className={`pnav-item py-3 text-primary ${ active[2] ? 'active border' : '' }`} onClick={() => setActiveState(2)}>
+                        <li className={`pnav-item py-3 text-primary ${ active[1] ? 'active border' : '' }`} onClick={() => setActiveState(1)}>
                             <i className="fas fa-paper-plane fa-lg"></i>
                             <span className='ps-2'>Posts</span>
+                        </li>
+                        <li className={`pnav-item py-3 text-danger ${ active[2] ? 'active border' : '' }`} onClick={() => setActiveState(2)}>
+                            <i className="fas fa-heart fa-lg"></i>
+                            <span className='ps-2'>Friends</span>
                         </li>
                         <li className={`pnav-item py-3 text-success ${ active[3] ? 'active border' : '' }`} onClick={() => setActiveState(3)}>
                             <i className="fas fa-bookmark fa-lg"></i>
@@ -88,17 +97,19 @@ const Profile = () => {
 
                 <div className="profile-content mt-3 p-3 bg-light border shadow">
                     
+                    {/* Navigation label */}
                     <div className="profile-title mt-5 mb-3">
                         <span className="fs-3 fw-bold">
-                            { active[0] ? "Profile" : active[1] ? "Friends" : active[2] ? "Posts" : active[3] ? "Saved" : "Profile" }
+                            { active[0] ? "Profile" : active[1] ? "Posts" : active[2] ? "Friends" : active[3] ? "Saved" : "Profile" }
                         </span>
                     </div>
 
+                    {/* Profile Active Section */}
                     {
-                        active[0] ? <User /> :
-                        active[1] ? <Friends /> :
-                        active[2] ? <Posts/> :
-                        active[3] ? <Saved/> : <User />
+                        active[0] ? <User/> :
+                        active[1] ? <Posts/> :
+                        active[2] ? <Friends/> :
+                        active[3] ? <Saved/> : <User/>
                     }
 
                 </div>

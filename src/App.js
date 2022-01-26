@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Profile from './routes/Profile'
 import Home from './routes/Home'
 import Feed from './routes/Feed'
-import Profile from './routes/Profile';
 
 function App() {
   return (

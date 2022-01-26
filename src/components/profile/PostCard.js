@@ -3,6 +3,7 @@ import Avatar from '../Avatar'
 
 const PostCard = ({ save = false }) => {
 
+    // Usage: for saved posts of other users
     const [ saved, setSaved ] = useState(true);
 
     return ( 

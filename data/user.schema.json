@@ -18,6 +18,7 @@
         "state" : "London",
         "city" : "Alpertown"
     },
+    "education" : "",
     "friends" : [ "U1", "U2", "U2", "..." ],
     "posts" : [ "P1", "P2", "P3", "..."],
     "likes" : [ "P1", "P2", "P3", "..." ],

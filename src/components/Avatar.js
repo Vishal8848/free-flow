@@ -1,5 +1,6 @@
 const Avatar = ({ name, scale = 'md', theme = 'primary' }) => {
 
+    // Parse props.name
     const initial = name.split(' ').filter((name) => name.length > 1).slice(0, 2).map((each) => each.charAt(0)).join('');
 
     return ( 

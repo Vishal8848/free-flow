@@ -9,9 +9,13 @@ const Feed = () => {
     return ( 
         <div className="container-md feed row gx-0 gx-md-4 gy-3 gy-md-2 m-auto justify-content-center">
             <div className="col-md-3 mb-2">
+            
+                {/* Live Chat */}
                 <div className="feed-chat">
                     <Chat/>
                 </div>
+
+                {/* Feed Actions */}
                 <div className="feed-actions mt-3">
                     <span className="feed-title ps-3 text-muted fw-bold">Actions</span>
                     <div className="action-set border py-3">
@@ -32,11 +36,17 @@ const Feed = () => {
                         </div>
                     </div>
                 </div>
+
             </div>
+
             <div className="col-md-6 mb-2">
+
+                {/* Create Post */}
                 <div className="feed-create border">
                     <CreatePost/>
                 </div>
+
+                {/* Posts Feed */}
                 <div className="feed-post mt-3">
                     <span className="feed-title ps-3 text-muted fw-bold">Posts</span>
                     <div className="posts-set">
@@ -44,16 +54,23 @@ const Feed = () => {
                         <Post/>
                     </div>
                 </div>
+
             </div>
+
             <div className="col-md-3 mb-2">
+
+                {/* Updates */}
                 <div className="feed-updates">
                     <span className="feed-title ps-3 text-muted fw-bold">Updates</span>
                     <Updates />
                 </div>
+
+                {/* Trending Post */}
                 <div className="feed-trending mt-3">
                     <span className="feed-title ps-3 text-muted fw-bold">Trending</span>
                     <Trending />
                 </div>
+                
             </div>
         </div>
     );
