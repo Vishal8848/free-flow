@@ -4,7 +4,7 @@ import Avatar from '../components/Avatar'
 const Header = () => {
 
     return ( 
-        <nav className="navbar navbar-expand-lg navbar-light mb-3 bg-light border-bottom">
+        <nav className="navbar header navbar-expand-lg navbar-light mb-3 bg-light border-bottom">
             <div className="container-fluid">
 
                 {/* Brand */}

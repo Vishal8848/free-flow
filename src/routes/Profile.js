@@ -6,6 +6,7 @@ import Friends from '../components/profile/Friends'
 import Stats from '../components/profile/Stats'
 import User from '../components/profile/User'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 const Posts = () => {
     return ( 
@@ -120,6 +121,7 @@ const Profile = () => {
                 </div>
             </div>
         </div>
+        <Footer />
     </>);
 }
  

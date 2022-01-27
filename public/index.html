@@ -36,6 +36,13 @@
         let chat = document.getElementsByClassName('chat-content')[0];
         if(chat !== null) chat.scrollTop = chat.scrollHeight;
       }
+      window.onscroll = () => {
+        let head = document.getElementsByClassName('header')[0], foot = document.getElementsByClassName('footer-mob')[0];
+        if(window.scrollY > head.offsetHeight)  head.classList.add('fixed-top');
+        else head.classList.remove('fixed-top');
+        // if((window.scrollY - foot.offsetHeight) < 2742)  foot.classList.add('fixed-bottom');
+        // else foot.classList.remove('fixed-bottom');
+      }
     </script>
   
   </body>

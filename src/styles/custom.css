@@ -89,26 +89,44 @@ body {
     width: 200px;
     margin-top: 10px;
 }
+.footer .item {
+    transform: scale(1.25);
+}
 @media screen and ( max-width: 768px ) {
     .search-form {
         width: 70%;
     }
+    .user-menu {
+        justify-content: space-evenly;
+    }
 }
 
 /* Responsiveness */
-.mobile {
+.header .mobile {
     display: none;
 }
-.system {
+.header .system {
     display: flex;
 }
+.footer-sys {
+    display: block;
+}
+.footer-mob {
+    display: none;
+}
 @media screen and ( max-width: 768px ) {
-    .mobile {
+    .header .mobile {
         display: block;
     }
-    .system {
+    .header .system {
         display: none;
-    }   
+    }
+    .footer-sys {
+        display: none;
+    }
+    .footer-mob {
+        display: flex;
+    }
 }
 
 /* Scrollbar CSS */

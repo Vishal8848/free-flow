@@ -9,7 +9,7 @@
 }
 .post {
     width: 100%;
-    border-radius: 25px;
+    border-radius: 10px;
     background-color: white;
 }
 .post-header {
@@ -116,7 +116,7 @@
 .trend {
     width: 100%;
     height: auto;
-    border-radius: 25px;
+    border-radius: 10px;
     background-color: white;
 }
 @media screen and ( max-width : 768px ) {
@@ -159,7 +159,7 @@
 .action-set {
     width: 100%;
     height: auto;
-    border-radius: 25px;
+    border-radius: 10px;
     background-color: white;
 }
 @media screen and ( max-width : 768px ) {
@@ -186,21 +186,21 @@
 
 /* Feed Chat */
 .feed-chat {
-    border-radius: 25px;
+    border-radius: 10px;
     background-color: white;
 }
 .chat-header {
     font-size: 20px;
     font-weight: bolder;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 .chat-create {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 @media screen and ( max-width : 768px ) {
     .feed-chat {
@@ -284,10 +284,10 @@
     min-height: 250px;
     max-height: 320px;
     overflow-y: auto;
-    border-radius: 25px;
+    border-radius: 10px;
 }
 .update {
-    border-radius: 25px;
+    border-radius: 10px;
     transform: scale(0);
     background-color: white;
     animation: zoom-in 0.25s linear forwards;
@@ -322,20 +322,23 @@
 
 /* Create Post */
 .feed-create {
-    border-radius: 25px;
+    border-radius: 10px;
     background-color: rgba(25, 25, 25, 0.05);
 }
 .post-trigger {
     display: flex;
     align-items: center;
     background-color: white;
-    border-radius: 25px;
+    border-radius: 10px;
     justify-content: space-between;
 }
 @media screen and ( max-width: 768px ) {
     .feed-create, .post-trigger {
         border-radius: 5px;
     }
+}
+.create-form select, .create-form input, .create-form textarea {
+    border-radius: 10px;
 }
 .post-trigger div:hover {
     cursor: pointer;
