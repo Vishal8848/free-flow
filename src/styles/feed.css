@@ -202,26 +202,8 @@
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
-@media screen and ( max-width : 768px ) {
-    .feed-chat {
-        border-radius: 5px;
-    }
-    .chat-header {
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-    }
-    .chat-create {
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-}
-.chat {
-    width: 100%;
-    min-height: 428px;
-}
 .chat-content {
-    height: 0;
-    max-height: 300px;
+    height: 100%;
     overflow-y: auto;
     animation: pull 0.75s linear forwards;
 }
@@ -249,9 +231,25 @@
 }
 .chat-notice {
     background-color: rgba(25, 25, 25, 0.05);
-    padding-top: 30%;
+    padding: 30%;
     text-align: center;
-    height: 300px;
+    height: 100%;
+}
+@media screen and ( max-width : 768px ) {
+    .feed-chat {
+        border-radius: 5px;
+    }
+    .chat-content {
+        height: 100% !important;
+    }
+    .chat-header {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+    .chat-create {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
 }
 
 /* Chat Message */

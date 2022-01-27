@@ -32,6 +32,9 @@ const Chat = () => {
                     <strong>Chat Messenger</strong><br/>
                     Your messages are visible to all users online
                 </div>
+                <Message />
+                <Message />
+                <Message />
             </div>
             <div className="chat-create border ps-2 py-3">
                 <Avatar name="Vishal Pranav" scale="sm" theme="danger"/>

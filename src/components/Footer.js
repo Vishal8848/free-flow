@@ -11,12 +11,12 @@ const Footer = ({ manageFeed }) => {
         </div>
         <div className="user-menu footer-mob w-100 border-top text-center py-2 mt-3 bg-light fixed-bottom">
             {/* Feed */}
-            <div className="item" onClick={() => { setActive([ true, false, false, false ]) }}>
+            <div className="item" onClick={() => { setActive([ true, false, false, false ]); manageFeed({ restrict: true, state: 0 }) }}>
                 <i className={`fas fa-home fa-2x ${active[0] ? 'text-dark' : 'text-muted'}`}></i>
             </div>
 
             {/* Chat */}
-            <div className="item" onClick={() => { setActive([ false, true, false, false ]) }}>
+            <div className="item" onClick={() => { setActive([ false, true, false, false ]); manageFeed({ restrict: true, state: 1 }) }}>
                 <i className={`fas fa-comments fa-2x ${active[1] ? 'text-dark' : 'text-muted'}`}></i>
             </div>
 
@@ -27,7 +27,7 @@ const Footer = ({ manageFeed }) => {
             </div>
 
             {/* Trending & Updates */}
-            <div className="item"  onClick={() => { setActive([ false, false, false, true ]) }}>
+            <div className="item"  onClick={() => { setActive([ false, false, false, true ]); manageFeed({ restrict: true, state: 2 }) }}>
                 <i className={`fas fa-fire fa-2x ${active[3] ? 'text-dark' : 'text-muted'}`}></i>
             </div>
         </div>
