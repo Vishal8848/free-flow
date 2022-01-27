@@ -2,11 +2,13 @@ import { Link } from 'react-router-dom'
 import CreatePost from '../components/feed/CreatePost'
 import Trending from '../components/feed/Trending'
 import Updates from '../components/feed/Updates'
+import Header from '../components/Header'
 import Chat from '../components/feed/Chat'
 import Post from '../components/feed/Post'
 
 const Feed = () => {
-    return ( 
+    return ( <>
+        <Header />
         <div className="container-md feed row gx-0 gx-md-4 gy-3 gy-md-2 m-auto justify-content-center">
             <div className="col-md-3 mb-2">
             
@@ -20,19 +22,19 @@ const Feed = () => {
                     <span className="feed-title ps-3 text-muted fw-bold">Actions</span>
                     <div className="action-set border py-3">
                         <div className="action">
-                            <Link to="/profile"><i className="fas fa-user me-2 text-primary"></i> Profile</Link>
+                            <Link to="/profile"><i className="fas fa-user me-2 text-dark"></i> Profile</Link>
                         </div><hr/>
                         <div className="action">
-                            <Link to="/profile"><i className="fas fa-heart me-2 text-danger"></i> Posts</Link>
+                            <Link to="/profile/posts"><i className="fas fa-paper-plane me-2 text-primary"></i> Posts</Link>
                         </div><hr/>
                         <div className="action">
-                            <Link to="/profile"><i className="fas fa-bookmark me-2 text-success"></i> Saved</Link>
+                            <Link to="/profile/saved"><i className="fas fa-heart me-2 text-danger"></i> Friends</Link>
                         </div><hr/>
                         <div className="action">
-                            <Link to="/profile"><i className="fas fa-edit me-2 text-dark"></i> Settings</Link>
+                            <Link to="/profile/friends"><i className="fas fa-bookmark me-2 text-success"></i> Saved</Link>
                         </div><hr/>
                         <div className="action">
-                            <Link to="/profile"><i className="fas fa-lightbulb me-2 text-warning"></i> Feedback</Link>
+                            <Link to="/contact"><i className="fas fa-lightbulb me-2 text-warning"></i> Feedback</Link>
                         </div>
                     </div>
                 </div>
@@ -73,7 +75,7 @@ const Feed = () => {
                 
             </div>
         </div>
-    );
+    </>);
 }
  
 export default Feed;

@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import PostCard from '../components/profile/PostCard'
 import Details from '../components/profile/Details'
 import Friends from '../components/profile/Friends'
 import Stats from '../components/profile/Stats'
 import User from '../components/profile/User'
+import Header from '../components/Header'
 
 const Posts = () => {
     return ( 
@@ -31,7 +33,9 @@ const Saved = () => {
 
 const Profile = () => {
 
-    let [ active, setActive ] = useState([ true, false, false, false ]);
+    const { section } = useParams();
+
+    let [ active, setActive ] = useState([ [ 'posts', 'friends', 'saved' ].every((param) => { return section !== param }), section === 'posts', section === 'friends', section === 'saved' ]);
 
     // Profile Active Selector
     const setActiveState = (state) => {
@@ -40,7 +44,8 @@ const Profile = () => {
         setActive([...active]);
     }
 
-    return ( 
+    return ( <>
+        <Header />
         <div className="container-md m-auto profile rounded">
             <div className="profile-header m-auto border shadow">
 
@@ -115,7 +120,7 @@ const Profile = () => {
                 </div>
             </div>
         </div>
-    );
+    </>);
 }
  
 export default Profile;

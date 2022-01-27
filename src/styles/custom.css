@@ -51,6 +51,66 @@ body {
     border-radius: 5px;
 }
 
+/* Header */
+.brand, .user-menu {
+    width: fit-content;
+}
+.search-form, .search-form input {
+    height: 45px;
+}
+.user-menu {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.navbar-brand {
+    font-size: 25px;
+    font-family: 'Poppins';
+    color: #0C1E7F !important;
+    font-weight: bolder !important;
+}
+.item {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.75);
+}
+.u-image {
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,0.25);
+}
+.dropdown > .dropdown-menu {
+    width: 200px;
+    margin-top: 10px;
+}
+@media screen and ( max-width: 768px ) {
+    .search-form {
+        width: 70%;
+    }
+}
+
+/* Responsiveness */
+.mobile {
+    display: none;
+}
+.system {
+    display: flex;
+}
+@media screen and ( max-width: 768px ) {
+    .mobile {
+        display: block;
+    }
+    .system {
+        display: none;
+    }   
+}
+
 /* Scrollbar CSS */
 ::-webkit-scrollbar {
     width: 10px;
@@ -80,25 +140,15 @@ body {
     100% {  transform: scale(1);    }
 }
 @keyframes volley {
-    0% {
-        margin-left: -35px;
-    }
-    50% {
-        margin-left: -15px;
-    }
-    100% {
-        margin-left: -35px;
-    }
+    0% {    margin-left: -35px; }
+    50% {   margin-left: -15px; }
+    100% {  margin-left: -35px; }
 }
 @keyframes zoom-in {
     0% {    transform: scale(0);    }
     100% {    transform: scale(1);  }
 }
 @keyframes pull {
-    from    {
-        height: 0;
-    }
-    to {
-        height: 300px;
-    }
+    from {   height: 0;  }
+    to { height: 300px;  }
 }

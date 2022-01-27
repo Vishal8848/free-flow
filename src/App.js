@@ -15,8 +15,11 @@ function App() {
         {/* Feed: Posts, Trending and User Interaction */}
         <Route path="/feed" element={<Feed/>} />
 
-        {/* Profile: User, Friends, Actions */}
-        <Route path="/profile" element={<Profile/>} />
+        {/* Profile: Strict User */}
+        <Route exact path="/profile" element={<Profile />}/>
+
+        {/* Profile: Posts, Friends, Saved */}
+        <Route path="/profile/:section" element={<Profile/>} />
         
       </Routes>
 
