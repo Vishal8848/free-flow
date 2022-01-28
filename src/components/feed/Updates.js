@@ -30,6 +30,8 @@ const Updates = () => {
                 <strong>Post Notifications</strong><br/>
                 All actions made on your posts live here
             </div>
+            <Update />
+            <Update />
         </div>
     );
 }

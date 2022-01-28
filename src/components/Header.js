@@ -4,12 +4,12 @@ import Avatar from '../components/Avatar'
 const Header = () => {
 
     return ( 
-        <nav className="navbar header navbar-expand-lg navbar-light mb-3 bg-light border-bottom">
+        <nav className="navbar header navbar-expand-lg navbar-light mb-md-3 bg-light border-bottom">
             <div className="container-fluid">
 
                 {/* Brand */}
                 <div className="brand mobile">
-                    <Link to="/"> <i className="fab fa-facebook fa-2x text-primary"></i> </Link>
+                    <Link to="/feed"> <i className="fab fa-facebook fa-2x text-primary"></i> </Link>
                 </div>
 
                 {/* Search People Form */}
@@ -19,7 +19,7 @@ const Header = () => {
 
                 {/* Brand */}
                 <div className="brand system">
-                    <Link to="/" className="navbar-brand"> Freeflow </Link>
+                    <Link to="/feed" className="navbar-brand"> Freeflow </Link>
                 </div>
 
                 {/* User Menu */}
@@ -55,9 +55,9 @@ const Header = () => {
                             <div className="actions-partition text-start">
                                 <div className="dropdown-header text-center">ACTIONS</div>
                                 <Link to="/profile" className="dropdown-item fw-bold"><i className="fas fa-user me-2 text-dark"></i>Profile</Link>
-                                <Link to="/profile/posts" className="dropdown-item fw-bold"><i className="fas fa-paper-plane me-2 text-primary"></i>Posts</Link>
-                                <Link to="/profile/saved" className="dropdown-item fw-bold"><i className="fas fa-heart me-2 text-danger"></i>Friends</Link>
-                                <Link to="/profile/friends" className="dropdown-item fw-bold"><i className="fas fa-bookmark me-2 text-success"></i>Saved</Link>
+                                <Link to="/profile?type=posts" className="dropdown-item fw-bold"><i className="fas fa-paper-plane me-2 text-primary"></i>Posts</Link>
+                                <Link to="/profile?type=friends" className="dropdown-item fw-bold"><i className="fas fa-heart me-2 text-danger"></i>Friends</Link>
+                                <Link to="/profile?type=saved" className="dropdown-item fw-bold"><i className="fas fa-bookmark me-2 text-success"></i>Saved</Link>
                                 <Link to="/contact" className="dropdown-item fw-bold"><i className="fas fa-lightbulb me-2 text-warning"></i>Feedback</Link>
                                 <div className="dropdown-divider"></div>
                                 <Link to="/" className="dropdown-item fw-bold"><i className="fas fa-sign-out-alt me-2"></i>Logout</Link>

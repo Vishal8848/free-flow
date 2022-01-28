@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useState, useEffect, useRef } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import PostCard from '../components/profile/PostCard'
 import Details from '../components/profile/Details'
 import Friends from '../components/profile/Friends'
@@ -34,9 +34,25 @@ const Saved = () => {
 
 const Profile = () => {
 
-    const { section } = useParams();
+    const [ params ] = useSearchParams();
+    const type = params.get('type');
+    const typeRef = useRef(type);
+    let [ active, setActive ] = useState([ 
+        type === null, 
+        type === 'posts', 
+        type === 'friends', 
+        type === 'saved' 
+    ]);
 
-    let [ active, setActive ] = useState([ [ 'posts', 'friends', 'saved' ].every((param) => { return section !== param }), section === 'posts', section === 'friends', section === 'saved' ]);
+    useEffect(() => {
+        typeRef.current = params.get('type');
+        setActive([
+            typeRef.current === null, 
+            typeRef.current === 'posts', 
+            typeRef.current === 'friends', 
+            typeRef.current === 'saved' 
+        ]);
+    }, [params])
 
     // Profile Active Selector
     const setActiveState = (state) => {
@@ -50,7 +66,6 @@ const Profile = () => {
         <div className="container-md m-auto profile rounded">
             <div className="profile-header m-auto border shadow">
 
-                {/* Background */}
                 <div className="profile-bg bg-dark border-bottom">
                     <div className="pic-edit fw-bold pt-3">
                         <i className="fas fa-camera fa-lg ms-3 me-2"></i> 
@@ -58,16 +73,12 @@ const Profile = () => {
                     </div>
                 </div>
 
-                <div className="profile-info bg-light pt-4 pb-5 border">
-                    
-                    {/* Likes, Friends & Posts */}
+                <div className="profile-info bg-light pt-4 pb-5 border">                    
                     <Stats/>
 
-                    {/* Location, Description & Friends in Common */}
                     <Details/>
                 </div>
 
-                {/* Profile Picture */}
                 <div className="profile-pic border shadow">
                     <div className="profile-initial">VP</div>
                     <div className="pic-edit fw-bold pt-3 rounded-pill">
@@ -79,7 +90,6 @@ const Profile = () => {
 
             <div className="profile-body m-auto">
 
-                {/* Profile Navigation */}
                 <div className="profile-nav bg-light border shadow">
                     <ul className="pnav-list my-2 mx-3">
                         <li className={`pnav-item py-3 text-dark ${ active[0] ? 'active border' : '' }`} onClick={() => setActiveState(0)}>
@@ -103,14 +113,12 @@ const Profile = () => {
 
                 <div className="profile-content mt-3 p-3 bg-light border shadow">
                     
-                    {/* Navigation label */}
                     <div className="profile-title mt-5 mb-3">
                         <span className="fs-3 fw-bold">
                             { active[0] ? "Profile" : active[1] ? "Posts" : active[2] ? "Friends" : active[3] ? "Saved" : "Profile" }
                         </span>
                     </div>
 
-                    {/* Profile Active Section */}
                     {
                         active[0] ? <User/> :
                         active[1] ? <Posts/> :
