@@ -1,19 +1,47 @@
+import { useState } from 'react';
 import Loader from '../components/Loader'
 
 const ResetPasswd = ({ shiftAuth }) => {
+
+    const [ load, setLoad ] = useState({ passwd: "" });
+    const [ cred, setCred ] = useState({ email: "", passwd: "", cpasswd: "" });
+
+    const setField = (key, value) => {
+        let fields = cred;
+        fields[key] = value;
+        setCred({...fields});
+    }
+
+    const handleReset = (e) => {
+        e.preventDefault();
+        setLoad(true);
+    }
+
     return ( 
         <div className="reset-form text-center rounded bg-light p-3 shadow">
-            <form className="form-floating">
+            
+            <form className="form-floating" onSubmit={handleReset}>
+
                 <div className="row mb-3">
                     <div className="form-floating" style={{ width: "400px" }}>
-                        <input type="password" className="form-control" id="passwd" name="passwd" required/>
+                        <input type="email" className="form-control" id="email" name="email" disabled
+                            value={cred.email} onChange={(e) => setField('email', e.target.value)}/>
+                        <label htmlFor="email">&nbsp;&nbsp;&nbsp;Email Address</label>
+                    </div>
+                </div>
+
+                <div className="row mb-3">
+                    <div className="form-floating" style={{ width: "400px" }}>
+                        <input type="password" className="form-control" id="passwd" name="passwd" required
+                            value={cred.passwd} onChange={(e) => setField('passwd', e.target.value)}/>
                         <label htmlFor="passwd">&nbsp;&nbsp;&nbsp;New Password</label>
                     </div>
                 </div>
 
                 <div className="row mb-3">
                     <div className="form-floating" style={{ width: "400px" }}>
-                        <input type="password" className="form-control" id="cpasswd" name="cpasswd" required/>
+                        <input type="password" className="form-control" id="cpasswd" name="cpasswd" required
+                            value={cred.cpasswd} onChange={(e) => setField('cpasswd', e.target.value)}/>
                         <label htmlFor="cpasswd">&nbsp;&nbsp;&nbsp;Confirm Password</label>
                     </div>
                 </div>
@@ -29,7 +57,7 @@ const ResetPasswd = ({ shiftAuth }) => {
                     onClick={() => shiftAuth(0)}>Cancel</button>
             </div>
 
-            <Loader show={false}/>
+            <Loader show={load}/>
         </div>
     );
 }

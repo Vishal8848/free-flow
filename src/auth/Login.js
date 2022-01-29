@@ -1,22 +1,40 @@
 import AuthProvider from './AuthProvider'
 import Loader from '../components/Loader'
+import { useState } from 'react';
 
 const Login = ({ shiftAuth }) => {
+
+    const [ load, setLoad ] = useState(false);
+    const [ cred, setCred ] = useState({ email: "", passwd: "" });
+
+    const setField = (key, value) => {
+        let fields = cred;
+        fields[key] = value;
+        setCred({...fields});
+    }
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        setLoad(true);
+    }
+
     return ( 
         <div className="login-form text-center rounded bg-light p-3 shadow">
 
-            <form className="form-floating">
+            <form className="form-floating" onSubmit={handleLogin}>
             
                 <div className="row mb-3">
                     <div className="form-floating" style={{ width: "400px" }}>
-                        <input type="email" className="form-control" id="email" name="email" required/>
+                        <input type="email" className="form-control" id="email" name="email" required
+                            value={cred.email} onChange={(e) => setField('email', e.target.value)}/>
                         <label htmlFor="email">&nbsp;&nbsp;&nbsp;Email Address</label>
                     </div>
                 </div>
 
                 <div className="row mb-3">
                     <div className="form-floating" style={{ width: "400px" }}>
-                        <input type="password" className="form-control" id="passwd" name="passwd" required/>
+                        <input type="password" className="form-control" id="passwd" name="passwd" required
+                            value={cred.passwd} onChange={(e) => setField('passwd', e.target.value)}/>
                         <label htmlFor="passwd">&nbsp;&nbsp;&nbsp;Password</label>
                     </div>
                 </div>
@@ -46,7 +64,7 @@ const Login = ({ shiftAuth }) => {
 
             <AuthProvider />
 
-            <Loader show={false}/>
+            <Loader show={load}/>
         </div>
     );
 }
