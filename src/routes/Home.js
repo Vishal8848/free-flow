@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Freeflow from "../components/Freeflow"
+// import Inform from '../components/Inform'
 import RequestReset from '../auth/RequestReset'
 import ResetPasswd from '../auth/ResetPasswd'
 import Register from '../auth/Register'
@@ -29,6 +30,7 @@ const Home = () => {
                     <Authentication />
                 </div>
             </div>
+            {/* <Inform status={0}/> */}
         </div>
     </>);
 }
