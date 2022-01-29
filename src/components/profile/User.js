@@ -1,4 +1,7 @@
 const User = () => {
+
+    
+
     return ( 
         <div className="user-profile m-auto">
             <div className="user-basic mt-5">
@@ -15,15 +18,15 @@ const User = () => {
                 </div>
                 
                 <div className="user-location mt-3">
-                    <div className="form-floating">
-                        <input type="text" id="user-country" name="user-country" className="form-control" placeholder="Country" value="India"/>
+                    <div className="form-floating me-2">
+                        <input type="text" id="user-country" name="user-country" className="form-control" placeholder="Country"/>
                         <label htmlFor="user-country">Country</label>
                     </div>
-                    <div className="form-floating">
+                    <div className="form-floating mx-2">
                         <input type="text" id="user-state" name="user-state" className="form-control" placeholder="State"/>
                         <label htmlFor="user-state">State</label>
                     </div>
-                    <div className="form-floating">
+                    <div className="form-floating ms-2">
                         <input type="text" id="user-city" name="user-city" className="form-control" placeholder="City"/>
                         <label htmlFor="user-city">City</label>
                     </div>
@@ -35,13 +38,13 @@ const User = () => {
                     <div className="text-muted ps-2">Eg: Delhi Public School</div>
                 </div>
 
-                <div className="user-extras mt-3 row">    
-                    <div className="col-md-3 form-floating">
+                <div className="user-extras row">    
+                    <div className="col-md-3 form-floating mt-3">
                         <input type="text" id="dob" name="dob" className="form-control"
                             onFocus={ (e) => e.target.type = "date" } placeholder="00-00-0000" max="2012-12-31"/>
                         <label htmlFor="dob">&nbsp;&nbsp;&nbsp;Date of Birth</label>
                     </div>
-                    <div className="col-md-9 form-floating">
+                    <div className="col-md-9 form-floating mt-3">
                         <input type="text" id="hobbies" name="hobbies" className="form-control" placeholder="Hobbies"/>
                         <label htmlFor="hobbies">&nbsp;&nbsp;&nbsp;Hobbies <small className="text-muted">- If any</small></label>
                     </div>

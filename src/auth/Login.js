@@ -5,7 +5,8 @@ import { useState } from 'react';
 const Login = ({ shiftAuth }) => {
 
     const [ load, setLoad ] = useState(false);
-    const [ cred, setCred ] = useState({ email: "", passwd: "" });
+    const [ check, setCheck ] = useState([ null, null ]);
+    const [ cred, setCred ] = useState({ email: "", passwd: "", save: true });
 
     const setField = (key, value) => {
         let fields = cred;
@@ -13,10 +14,22 @@ const Login = ({ shiftAuth }) => {
         setCred({...fields});
     }
 
+    const Validate = () => {
+        check[0] = cred.email.length > 0;
+        check[1] = cred.passwd.length > 0;
+        setCheck([...check ]);
+        return ( check[0] && check[1] );
+    }
+
     const handleLogin = (e) => {
         e.preventDefault();
-        setLoad(true);
+        if(Validate())  {
+            setLoad(false);
+        }
     }
+
+    // Alert Logic
+    // ( check.every( e => e == null ) || check.every( e => e === true) ) && 'd-none'
 
     return ( 
         <div className="login-form text-center rounded bg-light p-3 shadow">
@@ -25,23 +38,34 @@ const Login = ({ shiftAuth }) => {
             
                 <div className="row mb-3">
                     <div className="form-floating" style={{ width: "400px" }}>
-                        <input type="email" className="form-control" id="email" name="email" required
+                        <input type="email" id="email" name="email" className={`form-control ${ (check[0] != null && cred.email.length >= 0)  && (check[0] ? 'is-valid' : 'is-invalid')}`}
                             value={cred.email} onChange={(e) => setField('email', e.target.value)}/>
                         <label htmlFor="email">&nbsp;&nbsp;&nbsp;Email Address</label>
+                        <div className="text-start fw-bold ps-2 text-danger">
+                            {   (check[0] != null && cred.email.length >= 0) &&
+                                !check[0] && "Required"
+                            }
+                        </div>
                     </div>
                 </div>
 
                 <div className="row mb-3">
                     <div className="form-floating" style={{ width: "400px" }}>
-                        <input type="password" className="form-control" id="passwd" name="passwd" required
+                        <input type="password" id="passwd" name="passwd" className={`form-control ${ (check[1] != null && cred.passwd.length === 0)  && (check[1] ? 'is-valid' : 'is-invalid')}`}
                             value={cred.passwd} onChange={(e) => setField('passwd', e.target.value)}/>
                         <label htmlFor="passwd">&nbsp;&nbsp;&nbsp;Password</label>
+                        <div className="text-start fw-bold ps-2 text-danger">
+                            {   (check[1] != null && cred.passwd.length >= 0) &&
+                                !check[1] && "Required"
+                            }
+                        </div>
                     </div>
                 </div>
 
                 <div className="row mb-2">
                     <div className="form-check form-switch text-start ms-4">
-                        <input className="form-check-input" role="switch" type="checkbox" id="rememberCred" defaultChecked  style={{ height: "20px !important" }}/>
+                        <input className="form-check-input" role="switch" type="checkbox" id="rememberCred" style={{ height: "20px !important" }}
+                            checked={cred.save} onChange={(e) => setField('save', e.target.checked)}/>
                         <label className="form-check-label fw-bold" htmlFor="rememberCred">Remember Credentials</label>
                     </div>
                 </div>
