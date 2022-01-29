@@ -53,7 +53,7 @@ const Register = ({ shiftAuth }) => {
                     <div id="gender-drop" className="col-md-6">
                         <select id="gender" style={{ height: "55px" }} className="form-select"
                             value={cred.gender} onChange={(e) => setField('gender', e.target.value)}>
-                            <option value="" selected disabled>Gender</option>
+                            <option value="" disabled>Gender</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                             <option value="others">Others</option>

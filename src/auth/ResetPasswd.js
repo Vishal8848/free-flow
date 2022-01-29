@@ -3,7 +3,7 @@ import Loader from '../components/Loader'
 
 const ResetPasswd = ({ shiftAuth }) => {
 
-    const [ load, setLoad ] = useState({ passwd: "" });
+    const [ load, setLoad ] = useState(false);
     const [ cred, setCred ] = useState({ email: "", passwd: "", cpasswd: "" });
 
     const setField = (key, value) => {

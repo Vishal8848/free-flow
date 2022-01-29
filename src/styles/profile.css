@@ -274,10 +274,12 @@
         width: 100%;
     }   
 }
-.form-select {
-    height: 50px;
-}
 .user-save {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.user-location {
     display: flex;
     align-items: center;
     justify-content: space-between;
