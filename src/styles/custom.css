@@ -43,6 +43,7 @@ h1 {
 .login-form, .register-form, .request-form, .reset-form {
     width: min-content;
     height: min-content;
+    position: relative;
 }
 @media screen and ( max-width: 768px ) {
     #phrase {
@@ -146,6 +147,32 @@ h1 {
     animation: scroll-up 12s ease-in-out infinite;
 }
 
+/* Loader */
+.loader {
+    width: 410px;
+    height: 100%;
+    border-radius: 5px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    display: none;
+    margin-left: -205px;
+    background-color: rgba(25, 25, 25, 0.2);
+}
+.square-set .square {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    margin-left: -30px;
+    margin-top: -30px;
+    left: 50%;
+    top: 50%;
+    border-radius: 5px;
+    border: 3px solid rgba(255, 255, 255, 0.75);
+}  
+.s-1 {  animation: S1 2s infinite;  }
+.s-2 {  animation: S2 2s infinite;  }
+
 /* Responsiveness */
 .header .mobile {
     display: none;
@@ -221,4 +248,14 @@ h1 {
     50%, 70% {  transform: translateY(-50%);    }
     75%, 95% {  transform: translateY(-75%);    }
     100% {  transform: translateY(-100%);   }
+}
+@keyframes S1 {
+    0% {    transform: rotate(0deg);    }
+    50% {   transform: rotate(90deg);   }
+    100% {  transform: rotate(180deg);  }
+}    
+@keyframes S2 {
+    0% {    transform: rotate(180deg);  }
+    50% {   transform: rotate(90deg);   }
+    100% {  transform: rotate(0deg);    }
 }

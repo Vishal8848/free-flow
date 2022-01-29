@@ -1,3 +1,5 @@
+import Loader from '../components/Loader'
+
 const RequestReset = ({ shiftAuth }) => {
     return ( 
         <div className="request-form text-center rounded bg-light p-3 shadow">
@@ -33,6 +35,8 @@ const RequestReset = ({ shiftAuth }) => {
                 <button className="btn btn-danger w-100 h-75" style={{ height: "45px", cursor: "pointer" }}
                     onClick={() => shiftAuth(0)}>Cancel</button>
             </div>
+
+            <Loader show={false}/>
         </div>
     );
 }

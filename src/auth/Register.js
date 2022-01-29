@@ -1,3 +1,5 @@
+import Loader from '../components/Loader'
+
 const Register = ({ shiftAuth }) => {
     return ( 
         <div className="register-form text-center rounded bg-light p-3 shadow">
@@ -78,6 +80,8 @@ const Register = ({ shiftAuth }) => {
                 <div className="text-primary fw-bold" style={{ cursor: "pointer" }}
                     onClick={() => shiftAuth(0)}> Sign In </div>
             </div>
+
+            <Loader show={false}/>
         </div>
     );
 }

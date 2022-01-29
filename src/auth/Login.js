@@ -1,4 +1,5 @@
 import AuthProvider from './AuthProvider'
+import Loader from '../components/Loader'
 
 const Login = ({ shiftAuth }) => {
     return ( 
@@ -44,6 +45,8 @@ const Login = ({ shiftAuth }) => {
             </div>
 
             <AuthProvider />
+
+            <Loader show={false}/>
         </div>
     );
 }
