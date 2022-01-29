@@ -1,4 +1,6 @@
-const Login = () => {
+import AuthProvider from './AuthProvider'
+
+const Login = ({ shiftAuth }) => {
     return ( 
         <div className="login-form text-center rounded bg-light p-3 shadow">
 
@@ -30,14 +32,18 @@ const Login = () => {
 
             <div className="d-flex my-2 align-items-center justify-content-between">
             
-                <div className="text-primary fw-bold" style={{ cursor: "pointer" }}> Forgot Password ? </div>
+                <div className="text-primary fw-bold" style={{ cursor: "pointer" }}
+                    onClick={() => shiftAuth(2)}> Forgot Password ? </div>
 
                 <div className="d-flex align-items-center justify-content-end">
                     <div className="fw-bold">New User ?&nbsp;</div>
-                    <div className="text-primary fw-bold" style={{ cursor: "pointer" }}> Sign Up </div>
+                    <div className="text-primary fw-bold" style={{ cursor: "pointer" }}
+                        onClick={() => shiftAuth(1)}> Sign Up </div>
                 </div>
             
             </div>
+
+            <AuthProvider />
         </div>
     );
 }

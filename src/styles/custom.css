@@ -36,7 +36,11 @@ h1 {
     align-items: center;
     justify-content: center;
 }
-.login-form, .register-form, .reset-form {
+#gender-drop {
+    width: 200px;
+    height: 55px;
+}
+.login-form, .register-form, .request-form, .reset-form {
     width: min-content;
     height: min-content;
 }
