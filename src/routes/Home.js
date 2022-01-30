@@ -1,25 +1,28 @@
 import { useState } from "react";
 import Freeflow from "../components/Freeflow"
-// import Inform from '../components/Inform'
+import Inform from '../components/Inform'
 import RequestReset from '../auth/RequestReset'
 import ResetPasswd from '../auth/ResetPasswd'
 import Register from '../auth/Register'
 import Login from '../auth/Login'
 
-const Authentication = () => {
+const Authentication = ({ Inform }) => {
 
     const [ activeAuth, setActiveAuth ] = useState(0);
     const form = [ 
-        <Login shiftAuth={setActiveAuth}/>, 
-        <Register shiftAuth={setActiveAuth}/>,
-        <RequestReset shiftAuth={setActiveAuth}/>,
-        <ResetPasswd shiftAuth={setActiveAuth}/>
+        <Login shiftAuth={setActiveAuth} Inform={Inform}/>, 
+        <Register shiftAuth={setActiveAuth} Inform={Inform}/>,
+        <RequestReset shiftAuth={setActiveAuth} Inform={Inform}/>,
+        <ResetPasswd shiftAuth={setActiveAuth} Inform={Inform}/>
     ];
 
     return ( form[activeAuth] );
 }
 
 const Home = () => {
+
+    const [ inform, setInform ] = useState({ state: false, code: 0 });
+
     return (<>
         <div id="home" className="container-fluid bg-light">
             <div className="row border">
@@ -27,10 +30,10 @@ const Home = () => {
                     <Freeflow />
                 </div>
                 <div id="form-set" className="col-md-6">
-                    <Authentication />
+                    <Authentication Inform={setInform}/>
                 </div>
             </div>
-            {/* <Inform status={0}/> */}
+            { inform.state && <Inform status={inform.code}/>  }
         </div>
     </>);
 }

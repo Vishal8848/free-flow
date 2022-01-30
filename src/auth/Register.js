@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Loader from '../components/Loader'
+import { firebaseRegister } from '../firebase/firebaseAuth';
 
 // Regex
 const Name = new RegExp(/^[a-zA-Z0-9 ]+$/);
@@ -35,7 +36,11 @@ const Register = ({ shiftAuth }) => {
     const handleRegister = (e) => {
         e.preventDefault();
         if(Validate())  {
-            setLoad(false);
+            setLoad(true);
+            delete cred.cpasswd;
+            firebaseRegister(cred)
+            .then(data => setLoad(false))
+            .catch(error => console.log(error));
         }
     }
 

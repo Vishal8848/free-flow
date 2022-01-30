@@ -1,8 +1,9 @@
+import { useState } from 'react';
 import AuthProvider from './AuthProvider'
 import Loader from '../components/Loader'
-import { useState } from 'react';
+import { firebaseLogin } from '../firebase/firebaseAuth'
 
-const Login = ({ shiftAuth }) => {
+const Login = ({ shiftAuth, Inform }) => {
 
     const [ load, setLoad ] = useState(false);
     const [ check, setCheck ] = useState([ null, null ]);
@@ -24,12 +25,12 @@ const Login = ({ shiftAuth }) => {
     const handleLogin = (e) => {
         e.preventDefault();
         if(Validate())  {
-            setLoad(false);
+            setLoad(true);
+            firebaseLogin(cred)
+            .then(data => setLoad(false))
+            .catch(error => console.log(error));
         }
     }
-
-    // Alert Logic
-    // ( check.every( e => e == null ) || check.every( e => e === true) ) && 'd-none'
 
     return ( 
         <div className="login-form text-center rounded bg-light p-3 shadow">

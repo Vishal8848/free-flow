@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Loader from '../components/Loader'
+import { firebaseResetRequest } from '../firebase/firebaseAuth';
 
 // Captcha Creation
 const charSet = "aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ0123456789";
@@ -29,7 +30,11 @@ const RequestReset = ({ shiftAuth }) => {
     const handleRequest = (e) => {
         e.preventDefault();
         if(Validate())  {
-            setLoad(false);
+            setLoad(true);
+            delete cred.captcha;
+            firebaseResetRequest(cred)
+            .then(() => console.log('Password Reset Initiated'))
+            .catch(error => console.log(error));
         }
     }
 

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Loader from '../components/Loader'
+import { firebaseResetPasswd } from '../firebase/firebaseAuth';
 
 // Regex
 const Pass = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/);
@@ -8,7 +9,7 @@ const ResetPasswd = ({ shiftAuth }) => {
 
     const [ load, setLoad ] = useState(false);
     const [ check, setCheck ] = useState([ null, null, null ]);
-    const [ cred, setCred ] = useState({ email: "vish***********@gmail.com", passwd: "", cpasswd: "" });
+    const [ cred, setCred ] = useState({ email: "vish***********@gmail.com", passwd: "", cpasswd: "", code: "" });
 
     const setField = (key, value) => {
         let fields = cred;
@@ -27,7 +28,11 @@ const ResetPasswd = ({ shiftAuth }) => {
     const handleReset = (e) => {
         e.preventDefault();
         if(Validate())  {
-            setLoad(false);
+            setLoad(true);
+            delete cred.cpasswd;
+            firebaseResetPasswd(cred)
+            .then(() => console.log('Password Reset'))
+            .catch(error => console.log(error));
         }
     }
 
