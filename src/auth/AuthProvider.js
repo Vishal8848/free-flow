@@ -1,7 +1,11 @@
+import { firebaseGoogleLogin } from "../firebase/firebaseAuth";
+
 const AuthProvider = () => {
 
     const handleProvider = () => {
-        
+        firebaseGoogleLogin()
+        .then(data => console.log('Google Login'))
+        .catch(err => console.log(err));
     }
 
     return (<>

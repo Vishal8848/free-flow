@@ -149,6 +149,66 @@ h1 {
     animation: scroll-up 12s ease-in-out infinite;
 }
 
+/* Tint & Docker */
+.docker {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+    width: 12.5px;
+    height: 12.5px;
+    border-radius: 50%;
+    transform: translate(50%, -50%);
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.tint {
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    background-color: white;
+}
+.tint-tr {
+    top: 0px;
+    right: 15px;
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    border-left: 1px solid rgba(0, 0, 0, 0.3);
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+.tint-tm {
+    top: 0px;
+    right: 37.5%;
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    border-left: 1px solid rgba(0, 0, 0, 0.3);
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+.tint-tl {
+    top: 0px;
+    left: 15px;
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    border-left: 1px solid rgba(0, 0, 0, 0.3);
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+/* Tooltip */
+div:hover > .tool-tip {
+    opacity: 1;
+}
+.tool-tip {
+    position: absolute;
+    transform: translateY(150%);
+    background-color: white;
+    border-radius: 16px;
+    width: 100px;
+    height: 30px;
+    opacity: 0;
+}
+.tooltip-content {
+    text-align: center;
+    padding-top: 2.5px;
+    font-weight: bold;
+}
+
 /* Inform Modal */
 .modal-container {
     background-color: rgba(25,25,25,0.5);

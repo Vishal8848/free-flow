@@ -1,4 +1,4 @@
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, verifyPasswordResetCode, confirmPasswordReset } from 'firebase/auth'
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, verifyPasswordResetCode, confirmPasswordReset, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { getFirestore, doc, setDoc } from 'firebase/firestore/lite'
 import firebase from './firebase'
 
@@ -13,17 +13,29 @@ export const firebaseLogin = async (cred) => {
         // Verify Email
         response.user.emailVerified = true;
 
+        // Cookie Access
         if(cred.save)   {
             let access = { uid: response.user.uid, verified: true, on: Date.now() };
-
-            // Cookies Access
             window.localStorage.setItem('access', JSON.stringify(access));
-        }
+
+        }   else window.localStorage.removeItem('access')
 
         return response.user;
 
     }   catch(err)  { return err.message }
 
+}
+
+export const firebaseGoogleLogin = async () => {
+
+    try {
+        const Google = new GoogleAuthProvider();
+
+        const response = await signInWithPopup(auth, Google);
+
+        return response.user;
+
+    }   catch(err) { return err.message }
 }
 
 export const firebaseRegister = async (cred, user) => {
@@ -36,11 +48,6 @@ export const firebaseRegister = async (cred, user) => {
 
         // Write User Document
         setDoc(doc(store, 'users', response.user.uid), user);
-
-        // let access = { uid: response.user.uid, verified: false, on: Date.now()  }
-
-        // // Cookie access
-        // window.localStorage.setItem('access', JSON.stringify(access));
 
         await sendEmailVerification(response.user);
 

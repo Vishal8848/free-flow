@@ -1,4 +1,4 @@
-import Avatar from "../Avatar";
+import { Avatar } from "../Extras";
 import TypeWriter from 'typewriter-effect'
 
 const Trending = () => {

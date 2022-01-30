@@ -1,22 +1,19 @@
-import Avatar from '../Avatar'
+import { Avatar } from '../Extras'
 
 const Friend = ({ side }) => {
 
     return ( 
         <div className={`friend p-2 bg-light rounded border shadow-sm m${side}-md-auto mt-4`}>
 
-            {/* Friend Avatar */}
             <div className="friend-img">
                 <Avatar name="Vishal Pranav" scale="square" theme="danger"/>
             </div>
 
-            {/* Friend Description */}
             <div className="friend-desc ps-3">
                 <span className="fs-5 fw-bold">Vishal Pranav</span><br/>
                 <span className="fs-6 fst-italic text-muted">2 mutual friends</span>
             </div>
 
-            {/* Friend Actions */}
             <div className="friend-actions dropdown">
                 <button className="btn rounded-circle py-2 px-3" data-bs-toggle="dropdown">
                     <i className="fas fa-ellipsis-v fa-lg"></i>

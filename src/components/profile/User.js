@@ -1,7 +1,5 @@
 const User = () => {
 
-    
-
     return ( 
         <div className="user-profile m-auto">
             <div className="user-basic mt-5">

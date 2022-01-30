@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Freeflow from "../components/Freeflow"
-import Inform from '../components/Inform'
+import { Freeflow } from "../components/Extras"
 import RequestReset from '../auth/RequestReset'
 import ResetPasswd from '../auth/ResetPasswd'
+import Inform from '../components/Inform'
 import Register from '../auth/Register'
 import Login from '../auth/Login'
 

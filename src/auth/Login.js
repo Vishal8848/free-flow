@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import AuthProvider from './AuthProvider'
-import Loader from '../components/Loader'
+import { Loader } from '../components/Extras'
 import { firebaseLogin } from '../firebase/firebaseAuth'
 
 const Login = ({ shiftAuth, Inform }) => {

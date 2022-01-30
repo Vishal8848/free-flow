@@ -1,4 +1,4 @@
-import Avatar from "../Avatar";
+import { Avatar } from "../Extras";
 import { useState } from "react";
 
 const CreatePost = () => {

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import Avatar from '../components/Avatar'
+import { Avatar, Tooltip } from '../components/Extras'
 
 const Header = () => {
 
@@ -7,44 +7,37 @@ const Header = () => {
         <nav className="navbar header navbar-expand-lg navbar-light mb-md-3 bg-light border-bottom">
             <div className="container-fluid">
 
-                {/* Brand */}
                 <div className="brand mobile">
                     <Link to="/feed"> <i className="fab fa-facebook fa-2x text-primary"></i> </Link>
                 </div>
 
-                {/* Search People Form */}
                 <div className="search-form">
                     <input type="search" className="form-control rounded-pill shadow-sm" placeholder="Search Freeflow"/>
                 </div>
 
-                {/* Brand */}
                 <div className="brand system">
                     <Link to="/feed" className="navbar-brand"> Freeflow </Link>
                 </div>
 
-                {/* User Menu */}
                 <div className="user-menu">
 
-                    {/* Feed */}
                     <div className="item border shadow-sm me-3 system">
                         <Link to="/feed" className="nav-link"><i className="fas fa-home fa-lg text-dark"></i></Link>
+                        <Tooltip type="Home"/>
                     </div>
 
-                    {/* Notifications */}
                     <div className="item border shadow-sm me-3 system position-relative">
                         <div className="docker bg-danger"></div>
                         <i className="fas fa-bell fa-lg"></i>
+                        <Tooltip type="Updates"/>
                     </div>
 
-                    {/* User Dropdown */}
                     <div className="dropdown">
 
-                        {/* Trigger */}
                         <div id="user-drop" data-bs-toggle="dropdown" style={{ cursor: "pointer", userSelect: "none" }}>
                             <Avatar name="Vishal Pranav" theme="danger" scale="md"/>
                         </div>
 
-                        {/* Dropdown */}
                         <div className="dropdown-menu dropdown-menu-end" aria-labelledby="user-drop">
                             <div className="tint tint-tr"></div>
                             <div className="user-partition text-center">
