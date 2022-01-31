@@ -18,12 +18,13 @@ const Friend = ({ side }) => {
                 <button className="btn rounded-circle py-2 px-3" data-bs-toggle="dropdown">
                     <i className="fas fa-ellipsis-v fa-lg"></i>
                 </button>
-                <ul className="dropdown-menu dropdown-menu-end bg-light">
-                    <li className="dropdown-item">
-                        <i className="fas fa-user fa-lg me-2 text-primary"></i>View Profile
+                <ul className="dropdown-menu dropdown-menu-end bg-light shadow" style={{ width: "fit-content" }}>
+                    <div className="tint tint-tr"></div>
+                    <li className="dropdown-item fw-bold">
+                        <i className="fas fa-user fa-lg me-2"></i>View Profile
                     </li>
-                    <li className="dropdown-item">
-                        <i className="fas fa-ban fa-lg me-2 text-danger"></i>Unfriend
+                    <li className="dropdown-item fw-bold">
+                        <i className="fas fa-ban fa-lg me-2" style={{ WebkitTextStroke: "1.5px" }}></i>Unfriend
                     </li>
                 </ul>
             </div>

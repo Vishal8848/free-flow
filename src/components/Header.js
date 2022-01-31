@@ -1,22 +1,55 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom'
 import { Avatar, Tooltip } from '../components/Extras'
 
+const SearchUser = ({ nb }) => {
+
+    const [ request, setRequest ] = useState(false);
+
+    return (
+        <div className={`search-user p-2 bg-light ${ !nb && 'border-bottom' }`}>
+            <Avatar name="Vishal Pranav" scale="sm" theme="success"/>
+            <div className="fs-6 fw-bold mx-3 w-100">Abishek Prasannaa</div>
+            <button className={`btn btn-${ request ? 'secondary' : 'primary' } btn-sm`} onClick={() => setRequest(true)} disabled={ request ? "disabled" : "" }>
+                { !request && <i className="fas fa-plus me-2"></i> }
+                { request ? "Requested" : "Friend" }
+            </button>
+        </div>
+    );
+}
+
+const Search = () => {
+    return (
+        <div className="search p-2 bg-light border-end border-bottom">
+            <SearchUser />
+            <SearchUser />
+            <SearchUser nb={true}/>
+        </div>
+    );
+}
+
 const Header = () => {
+
+    const [ search, setSearch ] = useState({ open: false, input: "" })
 
     return ( 
         <nav className="navbar header navbar-expand-lg navbar-light mb-md-3 bg-light border-bottom">
             <div className="container-fluid">
 
-                <div className="brand mobile">
+                <div className="brand me-2">
                     <Link to="/feed"> <i className="fab fa-facebook fa-2x text-primary"></i> </Link>
                 </div>
 
-                <div className="search-form">
-                    <input type="search" className="form-control rounded-pill shadow-sm" placeholder="Search Freeflow"/>
+                { search.open && <div className="show-search bg-transparent border-end"></div> }
+                <div className="search-form me-md-auto ms-md-2">
+                    <input id="search" type="search" className={`form-control rounded-pill shadow-sm`} placeholder="Search Freeflow"
+                        onFocusCapture={() => { search.open = true; setSearch({...search}) }}
+                        value={search.input} onChange={(e) => { search.input = e.target.value; setSearch({...search}) }}/>
+                    { search.open && <Search /> }
                 </div>
 
-                <div className="brand system">
-                    <Link to="/feed" className="navbar-brand"> Freeflow </Link>
+                <div className="brand system w-100">
+                    <Link to="/feed" className="navbar-brand m-auto"> Freeflow </Link>
                 </div>
 
                 <div className="user-menu">

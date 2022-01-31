@@ -87,13 +87,16 @@ h1 {
     font-size: 45px;
     border-radius: 5px;
 }
+.avatar-square-sm {
+    width: 50px;
+    height: 50px;
+    font-size: 30px;
+    border-radius: 5px;
+}
 
 /* Header */
 .brand, .user-menu {
     width: fit-content;
-}
-.search-form, .search-form input {
-    height: 45px;
 }
 .user-menu {
     display: flex;
@@ -129,12 +132,59 @@ h1 {
 .footer .item {
     transform: scale(1.25);
 }
+@media screen and ( min-width: 768px ) {    
+    .search-form input:focus {
+        width: 325px;
+    }
+}
 @media screen and ( max-width: 768px ) {
     .search-form {
-        width: 70%;
+        width: 75%;
     }
     .user-menu {
         justify-content: space-evenly;
+    }
+}
+
+/* Search */
+.search {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 9999;
+    width: 400px;
+    height: auto;
+    max-height: 350px;
+    overflow-y: auto;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+}
+.search-user {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.search-user button {
+    display: flex;
+    align-items: center;
+}
+.show-search {
+    width: 400px;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+}
+@media screen and ( max-width: 768px )  {
+    .search {
+        width: 100%;
+    }
+    .search-user {
+        justify-content: space-between;
+    }
+    .show-search {
+        width: 100%;
     }
 }
 

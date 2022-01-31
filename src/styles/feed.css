@@ -226,9 +226,6 @@
 .chat-create input:focus ~ div i {
     animation: volley 1.5s infinite;
 }
-.chat-header > i {
-    animation: pulse 1s infinite;
-}
 .chat-notice {
     background-color: rgba(25, 25, 25, 0.05);
     padding: 30%;
