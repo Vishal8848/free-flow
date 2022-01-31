@@ -79,20 +79,20 @@ const Header = () => {
 
                         <div className="dropdown-menu dropdown-menu-end" aria-labelledby="user-drop">
                             <div className="tint tint-tr"></div>
-                            <div className="user-partition text-center">
-                                <div className="u-image border shadow m-auto"></div>
-                                <div className="u-name mt-2"><h5>Vishal Pranav</h5></div>
+                            <div className="user-partition">
+                                <Avatar name="Vishal Pranav" scale="lg" theme="success"/>
+                                <div className="u-name mt-2 text-center"><h5>Vishal Pranav</h5></div>
                             </div>
                             <div className="dropdown-divider"></div>
                             <div className="actions-partition text-start">
                                 <div className="dropdown-header text-center">ACTIONS</div>
-                                <Link to="/profile" className="dropdown-item fw-bold"><i className="fas fa-user me-2 text-dark"></i>Profile</Link>
-                                <Link to="/profile?type=posts" className="dropdown-item fw-bold"><i className="fas fa-paper-plane me-2 text-primary"></i>Posts</Link>
-                                <Link to="/profile?type=friends" className="dropdown-item fw-bold"><i className="fas fa-heart me-2 text-danger"></i>Friends</Link>
-                                <Link to="/profile?type=saved" className="dropdown-item fw-bold"><i className="fas fa-bookmark me-2 text-success"></i>Saved</Link>
-                                <Link to="/contact" className="dropdown-item fw-bold"><i className="fas fa-lightbulb me-2 text-warning"></i>Feedback</Link>
+                                <Link to="/profile" className="dropdown-item fw-bold">Profile</Link>
+                                <Link to="/profile?type=posts" className="dropdown-item fw-bold">Posts</Link>
+                                <Link to="/profile?type=friends" className="dropdown-item fw-bold">Friends</Link>
+                                <Link to="/profile?type=saved" className="dropdown-item fw-bold">Saved</Link>
+                                <Link to="/contact" className="dropdown-item fw-bold">Feedback</Link>
                                 <div className="dropdown-divider"></div>
-                                <Link to="/" className="dropdown-item fw-bold"><i className="fas fa-sign-out-alt me-2"></i>Logout</Link>
+                                <Link to="/" className="dropdown-item fw-bold">Logout</Link>
                             </div>
                         </div>
                     </div>

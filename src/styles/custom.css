@@ -65,6 +65,7 @@ h1 {
     font-weight: bold;
     color: white;
     display: flex;
+    margin: auto;
 }
 .avatar > img {
     width: inherit;
@@ -80,6 +81,11 @@ h1 {
     width: 45px;
     height: 45px;
     font-size: 17.5px;
+}
+.avatar-lg {
+    width: 76px;
+    height: 75px;
+    font-size: 30px;
 }
 .avatar-square {
     width: 75px;
@@ -99,6 +105,7 @@ h1 {
     width: fit-content;
 }
 .search-form {
+    height: 100%;
     display: flex;
     align-items: center;
 }
@@ -144,6 +151,7 @@ h1 {
 @media screen and ( max-width: 768px ) {
     .search-form {
         width: 75%;
+        height: 50px;
     }
     .user-menu {
         justify-content: space-evenly;
@@ -377,6 +385,26 @@ div:hover > .tool-tip {
 .s-1 {  animation: S1 2s infinite;  }
 .s-2 {  animation: S2 2s infinite;  }
 
+/* Theme */
+.theme-dark-outer  {
+    background-color: rgb(24, 25, 26);
+}
+.theme-dark-middle  {
+    background-color: rgb(28, 30, 33);
+}
+.theme-dark-inner  {
+    background-color: rgb(32, 35, 40);
+}
+.theme-light-outer  {
+    background-color: #F4F4F2;
+}
+.theme-light-middle  {
+    background-color: #E8E8E8;
+}
+.theme-light-inner  {
+    background-color: #BBBFCA;
+}
+
 /* Responsiveness */
 .header .mobile {
     display: none;
@@ -439,17 +467,13 @@ div:hover > .tool-tip {
     100% {  transform: scale(1);    }
 }
 @keyframes volley {
-    0% {    margin-left: -35px; }
-    50% {   margin-left: -15px; }
-    100% {  margin-left: -35px; }
+    0% {    margin-left: -30px; }
+    50% {   margin-left: -20px; }
+    100% {  margin-left: -30px; }
 }
 @keyframes zoom-in {
     0% {    transform: scale(0);    }
     100% {    transform: scale(1);  }
-}
-@keyframes pull {
-    from {   height: 0;  }
-    to { height: 300px;  }
 }
 @keyframes scroll-up {
     0%, 20% {   transform: translateY(0);   }
