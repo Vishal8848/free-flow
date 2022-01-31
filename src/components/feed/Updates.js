@@ -27,8 +27,8 @@ const Updates = () => {
     return ( 
         <div className="updates">
             <div className="update-notice text-muted px-5">
-                <strong>Post Notifications</strong><br/>
-                All actions made on your posts live here
+                <strong>Wave Notifications</strong><br/>
+                All actions made on your waves live here
             </div>
             <Update />
             <Update />

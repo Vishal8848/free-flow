@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Notifications from './Notifications';
 import { Link, useSearchParams } from 'react-router-dom'
 
 const Footer = () => {
@@ -42,9 +43,9 @@ const Footer = () => {
                 </Link>
             </div>
 
-            <div className="item bg-light position-relative"  onClick={() => setNotify(!notify) }>
+            <div className="item bg-light position-relative">
                 <div className="docker me-2 bg-danger"></div>
-                <span>  <i className={`fas fa-bell fa-lg ${notify ? 'text-dark' : 'text-muted'}`}></i> News  </span>
+                <span>  <i className={`fas fa-bell fa-lg ${notify ? 'text-dark' : 'text-muted'}`} onClick={() => setNotify(!notify) }></i> News  </span>
             </div>
 
             <div className="item bg-light d-block" onClick={() => setActive([ false, false, false, true ])}>
@@ -54,6 +55,7 @@ const Footer = () => {
                 </Link>
             </div>
         </div>
+        { notify && <Notifications bottom notify={setNotify}/> }
     </>);
 }
  

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
-import { Avatar, Tooltip } from '../components/Extras'
+import { Avatar, Tooltip } from './Extras'
+import Notifications from './Notifications'
 
 const SearchUser = ({ nb }) => {
 
@@ -9,7 +10,7 @@ const SearchUser = ({ nb }) => {
     return (
         <div className={`search-user p-2 bg-light ${ !nb && 'border-bottom' }`}>
             <Avatar name="Vishal Pranav" scale="sm" theme="success"/>
-            <div className="fs-6 fw-bold mx-3 w-100">Abishek Prasannaa</div>
+            <div className="fs-6 mx-3 w-100">Abishek Prasannaa</div>
             <button className={`btn btn-${ request ? 'secondary' : 'primary' } btn-sm`} onClick={() => setRequest(true)} disabled={ request ? "disabled" : "" }>
                 { !request && <i className="fas fa-plus me-2"></i> }
                 { request ? "Requested" : "Friend" }
@@ -21,6 +22,7 @@ const SearchUser = ({ nb }) => {
 const Search = () => {
     return (
         <div className="search p-2 bg-light border-end border-bottom">
+            <span className="feed-title ps-3 text-muted fw-bold">Search Results</span>
             <SearchUser />
             <SearchUser />
             <SearchUser nb={true}/>
@@ -30,26 +32,30 @@ const Search = () => {
 
 const Header = () => {
 
-    const [ search, setSearch ] = useState({ open: false, input: "" })
+    const [ search, setSearch ] = useState({ open: false, input: "" });
+    const [ notify, setNotify ] = useState(false);
 
     return ( 
         <nav className="navbar header navbar-expand-lg navbar-light mb-md-3 bg-light border-bottom">
             <div className="container-fluid">
 
                 <div className="brand me-2">
-                    <Link to="/feed"> <i className="fab fa-facebook fa-2x text-primary"></i> </Link>
+                    {   search.open ?
+                        <i className="fas fa-chevron-left fa-lg text-primary pt-2 mx-2" onClick={() => { search.open = false; setSearch({...search}) }} style={{ cursor:"pointer" }}></i> :
+                        <Link to="/feed"> <i className="fab fa-facebook fa-2x text-primary"></i> </Link> 
+                    }
                 </div>
 
                 { search.open && <div className="show-search bg-transparent border-end"></div> }
                 <div className="search-form me-md-auto ms-md-2">
-                    <input id="search" type="search" className={`form-control rounded-pill shadow-sm`} placeholder="Search Freeflow"
+                    <input id="search" type="search" className={`form-control ${ search.open && 'search-focus' } rounded-pill shadow-sm`} placeholder="Search Freeflow"
                         onFocusCapture={() => { search.open = true; setSearch({...search}) }}
                         value={search.input} onChange={(e) => { search.input = e.target.value; setSearch({...search}) }}/>
                     { search.open && <Search /> }
                 </div>
 
-                <div className="brand system w-100">
-                    <Link to="/feed" className="navbar-brand m-auto"> Freeflow </Link>
+                <div className="brand system me-auto">
+                    <Link to="/feed" className="navbar-brand"> Freeflow </Link>
                 </div>
 
                 <div className="user-menu">
@@ -61,8 +67,8 @@ const Header = () => {
 
                     <div className="item border shadow-sm me-3 system position-relative">
                         <div className="docker bg-danger"></div>
-                        <i className="fas fa-bell fa-lg"></i>
-                        <Tooltip type="Updates"/>
+                        <i className="fas fa-bell fa-lg" onClick={() => setNotify(!notify)}></i>
+                        { notify ? <Notifications top/> : <Tooltip type="Notifications"/> }
                     </div>
 
                     <div className="dropdown">

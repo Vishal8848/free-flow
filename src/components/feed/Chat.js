@@ -25,12 +25,12 @@ const Chat = () => {
     return ( 
         <div className="chat">
             <div className="chat-header p-3 border">
-                <i className="fas fa-comments me-2 text-success"></i> Live Chat
+                <i className="fas fa-comments me-2 text-success"></i> Live Pond
             </div>
             <div className="chat-content border-start border-end">
                 <div className="chat-notice text-muted px-5 border-bottom">
-                    <strong>Chat Messenger</strong><br/>
-                    Your messages are visible to all users online
+                    <strong>Pond Messenger</strong><br/>
+                    Your ripples are visible to everyone online
                 </div>
                 <Message />
                 <Message />
@@ -38,7 +38,7 @@ const Chat = () => {
             </div>
             <div className="chat-create border ps-2 py-3">
                 <Avatar name="Vishal Pranav" scale="sm" theme="danger"/>
-                <input className="w-75" placeholder="Share your message"/>
+                <input className="w-75" placeholder="Send a ripple ..."/>
                 <div className="submit-msg"><i className="fas fa-caret-right fa-2x"></i></div>
             </div>
         </div>

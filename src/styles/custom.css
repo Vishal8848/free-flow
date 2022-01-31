@@ -98,6 +98,10 @@ h1 {
 .brand, .user-menu {
     width: fit-content;
 }
+.search-form {
+    display: flex;
+    align-items: center;
+}
 .user-menu {
     display: flex;
     align-items: center;
@@ -133,8 +137,8 @@ h1 {
     transform: scale(1.25);
 }
 @media screen and ( min-width: 768px ) {    
-    .search-form input:focus {
-        width: 325px;
+    .search-focus {
+        width: 300px;
     }
 }
 @media screen and ( max-width: 768px ) {
@@ -156,7 +160,6 @@ h1 {
     height: auto;
     max-height: 350px;
     overflow-y: auto;
-    border-bottom-left-radius: 16px;
     border-bottom-right-radius: 16px;
 }
 .search-user {
@@ -179,6 +182,7 @@ h1 {
 @media screen and ( max-width: 768px )  {
     .search {
         width: 100%;
+        border-bottom-left-radius: 16px;
     }
     .search-user {
         justify-content: space-between;
@@ -219,14 +223,14 @@ h1 {
     background-color: white;
 }
 .tint-tr {
-    top: 0px;
+    top: 0;
     right: 15px;
     border-top: 1px solid rgba(0, 0, 0, 0.3);
     border-left: 1px solid rgba(0, 0, 0, 0.3);
     transform: translate(-50%, -50%) rotate(45deg);
 }
 .tint-tm {
-    top: 0px;
+    top: 0;
     right: 37.5%;
     border-top: 1px solid rgba(0, 0, 0, 0.3);
     border-left: 1px solid rgba(0, 0, 0, 0.3);
@@ -239,6 +243,43 @@ h1 {
     border-left: 1px solid rgba(0, 0, 0, 0.3);
     transform: translate(-50%, -50%) rotate(45deg);
 }
+.tint-br {
+    bottom: 0;
+    right: 15px;
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    border-left: 1px solid rgba(0, 0, 0, 0.3);
+    transform: translate(-50%, 50%) rotate(225deg);
+}
+
+/* Notifications */
+.notifications {
+    background-color: white;
+    border-radius: 16px;
+    position: absolute;
+    z-index: 9999;
+    width: max-content;
+    height: auto;
+    max-height: 400px;
+    overflow-y: auto;
+    bottom: unset;
+    top: 100%;
+    margin-left: -200px;
+}
+@media screen and ( max-width: 768px )  {
+    .notifications {
+        background-color: white;
+        min-height: 100vh;
+        max-height: 100vh;
+        overflow-y: auto;
+        border-radius: 0;
+        position: fixed;
+        z-index: 9999;
+        width: 100vw;
+        margin: 0;
+        left: 0;
+        top: 0;
+    }   
+}
 
 /* Tooltip */
 div:hover > .tool-tip {
@@ -249,7 +290,8 @@ div:hover > .tool-tip {
     transform: translateY(150%);
     background-color: white;
     border-radius: 16px;
-    width: 100px;
+    min-width: 100px;
+    width: auto;
     height: 30px;
     opacity: 0;
 }
@@ -377,6 +419,11 @@ div:hover > .tool-tip {
 }
 ::-webkit-scrollbar-thumb:hover {
     background: rgba(25, 25, 25, 0.15); 
+}
+@media screen and ( max-width: 768px )  {
+    ::-webkit-scrollbar {
+        width: 2px;
+    }   
 }
 
 /* Animations */
