@@ -3,6 +3,15 @@ import { Link } from 'react-router-dom'
 import { Avatar, Tooltip } from './Extras'
 import Notifications from './Notifications'
 
+const readStoredTheme = () => {
+
+    const theme = JSON.parse(window.localStorage.getItem('fftheme'));
+
+    if(theme != null) return theme.dark;
+
+    return false;
+}
+
 const SearchUser = () => {
 
     const [ request, setRequest ] = useState(false);
@@ -32,26 +41,30 @@ const Search = () => {
 
 const Header = () => {
 
+    const mode = readStoredTheme();
+
     const [ search, setSearch ] = useState({ open: false, input: "" });
-    const [ theme, setTheme ] = useState(false);
+    const [ theme, setTheme ] = useState(mode);
     const [ notify, setNotify ] = useState(false);
 
     useEffect(() => {
         if(theme)  {
+            window.localStorage.setItem('fftheme', JSON.stringify({ dark: true, on: Date.now() }))
             document.styleSheets[3].cssRules[60].style.backgroundColor = "rgb(24, 25, 26)"
             document.styleSheets[3].cssRules[61].style.backgroundColor = "rgb(28, 30, 33)"
             document.styleSheets[3].cssRules[62].style.backgroundColor = "rgb(32, 35, 40)"
-            document.styleSheets[3].cssRules[63].style.color = "rgb(238, 238, 238)";
+            document.styleSheets[3].cssRules[63].style.color = "rgb(238, 238, 238)"
         }   else {
+            window.localStorage.setItem('fftheme', JSON.stringify({ dark: false, on: Date.now() }))
             document.styleSheets[3].cssRules[60].style.backgroundColor = "rgb(187, 191, 202)"
             document.styleSheets[3].cssRules[61].style.backgroundColor = "rgb(232, 232, 232)"
             document.styleSheets[3].cssRules[62].style.backgroundColor = "rgb(244, 244, 242)"
-            document.styleSheets[3].cssRules[63].style.color = "rgb(25, 25, 25)";
+            document.styleSheets[3].cssRules[63].style.color = "rgb(25, 25, 25)"
         }
     }, [theme]);
 
     return ( 
-        <nav className="navbar header navbar-expand-lg navbar-light mb-md-3 theme-middle">
+        <nav className="navbar header navbar-expand-lg navbar-light mb-md-3 shadow-sm theme-middle">
             <div className="container-fluid theme-middle">
 
                 <div className="brand me-2">

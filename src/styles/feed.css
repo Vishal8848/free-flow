@@ -6,6 +6,7 @@
 .posts-set {
     height: 685px;
     overflow-y: auto;
+    border-radius: 10px;
 }
 .post {
     width: 100%;
@@ -112,22 +113,22 @@
 }
 
 /* Trending */
+.feed-trending {
+    border-radius: 10px;
+}
 .trend {
     width: 100%;
     height: auto;
     border-radius: 10px;
     background-color: white;
 }
-@media screen and ( max-width : 768px ) {
-    .trend {
-        border-radius: 5px;
-    }
-}
 .trend-header {
     display: flex;
     position: relative;
     align-items: center;
     justify-content: flex-start;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 .trend-redirect {
     position: absolute;
@@ -149,9 +150,19 @@
 .trend-status {
     width: 100%;
     text-align: center;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 .trend-status > i {
     animation: pulse 1s infinite;
+}
+@media screen and ( max-width : 768px ) {
+    .trend {
+        border-radius: 5px;
+    }
+    .trend-header, .trend-status {
+        border-radius: 0;
+    }
 }
 
 /* Feed Actions */
@@ -203,7 +214,6 @@
 .chat-content {
     height: 100%;
     min-height: 300px;
-    max-height: 300px;
     overflow-y: auto;
 }
 .chat-create > .avatar {
@@ -235,7 +245,7 @@
         border-radius: 5px;
     }
     .chat-content {
-        height: 100% !important;
+        height: 70vh;
     }
     .chat-header {
         border-top-left-radius: 0;
@@ -327,7 +337,7 @@
         border-radius: 5px;
     }
 }
-.create-form select, .create-form input, .create-form textarea {
+.create-form, .create-form select, .create-form input, .create-form textarea {
     border-radius: 10px;
 }
 .post-trigger div:hover {

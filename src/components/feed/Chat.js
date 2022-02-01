@@ -23,7 +23,7 @@ const Message = () => {
 
 const Chat = () => {
     return ( 
-        <div className="chat rounded theme-middle">
+        <div className="chat rounded shadow-sm theme-middle">
             <div className="chat-header p-3 border-dark theme-middle">
                 <i className="fas fa-comments me-2 text-success"></i> Live Pond
             </div>

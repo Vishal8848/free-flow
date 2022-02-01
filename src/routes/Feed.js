@@ -29,9 +29,9 @@ const Feed = () => {
             setFeed({ 
                 restrict: true, 
                 state: params.get('type') === 'chat' ? 1 : params.get('type') === 'trend' ? 2 : 0 
-            });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [params]);
+            })
+        else setFeed({ restrict: false, state: 0 });
+    }, [params, feed.restrict]);
     
     return ( <>
         <Header />

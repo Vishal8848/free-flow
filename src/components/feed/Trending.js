@@ -42,7 +42,7 @@ const Trending = () => {
             </div>
             <div className="trend-body theme-inner">
                 <div className="image bg-dark"></div>
-                <div className="content">
+                <div className="content text-muted">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora, ...
                 </div>
             </div>

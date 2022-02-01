@@ -22,7 +22,7 @@ const Comment = () => {
             
             </div>
             
-            <div className="comment-body">
+            <div className="comment-body text-muted">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis minima necessitatibus accusantium quis, debitis eum.
             </div>
         
@@ -35,7 +35,7 @@ const Post = () => {
     const { date, time } = parseTime(164266299431223);
 
     return ( 
-        <div className="post theme-middle">
+        <div className="post theme-middle rounded rounded-3">
             
             <div className="post-header px-3 px-md-4 py-2 py-md-3 theme-middle">
             
@@ -53,7 +53,7 @@ const Post = () => {
             </div>
             
             <div className="post-body">
-                <div className="content theme-inner">
+                <div className="content theme-inner text-muted">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates esse nihil impedit at perspiciatis temporibus dolor dicta dolorem ut, aliquam suscipit quis labore expedita molestias quia doloremque neque exercitationem nostrum? Deleniti quis illo, quos ipsa ea maiores saepe. Incidunt recusandae enim pariatur a assumenda impedit debitis sapiente dolorum ullam voluptatibus?
                 </div>
                 <div className="image bg-dark"></div>

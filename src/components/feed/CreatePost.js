@@ -34,12 +34,12 @@ const CreatePost = ({ width }) => {
                     <option value="private">Friends Only</option>
                 </select>
             </div>
-            <div className="form-floating mt-3">
-                <input id="post-title" type="text" className="form-control border-0 theme-inner" placeholder="Post Title (optional)"/>
+            <div className="form-floating mt-3 theme-inner rounded rounded-3">
+                <input id="post-title" type="text" className="form-control border-0" placeholder="Post Title (optional)"/>
                 <label htmlFor="post-title" className="text-muted">Wave Title <small> - optional</small></label>
             </div>
-            <div className="form-floating mt-3">
-                <textarea id="post-content" maxLength="1000" className="form-control border-0 theme-inner" placeholder="Write down your thoughts" style={{ minHeight: "100px", maxHeight: "200px" }}></textarea>
+            <div className="form-floating mt-3 theme-inner rounded rounded-3">
+                <textarea id="post-content" maxLength="1000" className="form-control border-0" placeholder="Write down your thoughts" style={{ minHeight: "100px", maxHeight: "200px" }}></textarea>
                 <label htmlFor="post-content" className="text-muted">Describe your wave</label>
             </div>
             {   image.status &&
@@ -50,7 +50,9 @@ const CreatePost = ({ width }) => {
             }
             <div className="mt-3">
                 <label htmlFor="post-image" className="text-muted mb-2">&nbsp;&nbsp;{ image.status ? "Picture Uploaded" : "Upload Picture" }</label>
-                <input id="post-image" className="form-control border-0 theme-inner" onChange={(e) => previewImg(e)} type="file" accept="image/*"/>
+                <div className="theme-inner rounded rounded-3">
+                    <input id="post-image" className="form-control border-0" onChange={(e) => previewImg(e)} type="file" accept="image/*"/>
+                </div>
             </div>
         </form>
     </>);
