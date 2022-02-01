@@ -10,7 +10,7 @@ import Footer from '../components/Footer'
 
 const Posts = () => {
     return ( 
-        <div className="post-set">
+        <div className="post-set theme-middle">
             <PostCard />
             <PostCard />
             <PostCard />
@@ -22,7 +22,7 @@ const Posts = () => {
 
 const Saved = () => {
     return ( 
-        <div className="saved-posts">
+        <div className="saved-posts theme-middle">
             <PostCard save={true}/>
             <PostCard save={true}/>
             <PostCard save={true}/>
@@ -63,23 +63,23 @@ const Profile = () => {
 
     return ( <>
         <Header />
-        <div className="container-md m-auto profile rounded">
-            <div className="profile-header m-auto border shadow">
+        <div className="container-md m-auto profile rounded theme-outer">
+            <div className="profile-header m-auto theme-middle">
 
-                <div className="profile-bg bg-dark border-bottom">
+                <div className="profile-bg bg-dark">
                     <div className="pic-edit fw-bold pt-3">
                         <i className="fas fa-camera fa-lg ms-3 me-2"></i> 
                         Edit Background
                     </div>
                 </div>
 
-                <div className="profile-info bg-light pt-4 pb-5 border">                    
+                <div className="profile-info pt-4 pb-5 theme-middle">
                     <Stats/>
 
                     <Details/>
                 </div>
 
-                <div className="profile-pic border shadow">
+                <div className="profile-pic theme-middle">
                     <div className="profile-initial">VP</div>
                     <div className="pic-edit fw-bold pt-3 rounded-pill">
                         <i className="fas fa-camera fa-lg me-2"></i> Edit Picture
@@ -88,11 +88,11 @@ const Profile = () => {
 
             </div>
 
-            <div className="profile-body m-auto">
+            <div className="profile-body m-auto theme-middle">
 
-                <div className="profile-nav bg-light border shadow">
+                <div className="profile-nav theme-middle shadow">
                     <ul className="pnav-list my-2 mx-3">
-                        <li className={`pnav-item py-3 text-dark ${ active[0] ? 'active border' : '' }`} onClick={() => setActiveState(0)}>
+                        <li className={`pnav-item py-3 ${ active[0] ? 'active border' : '' }`} onClick={() => setActiveState(0)}>
                             <i className="fas fa-user fa-lg"></i>
                             <span className='ps-2'>Profile</span>
                         </li>
@@ -111,10 +111,10 @@ const Profile = () => {
                     </ul>
                 </div>
 
-                <div className="profile-content mt-3 p-3 bg-light border shadow">
+                <div className="profile-content mt-3 p-3 theme-middle">
                     
                     <div className="profile-title mt-5 mb-3">
-                        <span className="fs-3 fw-bold">
+                        <span className="fs-3">
                             { active[0] ? "Profile" : active[1] ? "Posts" : active[2] ? "Friends" : active[3] ? "Saved" : "Profile" }
                         </span>
                     </div>

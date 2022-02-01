@@ -7,7 +7,7 @@ const Update = () => {
                 <Avatar name="Vishal Pranav" scale="md" theme="primary"/>
                 <div className="u-content px-3">
                     <div className="u-head">
-                        <div className="u-creator fw-bold">
+                        <div className="u-creator">
                             Vishal Pranav
                         </div>
                         <div className="u-time text-muted">
@@ -25,11 +25,15 @@ const Update = () => {
 
 const Updates = () => {
     return ( 
-        <div className="updates theme-middle">
-            <div className="update-notice text-muted px-5">
+        <div className="updates">
+            {/* <div className="update-notice text-muted px-5">
                 <strong>Wave Notifications</strong><br/>
                 All actions made on your waves live here
-            </div>
+            </div> */}
+            <Update />
+            <Update />
+            <Update />
+            <Update />
             <Update />
             <Update />
         </div>

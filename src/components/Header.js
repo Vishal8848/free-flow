@@ -75,12 +75,12 @@ const Header = () => {
 
                 <div className="user-menu">
 
-                    <div className="item me-3 system theme-middle">
-                        <Link to="/feed" className="nav-link theme-inner"><i className="fas fa-home fa-lg theme-inner"></i></Link>
+                    <div className="item me-3 system theme-middle shadow">
+                        <Link to="/feed" className="nav-link"><i className="fas fa-home fa-lg theme-inner"></i></Link>
                         <Tooltip type="Home"/>
                     </div>
 
-                    <div className="item me-3 system position-relative theme-middle">
+                    <div className="item me-3 system position-relative theme-middle shadow">
                         <div className="docker bg-danger"></div>
                         <i className="fas fa-bell fa-lg theme-inner" onClick={() => setNotify(!notify)}></i>
                         { notify ? <Notifications top/> : <Tooltip type="Notifications"/> }

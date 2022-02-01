@@ -3,7 +3,7 @@ import { Avatar } from '../Extras'
 const Friend = ({ side }) => {
 
     return ( 
-        <div className={`friend p-2 bg-light rounded border shadow-sm m${side}-md-auto mt-4`}>
+        <div className={`friend p-2 rounded shadow-sm m${side}-md-auto mt-4 theme-inner`}>
 
             <div className="friend-img">
                 <Avatar name="Vishal Pranav" scale="square" theme="danger"/>
@@ -14,16 +14,16 @@ const Friend = ({ side }) => {
                 <span className="fs-6 fst-italic text-muted">2 mutual friends</span>
             </div>
 
-            <div className="friend-actions dropdown">
-                <button className="btn rounded-circle py-2 px-3" data-bs-toggle="dropdown">
+            <div className="friend-actions dropdown theme-inner">
+                <button className="btn rounded-circle theme-inner py-2 px-3 me-2" data-bs-toggle="dropdown">
                     <i className="fas fa-ellipsis-v fa-lg"></i>
                 </button>
-                <ul className="dropdown-menu dropdown-menu-end bg-light shadow" style={{ width: "fit-content" }}>
+                <ul className="dropdown-menu dropdown-menu-end theme-inner shadow" style={{ width: "fit-content" }}>
                     <div className="tint tint-tr"></div>
-                    <li className="dropdown-item fw-bold">
+                    <li className="dropdown-item theme-inner">
                         <i className="fas fa-user fa-lg me-2"></i>View Profile
                     </li>
-                    <li className="dropdown-item fw-bold">
+                    <li className="dropdown-item theme-inner">
                         <i className="fas fa-ban fa-lg me-2" style={{ WebkitTextStroke: "1.5px" }}></i>Unfriend
                     </li>
                 </ul>

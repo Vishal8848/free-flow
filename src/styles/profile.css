@@ -269,6 +269,9 @@
 .user-profile {
     width: 75%;
 }
+.user-extras {
+    display: flex;
+}
 @media screen and ( max-width: 768px ) {
     .user-profile {
         width: 100%;
@@ -282,7 +285,10 @@
 .user-location {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
+}
+.user-location > .form-floating {
+    width: 100%;
 }
 
 /* Post Card */
@@ -319,7 +325,6 @@
     height: 200px;
 }
 .postcard-body > .content {
-    font-style: italic;
     text-align: justify;
     padding: 15px;
 }

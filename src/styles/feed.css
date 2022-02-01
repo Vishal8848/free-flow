@@ -186,7 +186,6 @@
 /* Feed Chat */
 .feed-chat {
     border-radius: 10px;
-    background-color: white;
 }
 .chat-header {
     font-size: 20px;
@@ -203,6 +202,7 @@
 }
 .chat-content {
     height: 100%;
+    min-height: 300px;
     max-height: 300px;
     overflow-y: auto;
 }
@@ -226,7 +226,6 @@
     animation: volley 1.5s infinite;
 }
 .chat-notice {
-    background-color: rgba(25, 25, 25, 0.05);
     padding: 30%;
     text-align: center;
     height: 100%;

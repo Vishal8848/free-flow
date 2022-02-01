@@ -2,10 +2,10 @@ import { Avatar } from "../Extras";
 
 const Details = () => {
     return (
-        <div className="profile-details border-start ps-md-5 ps-3">
+        <div className="profile-details ps-md-5 ps-3">
             
             <div className="profile-name">
-                <strong className="fs-2 align-middle" style={{ WebkitTextStroke: "1px" }}>Vishal Pranav</strong>
+                <strong className="fs-2 align-middle">Vishal Pranav</strong>
             </div>
 
             <div className="profile-location">

@@ -10,7 +10,7 @@ const Footer = () => {
 
     return ( <>
         <div className="w-100 footer-sys text-center py-3 mt-md-3 theme-middle">
-            &copy; Copyright: <Link to="/" className="text-primary fw-bold" style={{ textDecoration: "none" }}>Freeflow</Link>
+            &copy; Copyright: <Link to="/" className="text-primary" style={{ textDecoration: "none" }}>Freeflow</Link>
         </div>
         <div className="user-menu footer-mob w-100 text-center py-2 mt-md-3 theme-middle fixed-bottom">
             <div className="item theme-middle d-block">
