@@ -6,8 +6,8 @@ const Trending = () => {
     let timeString = 'an hour ago';
 
     return ( 
-        <div className="trend border">
-            <div className="trend-header px-3 py-2 border-bottom">
+        <div className="trend theme-middle">
+            <div className="trend-header px-3 py-2 theme-middle">
                 <Avatar name="Vishal Pranav" scale="md" theme="success"/>
                 <div className="trend-setter ps-3">
                     <div className="fs-5 fw-bold">
@@ -40,13 +40,13 @@ const Trending = () => {
                     <i className="fas fa-share fa-lg"></i>
                 </div>
             </div>
-            <div className="trend-body border-bottom">
+            <div className="trend-body theme-inner">
                 <div className="image bg-dark"></div>
                 <div className="content">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora, ...
                 </div>
             </div>
-            <div className="trend-status p-3 text-danger">
+            <div className="trend-status p-3 text-danger theme-middle">
                 <i className="fas fa-heart me-2"></i> <strong>234 Likes</strong>
             </div>
         </div>

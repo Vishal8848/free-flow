@@ -35,7 +35,7 @@ const Feed = () => {
     
     return ( <>
         <Header />
-        <div className="container-md feed row gx-0 gx-md-4 m-auto justify-content-center theme-dark-outer">
+        <div className="container-md feed row gx-0 gx-md-4 m-auto justify-content-center theme-outer">
             
             {   ((!feed.restrict && feed.state === 0) || (feed.restrict && feed.state === 1)) &&
                 <div className="col-md-3 mb-md-2">
@@ -47,21 +47,21 @@ const Feed = () => {
                     {   !feed.restrict &&
                         <div className="feed-actions mt-3">
                             <span className="feed-title ps-3 text-muted fw-bold">Actions</span>
-                            <div className="action-set theme-dark-middle">
-                                <div className="action theme-dark-inner">
-                                    <Link to="/profile" className="text-light"><i className="fas fa-user mx-3 text-light"></i> Profile</Link>
+                            <div className="action-set theme-middle">
+                                <div className="action theme-inner" style={{ borderTopLeftRadius: "10px", borderTopRightRadius: "10px" }}>
+                                    <Link to="/profile"><i className="fas fa-user mx-3"></i> Profile</Link>
                                 </div>
-                                <div className="action theme-dark-inner">
-                                    <Link to="/profile?type=posts" className="text-light"><i className="fas fa-paper-plane mx-3 text-light"></i> Posts</Link>
+                                <div className="action theme-inner">
+                                    <Link to="/profile?type=posts"><i className="fas fa-paper-plane mx-3"></i> Posts</Link>
                                 </div>
-                                <div className="action theme-dark-inner">
-                                    <Link to="/profile?type=friends" className="text-light"><i className="fas fa-heart mx-3 text-light"></i> Friends</Link>
+                                <div className="action theme-inner">
+                                    <Link to="/profile?type=friends"><i className="fas fa-heart mx-3"></i> Friends</Link>
                                 </div>
-                                <div className="action theme-dark-inner">
-                                    <Link to="/profile?type=saved" className="text-light"><i className="fas fa-bookmark mx-3 text-light"></i> Saved</Link>
+                                <div className="action theme-inner">
+                                    <Link to="/profile?type=saved"><i className="fas fa-bookmark mx-3"></i> Saved</Link>
                                 </div>
-                                <div className="action theme-dark-inner">
-                                    <Link to="/contact" className="text-light"><i className="fas fa-lightbulb mx-3 text-light"></i> Feedback</Link>
+                                <div className="action theme-inner" style={{ borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
+                                    <Link to="/contact"><i className="fas fa-lightbulb mx-3"></i> Feedback</Link>
                                 </div>
                             </div>
                         </div>
@@ -72,7 +72,7 @@ const Feed = () => {
             {   (!feed.restrict || (feed.restrict && feed.state === 0)) &&
                 <div className="col-md-6 mb-md-2">
 
-                    <div className="feed-create border">
+                    <div className="feed-create">
                         <CreatePost width={width}/>
                     </div>
 

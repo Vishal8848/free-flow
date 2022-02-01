@@ -7,7 +7,7 @@ export const Avatar = ({ name, scale = 'md', theme = 'primary' }) => {
 
     return ( 
         <Link to="/profile">
-            <div className={`avatar avatar-${scale} bg-${theme} border`}>
+            <div className={`avatar avatar-${scale} bg-${theme}`}>
                 { initial.length > 0 ? initial : '~' }
             </div>
         </Link>

@@ -117,7 +117,7 @@ h1 {
 .navbar-brand {
     font-size: 25px;
     font-family: 'Poppins';
-    color: #0C1E7F !important;
+    color: inherit !important;
     font-weight: bolder !important;
 }
 .item {
@@ -139,6 +139,16 @@ h1 {
 .dropdown > .dropdown-menu {
     width: 200px;
     margin-top: 10px;
+}
+.theme-switch {
+    display: flex;
+    padding: 10px 15px 2.5px 15px;
+    align-items: center;
+    justify-content: space-between;
+}
+.theme-switch input {
+    transform: scale(1.25);
+    cursor: pointer;
 }
 .footer .item {
     transform: scale(1.25);
@@ -386,23 +396,17 @@ div:hover > .tool-tip {
 .s-2 {  animation: S2 2s infinite;  }
 
 /* Theme */
-.theme-dark-outer  {
-    background-color: rgb(24, 25, 26);
+.theme-outer  {
+    background-color: rgb(244, 247, 248);
 }
-.theme-dark-middle  {
-    background-color: rgb(28, 30, 33);
+.theme-middle  {
+    background-color: rgb(255, 255, 255);
 }
-.theme-dark-inner  {
-    background-color: rgb(32, 35, 40);
+.theme-inner  {
+    background-color: rgb(248, 255, 255);
 }
-.theme-light-outer  {
-    background-color: #F4F4F2;
-}
-.theme-light-middle  {
-    background-color: #E8E8E8;
-}
-.theme-light-inner  {
-    background-color: #BBBFCA;
+.theme-outer, .theme-middle, .theme-inner {
+    color: rgb(25, 25, 25);
 }
 
 /* Responsiveness */

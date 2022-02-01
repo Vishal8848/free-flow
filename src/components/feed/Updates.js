@@ -2,7 +2,7 @@ import { Avatar } from "../Extras";
 
 const Update = () => {
     return (
-        <div className="update border mb-2">
+        <div className="update mb-2 theme-inner">
             <div className="update-by">
                 <Avatar name="Vishal Pranav" scale="md" theme="primary"/>
                 <div className="u-content px-3">
@@ -25,7 +25,7 @@ const Update = () => {
 
 const Updates = () => {
     return ( 
-        <div className="updates">
+        <div className="updates theme-middle">
             <div className="update-notice text-muted px-5">
                 <strong>Wave Notifications</strong><br/>
                 All actions made on your waves live here
