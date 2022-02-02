@@ -6,17 +6,26 @@ import { firebaseResetRequest } from '../firebase/firebaseAuth';
 const charSet = "aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ0123456789";
 const getCaptcha = (size) => {    return (size) ? charSet.charAt(Math.floor((Math.random() * 100) + 1) % charSet.length) + getCaptcha(size-1) : "";   }
 
-const RequestReset = ({ shiftAuth }) => {
+const RequestReset = ({ shiftAuth, Inform }) => {
 
     const [ load, setLoad ] = useState(false);
-    const [ check, setCheck ] = useState([ null, null ]);
     const [ captcha, setCaptcha ] = useState(getCaptcha(5));
-    const [ cred, setCred ] = useState({ email: "", captcha: "" });
+    
+    const [ error, setError ] = useState({ status: false, message: null });
+    const [ check, setCheck ] = useState([ null, null ]);
+
+    const initial = { email: "", captcha: "" };
+    const [ cred, setCred ] = useState(initial);
 
     const setField = (key, value) => {
         let fields = cred;
         fields[key] = value;
         setCred({...fields});
+    }
+
+    const Reset = () => {
+        setCred({...initial});
+        setCheck([ null, null ]);
     }
 
     const Validate = () => {
@@ -32,15 +41,27 @@ const RequestReset = ({ shiftAuth }) => {
         if(Validate())  {
             setLoad(true);
             delete cred.captcha;
-            firebaseResetRequest(cred)
-            .then(() => console.log('Password Reset Initiated'))
-            .catch(error => console.log(error));
+            firebaseResetRequest(cred).then(res => {
+                Reset();
+                setLoad(false);
+                if(res.error)   {
+                    error.status = true;
+                    switch(res.data)  {
+                        case 'auth/network-request-failed': error.message = "Please check your internet connection"; break;
+                        default: error.message = "Server issues. Please try again later"
+                    }   setError({...error});
+                }   else Inform({ state: true, code: 2 })
+            })
         }
     }
 
     return ( 
         <div className="request-form text-center rounded bg-light p-3 shadow">
             
+            <div className={`alert alert-danger p-2 fw-bold ${ !error.status && 'd-none' }`}>
+                { error.message }
+            </div>
+
             <form className="form-floating" onSubmit={handleRequest}>
 
                 <div className="row mb-3">

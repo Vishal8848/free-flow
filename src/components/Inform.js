@@ -65,7 +65,7 @@ const Inform = ({ status }) => {
                         <p className={`fw-bold text-muted text-justify ${ (status === 0 || status === 2) && 'pt-3' }`}>
                             { info[status].body }
                         </p>
-                        { info[status].exit && <button onClick={() => setView(false)} className={`btn btn-${info[status].skin} shadow`}>Continue</button> }
+                        { info[status].exit && <button onClick={() => setView(false)} className={`btn btn-${info[status].skin} btn-sm shadow`}>Continue</button> }
                     </div>
                 </div>
             </div>

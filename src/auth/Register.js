@@ -59,7 +59,7 @@ const Register = ({ shiftAuth, Inform }) => {
                         case 'auth/invalid-email': error.message = "Invalid email address"; break;
                         case 'auth/weak-password': error.message = "Weak password"; break;
                         case 'auth/network-request-failed': error.message = "Please check your internet connection"; break;
-                        default:  error.message = "Server issues. Please try again later"
+                        default:  error.message = "Server issues. Please try again later"; console.log(res.data)
                     }   setError({...error});
                 }   else Inform({ state: true, code: 0 })
             })

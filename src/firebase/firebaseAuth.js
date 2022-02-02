@@ -1,4 +1,4 @@
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, verifyPasswordResetCode, confirmPasswordReset, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendSignInLinkToEmail, sendPasswordResetEmail, verifyPasswordResetCode, confirmPasswordReset, GoogleAuthProvider, signInWithPopup, isSignInWithEmailLink, signInWithEmailLink } from 'firebase/auth'
 import { getFirestore, doc, setDoc } from 'firebase/firestore/lite'
 import firebase from './firebase'
 
@@ -78,7 +78,9 @@ export const firebaseRegister = async (cred) => {
             updatedAt: Date.now()
         });
 
-        await sendEmailVerification(response.user);
+        window.localStorage.setItem('ffreg', JSON.stringify({ email: cred.email, at: Date.now() }))
+
+        await sendSignInLinkToEmail(auth, cred.email);
 
         return { error: false, data: response.user };
 
@@ -104,4 +106,17 @@ export const firebaseResetPasswd = async (cred) => {
 
     }   catch(err)  { return { error: true, data: cast(err.message) } }
 
+}
+
+export const firebaseLinkLogin = async (email) => {
+
+    try {
+        const status = isSignInWithEmailLink(auth, window.location.href)
+
+        if(status) {
+            const response = await signInWithEmailLink(auth, email, window.location.href)
+            return { error: false, data: response.user }
+        }
+
+    }   catch(err) { return { error: true, data: cast(err.message) } }
 }

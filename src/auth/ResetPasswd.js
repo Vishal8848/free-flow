@@ -5,16 +5,25 @@ import { firebaseResetPasswd } from '../firebase/firebaseAuth';
 // Regex
 const Pass = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/);
 
-const ResetPasswd = ({ shiftAuth }) => {
+const ResetPasswd = ({ shiftAuth, Inform }) => {
 
     const [ load, setLoad ] = useState(false);
+
+    const [ error, setError ] = useState({ status: false, message: null });
     const [ check, setCheck ] = useState([ null, null, null ]);
-    const [ cred, setCred ] = useState({ email: "vish***********@gmail.com", passwd: "", cpasswd: "", code: "" });
+
+    const initial = { email: "vish***********@gmail.com", passwd: "", cpasswd: "", code: "" };
+    const [ cred, setCred ] = useState(initial);
 
     const setField = (key, value) => {
         let fields = cred;
         fields[key] = value;
         setCred({...fields});
+    }
+
+    const Reset = () => {
+        setCred({...initial});
+        setCheck([ null, null, null ]);
     }
 
     const Validate = () => {
@@ -30,15 +39,27 @@ const ResetPasswd = ({ shiftAuth }) => {
         if(Validate())  {
             setLoad(true);
             delete cred.cpasswd;
-            firebaseResetPasswd(cred)
-            .then(() => console.log('Password Reset'))
-            .catch(error => console.log(error));
+            firebaseResetPasswd(cred).then(res => {
+                Reset();
+                setLoad(false);
+                if(res.error)   {
+                    error.status = true;
+                    switch(res.data)  {
+                        case 'auth/network-request-failed': error.message = "Please check your internet connection"; break;
+                        default: error.message = "Server issues. Please try again later"
+                    }   setError({...error});
+                }   else Inform({ state: true, code: 1 })
+            })
         }
     }
 
     return ( 
         <div className="reset-form text-center rounded bg-light p-3 shadow">
             
+            <div className={`alert alert-danger p-2 fw-bold ${ !error.status && 'd-none' }`}>
+                { error.message }
+            </div>
+
             <form className="form-floating" onSubmit={handleReset}>
 
                 <div className="row mb-3">

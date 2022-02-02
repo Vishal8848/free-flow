@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react"
-import { useNavigate, useSearchParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import { firebaseLinkLogin } from "../firebase/firebaseAuth"
 import { Freeflow } from "../components/Extras"
 import RequestReset from '../auth/RequestReset'
 import ResetPasswd from '../auth/ResetPasswd'
@@ -11,18 +12,17 @@ import { UserContext } from "../App"
 const Authentication = ({ Inform, setRoute }) => {
 
     const [ activeAuth, setActiveAuth ] = useState(0);
-    const [ params ] = useSearchParams();
-    const mode = params.get('mode'), actionCode = params.get('oobCode');
 
     useEffect(() => {
 
         if(window.location.href.startsWith('http://localhost:3000/verify?'))    {
 
-            if(mode == null || actionCode == null)  setRoute('/error');
+            const email = JSON.parse(window.localStorage.getItem('ffreg'));
 
-            if(mode === "verifyEmail")  {
-                
-            }
+            firebaseLinkLogin(email).then(res => {
+                if(res.error)   Inform({ state: true, code: 3 });
+                else console.log(res.data)
+            })
 
         }
 
