@@ -4,9 +4,7 @@ import { useState } from 'react'
  * 0 - Registration Successful
  * 1 - Reset Password Successful
  * 2 - Reset Password Initiated
- * 3 - Already Registered
- * 4 - User Not Recognized
- * 5 - Invalid Refirect Request
+ * 3 - Invalid Redirect Request
 */
 
 const Inform = ({ status }) => {
@@ -39,28 +37,12 @@ const Inform = ({ status }) => {
             code: 2
         },
         {
-            title: "Already Registered",
-            body: "Oops! You are already found to be a Freeflow user. You may proceed with login or sign up with new credentials",
-            skin: "warning",
-            icon: "exclamation",
-            exit: true,
-            code: 3
-        },
-        {
-            title: "User Not Recognized",
-            body: "Looks like you ain't signed up for Freeflow. Either check your credentials or sign up as a new user",
-            skin: "danger",
-            icon: "user-slash",
-            exit: true,
-            code: 4
-        },
-        {
             title: "Invalid Redirect Request",
             body: "Please check the link you clicked. The link may be expired or faulty. Use latest link or initiate a new request",
             skin: "danger",
             icon: "unlink",
             exit: true,
-            code: 5
+            code: 3
         }
     ]
     

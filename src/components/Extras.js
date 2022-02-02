@@ -52,7 +52,7 @@ export const parseTime = (timestamp) => {
 
 export const Freeflow = () => {
     return ( 
-        <div className="h-100 d-flex align-items-center justify-content-center">
+        <div className="h-100 d-flex align-items-center justify-content-center bg-light">
             <div id="phrase">
                 
                 <div className="d-flex">

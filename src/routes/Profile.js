@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useState, useEffect, useRef, useContext } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import PostCard from '../components/profile/PostCard'
 import Details from '../components/profile/Details'
 import Friends from '../components/profile/Friends'
@@ -7,6 +7,7 @@ import Stats from '../components/profile/Stats'
 import User from '../components/profile/User'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import { UserContext } from '../App'
 
 const Posts = () => {
     return ( 
@@ -33,6 +34,11 @@ const Saved = () => {
 }
 
 const Profile = () => {
+
+    const redirect = useNavigate();
+    const { user } = useContext(UserContext);
+
+    useEffect(() => { if(!user.auth) redirect('/') }, [user.auth, redirect]);
 
     const [ params ] = useSearchParams();
     const type = params.get('type');

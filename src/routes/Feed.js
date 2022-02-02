@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useState, useEffect, useContext } from 'react'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import CreatePost from '../components/feed/CreatePost'
 import Trending from '../components/feed/Trending'
 import Updates from '../components/feed/Updates'
@@ -8,8 +8,14 @@ import Footer from '../components/Footer'
 import Chat from '../components/feed/Chat'
 import Post from '../components/feed/Post'
 import useWindow from '../hooks/useWindow'
+import { UserContext } from '../App'
 
 const Feed = () => {
+
+    const redirect = useNavigate();
+    const { user } = useContext(UserContext);
+
+    useEffect(() => { if(!user.auth) redirect('/') }, [user.auth, redirect]);
 
     const { width } = useWindow();
     const [ params ] = useSearchParams();

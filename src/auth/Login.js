@@ -1,18 +1,31 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { UserContext } from '../App';
 import AuthProvider from './AuthProvider'
 import { Loader } from '../components/Extras'
 import { firebaseLogin } from '../firebase/firebaseAuth'
 
-const Login = ({ shiftAuth, Inform }) => {
+const Login = ({ shiftAuth }) => {
 
     const [ load, setLoad ] = useState(false);
+    const { setUser } = useContext(UserContext);
+
+    // User Cred
+    const initial = { email: "", passwd: "", save: true };
+    const [ cred, setCred ] = useState(initial);
+
+    // Input Validation
     const [ check, setCheck ] = useState([ null, null ]);
-    const [ cred, setCred ] = useState({ email: "", passwd: "", save: true });
+    let [ error, setError ] = useState({ status: false, message: null })
 
     const setField = (key, value) => {
         let fields = cred;
         fields[key] = value;
         setCred({...fields});
+    }
+
+    const Reset = () => {
+        setCred({...initial});
+        setCheck([ null, null ]);
     }
 
     const Validate = () => {
@@ -26,14 +39,30 @@ const Login = ({ shiftAuth, Inform }) => {
         e.preventDefault();
         if(Validate())  {
             setLoad(true);
-            firebaseLogin(cred)
-            .then(data => setLoad(false))
-            .catch(error => console.log(error));
+            firebaseLogin(cred).then(res => {   
+                Reset();
+                setLoad(false);
+                if(res.error)   {
+                    error.status = true;
+                    switch(res.data)    {
+                        case 'auth/wrong-password': error.message = "Invalid password"; break;
+                        case 'auth/user-not-found': error.message = "Invalid username"; break;
+                        case 'auth/too-many-requests': error.message = "Too many invalid attempts. Try again later"; break;
+                        case 'auth/network-request-failed': error.message = "Please check your internet connection"; break;
+                        default:  error.message = "Server issues. Please try again later"
+                    }   setError({...error});
+                }   else setUser({ auth: true, data: res.data });
+            })
+            
         }
     }
 
     return ( 
-        <div className="login-form text-center rounded bg-light p-3 shadow">
+        <div className="login-form text-center rounded p-3 shadow">
+
+            <div className={`alert alert-danger p-2 fw-bold ${ !error.status && 'd-none' }`}>
+                { error.message }
+            </div>
 
             <form className="form-floating" onSubmit={handleLogin}>
             

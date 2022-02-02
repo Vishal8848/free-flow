@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState} from 'react'
 import { Loader } from '../components/Extras'
 import { firebaseRegister } from '../firebase/firebaseAuth';
 
@@ -7,16 +7,27 @@ const Name = new RegExp(/^[a-zA-Z0-9 ]+$/);
 const Pass = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/);
 const Email = new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 
-const Register = ({ shiftAuth }) => {
+const Register = ({ shiftAuth, Inform }) => {
 
     const [ load, setLoad ] = useState(false);
+
+    // User Cred
+    const initial = { fname: "",  lname: "", dob: "", gender: "", email: "", passwd: "", cpasswd: "" };
+    const [ cred, setCred ] = useState(initial);
+
+    // User Validation
+    const [ error, setError ] = useState({ status: false, message: null });
     const [ check, setCheck ] = useState([ null, null, null, null, null, null, null, null ]);
-    const [ cred, setCred ] = useState({ fname: "",  lname: "", dob: "", gender: "", email: "", passwd: "", cpasswd: "" });
 
     const setField = (key, value) => {
         let fields = cred;
         fields[key] = value;
         setCred({...fields});
+    }
+
+    const Reset = () => {
+        setCred({...initial});
+        setCheck([ null, null, null, null, null, null, null, null ]);
     }
 
     const Validate = () => {
@@ -38,14 +49,29 @@ const Register = ({ shiftAuth }) => {
         if(Validate())  {
             setLoad(true);
             delete cred.cpasswd;
-            firebaseRegister(cred)
-            .then(data => setLoad(false))
-            .catch(error => console.log(error));
+            firebaseRegister(cred).then(res => {
+                Reset();
+                setLoad(false);
+                if(res.error)   {
+                    error.status = true;
+                    switch(res.data)    {
+                        case 'auth/email-already-in-use': error.message = "User already registered"; break;
+                        case 'auth/invalid-email': error.message = "Invalid email address"; break;
+                        case 'auth/weak-password': error.message = "Weak password"; break;
+                        case 'auth/network-request-failed': error.message = "Please check your internet connection"; break;
+                        default:  error.message = "Server issues. Please try again later"
+                    }   setError({...error});
+                }   else Inform({ state: true, code: 0 })
+            })
         }
     }
 
     return ( 
         <div className="register-form text-center rounded bg-light p-3 shadow">
+
+            <div className={`alert alert-danger p-2 fw-bold ${ !error.status && 'd-none' }`}>
+                { error.message }
+            </div>
 
             <form className="form-floating" onSubmit={handleRegister}>
                 
