@@ -49,13 +49,13 @@ const Header = () => {
 
     useEffect(() => {
         if(theme)  {
-            window.localStorage.setItem('fftheme', JSON.stringify({ dark: true, on: Date.now() }))
+            window.localStorage.setItem('fftheme', JSON.stringify({ dark: true, at: Date.now() }))
             document.styleSheets[3].cssRules[60].style.backgroundColor = "rgb(24, 25, 26)"
             document.styleSheets[3].cssRules[61].style.backgroundColor = "rgb(28, 30, 33)"
             document.styleSheets[3].cssRules[62].style.backgroundColor = "rgb(32, 35, 40)"
             document.styleSheets[3].cssRules[63].style.color = "rgb(238, 238, 238)"
         }   else {
-            window.localStorage.setItem('fftheme', JSON.stringify({ dark: false, on: Date.now() }))
+            window.localStorage.setItem('fftheme', JSON.stringify({ dark: false, at: Date.now() }))
             document.styleSheets[3].cssRules[60].style.backgroundColor = "rgb(187, 191, 202)"
             document.styleSheets[3].cssRules[61].style.backgroundColor = "rgb(232, 232, 232)"
             document.styleSheets[3].cssRules[62].style.backgroundColor = "rgb(244, 244, 242)"
