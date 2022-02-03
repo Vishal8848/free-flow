@@ -1,19 +1,24 @@
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendSignInLinkToEmail, sendPasswordResetEmail, verifyPasswordResetCode, confirmPasswordReset, GoogleAuthProvider, signInWithPopup, isSignInWithEmailLink, signInWithEmailLink } from 'firebase/auth'
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,  sendEmailVerification, sendPasswordResetEmail, verifyPasswordResetCode, confirmPasswordReset, GoogleAuthProvider, signInWithPopup, checkActionCode, applyActionCode, onAuthStateChanged } from 'firebase/auth'
 import { getFirestore, doc, setDoc } from 'firebase/firestore/lite'
 import firebase from './firebase'
 
+let userInstance = null;
 const auth = getAuth(firebase);
 const store = getFirestore(firebase);
 const themes = [ 'danger', 'success', 'primary', 'warning' ];
 const cast = (data) => { return data.split('(')[1].slice(0, -2) }
 
+const unsubscribeAuth = onAuthStateChanged(auth, user => {
+    userInstance = user;
+    console.log(user)
+}, error => {
+    console.log(error.message);
+})
+
 export const firebaseLogin = async (cred) => {
     
     try {
         let response = await signInWithEmailAndPassword(auth, cred.email, cred.passwd);
-
-        // Verify Email
-        response.user.emailVerified = true;
 
         let access = { uid: response.user.uid, verified: true, on: Date.now() };
 
@@ -49,38 +54,36 @@ export const firebaseRegister = async (cred) => {
         response.user.displayName = cred.fname + ' ' + cred.lname;
 
         // Write User Document
-        await setDoc(doc(store, 'users', response.user.uid), {
-            fname: cred.fname,
-            lname: cred.lname,
-            dob: cred.dob,
-            gender: cred.gender,
-            theme: themes[Math.floor(Math.random() * themes.length)],
-            cred: {
-                email: cred.email,
-                type: 'auth/email-and-password'
-            },
-            photoURL: false,
-            bgURL: false,
-            occupation: "",
-            description: "",
-            location: {
-                country: "",
-                state: "",
-                city: ""
-            },
-            education: "",
-            hobbies:  "",
-            friends: [],
-            posts: [],
-            saved: [],
-            likes: [],
-            createdAt: Date.now(),
-            updatedAt: Date.now()
-        });
+        // await setDoc(doc(store, 'users', response.user.uid), {
+        //     fname: cred.fname,
+        //     lname: cred.lname,
+        //     dob: cred.dob,
+        //     gender: cred.gender,
+        //     theme: themes[Math.floor(Math.random() * themes.length)],
+        //     cred: {
+        //         email: cred.email,
+        //         type: 'auth/email-and-password'
+        //     },
+        //     photoURL: false,
+        //     bgURL: false,
+        //     occupation: "",
+        //     description: "",
+        //     location: {
+        //         country: "",
+        //         state: "",
+        //         city: ""
+        //     },
+        //     education: "",
+        //     hobbies:  "",
+        //     friends: [],
+        //     posts: [],
+        //     saved: [],
+        //     likes: [],
+        //     createdAt: Date.now(),
+        //     updatedAt: Date.now()
+        // });
 
-        window.localStorage.setItem('ffreg', JSON.stringify({ email: cred.email, at: Date.now() }))
-
-        await sendSignInLinkToEmail(auth, cred.email);
+        await sendEmailVerification(auth);
 
         return { error: false, data: response.user };
 
@@ -108,15 +111,16 @@ export const firebaseResetPasswd = async (cred) => {
 
 }
 
-export const firebaseLinkLogin = async (email) => {
+export const firebaseVerifyCode = async (code) => {
 
     try {
-        const status = isSignInWithEmailLink(auth, window.location.href)
+        const response = await checkActionCode(auth, code);
 
-        if(status) {
-            const response = await signInWithEmailLink(auth, email, window.location.href)
-            return { error: false, data: response.user }
-        }
+        await applyActionCode(auth, code);
+
+        console.log(userInstance);
+
+        // return { error: false, data: response.user }
 
     }   catch(err) { return { error: true, data: cast(err.message) } }
 }
