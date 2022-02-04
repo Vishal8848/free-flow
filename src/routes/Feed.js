@@ -12,10 +12,12 @@ import { UserContext } from '../App'
 
 const Feed = () => {
 
-    const redirect = useNavigate();
+    const setRoute = useNavigate();
+
+    // Global User Context
     const { user } = useContext(UserContext);
 
-    useEffect(() => { if(!user.auth) redirect('/') }, [user.auth, redirect]);
+    useEffect(() => { if(!user.auth) setRoute('/') }, [user.auth, setRoute]);
 
     const { width } = useWindow();
     const [ params ] = useSearchParams();
@@ -25,11 +27,13 @@ const Feed = () => {
         state: type === 'chat' ? 1 : type === 'trend' ? 2 : 0 
     });
 
+    // Listen to Window Resize
     useEffect(() => {
         if(width <= 768 && !feed.restrict) setFeed({ restrict: true, state: 0 })
         if(width  > 768 && feed.restrict) setFeed({ restrict: false, state: 0 })
     }, [width, feed.restrict]);
 
+    // Update Feed
     useEffect(() => {
         if(feed.restrict) 
             setFeed({ 

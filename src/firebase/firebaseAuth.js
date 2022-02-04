@@ -1,19 +1,11 @@
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,  sendEmailVerification, sendPasswordResetEmail, verifyPasswordResetCode, confirmPasswordReset, GoogleAuthProvider, signInWithPopup, checkActionCode, applyActionCode, onAuthStateChanged } from 'firebase/auth'
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,  sendEmailVerification, sendPasswordResetEmail, verifyPasswordResetCode, confirmPasswordReset, GoogleAuthProvider, signInWithPopup, checkActionCode, applyActionCode } from 'firebase/auth'
 import { getFirestore, doc, setDoc } from 'firebase/firestore/lite'
 import firebase from './firebase'
 
-let userInstance = null;
 const auth = getAuth(firebase);
 const store = getFirestore(firebase);
 const themes = [ 'danger', 'success', 'primary', 'warning' ];
 const cast = (data) => { return data.split('(')[1].slice(0, -2) }
-
-const unsubscribeAuth = onAuthStateChanged(auth, user => {
-    userInstance = user;
-    console.log(user)
-}, error => {
-    console.log(error.message);
-})
 
 export const firebaseLogin = async (cred) => {
     
@@ -54,34 +46,34 @@ export const firebaseRegister = async (cred) => {
         response.user.displayName = cred.fname + ' ' + cred.lname;
 
         // Write User Document
-        // await setDoc(doc(store, 'users', response.user.uid), {
-        //     fname: cred.fname,
-        //     lname: cred.lname,
-        //     dob: cred.dob,
-        //     gender: cred.gender,
-        //     theme: themes[Math.floor(Math.random() * themes.length)],
-        //     cred: {
-        //         email: cred.email,
-        //         type: 'auth/email-and-password'
-        //     },
-        //     photoURL: false,
-        //     bgURL: false,
-        //     occupation: "",
-        //     description: "",
-        //     location: {
-        //         country: "",
-        //         state: "",
-        //         city: ""
-        //     },
-        //     education: "",
-        //     hobbies:  "",
-        //     friends: [],
-        //     posts: [],
-        //     saved: [],
-        //     likes: [],
-        //     createdAt: Date.now(),
-        //     updatedAt: Date.now()
-        // });
+        await setDoc(doc(store, 'users', response.user.uid), {
+            fname: cred.fname,
+            lname: cred.lname,
+            dob: cred.dob,
+            gender: cred.gender,
+            theme: themes[Math.floor(Math.random() * themes.length)],
+            cred: {
+                email: cred.email,
+                type: 'auth/email-and-password'
+            },
+            photoURL: false,
+            bgURL: false,
+            occupation: "",
+            description: "",
+            location: {
+                country: "",
+                state: "",
+                city: ""
+            },
+            education: "",
+            hobbies:  "",
+            friends: [],
+            posts: [],
+            saved: [],
+            likes: [],
+            createdAt: Date.now(),
+            updatedAt: Date.now()
+        });
 
         await sendEmailVerification(auth);
 
@@ -118,9 +110,7 @@ export const firebaseVerifyCode = async (code) => {
 
         await applyActionCode(auth, code);
 
-        console.log(userInstance);
-
-        // return { error: false, data: response.user }
+        return { error: false, data: response.user }
 
     }   catch(err) { return { error: true, data: cast(err.message) } }
 }
