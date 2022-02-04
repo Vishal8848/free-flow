@@ -337,8 +337,12 @@
         border-radius: 5px;
     }
 }
-.create-form, .create-form select, .create-form input, .create-form textarea {
+.create-form select, .create-form input, .create-form textarea {
     border-radius: 10px;
+}
+.create-form {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 .post-trigger div:hover {
     cursor: pointer;
