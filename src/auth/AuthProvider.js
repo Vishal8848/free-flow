@@ -1,4 +1,4 @@
-import { firebaseGoogleLogin } from "../firebase/firebaseAuth";
+import { firebaseGoogleLogin } from "../modules/firebaseAuth";
 
 const AuthProvider = () => {
 

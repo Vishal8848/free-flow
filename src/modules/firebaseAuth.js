@@ -1,4 +1,4 @@
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,  sendEmailVerification, sendPasswordResetEmail, verifyPasswordResetCode, confirmPasswordReset, GoogleAuthProvider, signInWithPopup, checkActionCode, applyActionCode } from 'firebase/auth'
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { getFirestore, doc, setDoc } from 'firebase/firestore/lite'
 import firebase from './firebase'
 
@@ -75,8 +75,6 @@ export const firebaseRegister = async (cred) => {
             updatedAt: Date.now()
         });
 
-        await sendEmailVerification(auth);
-
         return { error: false, data: response.user };
 
     }   catch(err)  { return { error: true, data: cast(err.message) } }
@@ -86,7 +84,6 @@ export const firebaseRegister = async (cred) => {
 export const firebaseResetRequest = async (cred) => {
 
     try {
-        await sendPasswordResetEmail(auth, cred.email);
         
     }   catch(err)   { return { error: true, data: cast(err.message) } }
 
@@ -95,9 +92,6 @@ export const firebaseResetRequest = async (cred) => {
 export const firebaseResetPasswd = async (cred) => {
 
     try {
-        await verifyPasswordResetCode(auth.cred.code);
-
-        await confirmPasswordReset(auth, cred.code, cred.passwd);
 
     }   catch(err)  { return { error: true, data: cast(err.message) } }
 
@@ -106,11 +100,6 @@ export const firebaseResetPasswd = async (cred) => {
 export const firebaseVerifyCode = async (code) => {
 
     try {
-        const response = await checkActionCode(auth, code);
-
-        await applyActionCode(auth, code);
-
-        return { error: false, data: response.user }
 
     }   catch(err) { return { error: true, data: cast(err.message) } }
 }

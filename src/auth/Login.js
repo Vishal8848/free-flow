@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import { UserContext } from '../App';
 import AuthProvider from './AuthProvider'
 import { Loader } from '../components/Extras'
-import { firebaseLogin } from '../firebase/firebaseAuth'
+import { firebaseLogin } from '../modules/firebaseAuth'
 
 const Login = ({ shiftAuth }) => {
 
@@ -52,8 +52,7 @@ const Login = ({ shiftAuth }) => {
                         default:  error.message = "Server issues. Please try again later"
                     }   setError({...error});
                 }   else setUser({ auth: true, data: res.data });
-            })
-            
+            })   
         }
     }
 

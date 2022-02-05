@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Loader } from '../components/Extras'
-import { firebaseResetRequest } from '../firebase/firebaseAuth';
+import { firebaseResetRequest } from '../modules/firebaseAuth';
 
 // Captcha Creation
 const charSet = "aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ0123456789";
