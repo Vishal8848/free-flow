@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from "react"
-import { useNavigate, useSearchParams } from "react-router-dom"
-import { firebaseVerifyCode } from "../firebase/firebaseAuth"
+import { useNavigate } from "react-router-dom"
 import { Freeflow } from "../components/Extras"
 import RequestReset from '../auth/RequestReset'
 import ResetPasswd from '../auth/ResetPasswd'
@@ -12,24 +11,6 @@ import { UserContext } from "../App"
 const Authentication = ({ Inform, setRoute }) => {
 
     const [ activeAuth, setActiveAuth ] = useState(0);
-    const [ params ] = useSearchParams();
-
-    useEffect(() => {
-
-        if(window.location.href.startsWith('http://localhost:3000/verify?'))    {
-
-            const mode = params.get('mode'), code = params.get('oobCode');
-
-            if(mode === 'verifyEmail')  {
-                firebaseVerifyCode(code).then(res => {
-                    if(res.error)   Inform({ state: true, code: 3 });
-                    else console.log(res.data)
-                })
-            }
-
-        }
-
-    })
 
     const form = [ 
         <Login shiftAuth={setActiveAuth}/>, 
