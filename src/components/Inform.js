@@ -14,10 +14,10 @@ const Inform = ({ status }) => {
     const info = [
         {
             title: "Registration Successful",
-            body: "Thank you for joining Freeflow. Follow the link sent to your inbox to verify email and start using Freeflow",
+            body: "Thank you for joining Freeflow. Follow the link sent to your inbox to verify email and login to start using Freeflow",
             skin: "success",
             icon: "check",
-            exit: false,
+            exit: true,
             code: 0
         },
         {

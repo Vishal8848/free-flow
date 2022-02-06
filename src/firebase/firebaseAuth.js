@@ -1,4 +1,4 @@
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from 'firebase/auth'
 import { getFirestore, doc, setDoc } from 'firebase/firestore/lite'
 import firebase from './firebase'
 
@@ -84,16 +84,9 @@ export const firebaseRegister = async (cred) => {
 export const firebaseResetRequest = async (cred) => {
 
     try {
-        
+        await sendPasswordResetEmail(auth, cred.email);
+
     }   catch(err)   { return { error: true, data: cast(err.message) } }
-
-}
-
-export const firebaseResetPasswd = async (cred) => {
-
-    try {
-
-    }   catch(err)  { return { error: true, data: cast(err.message) } }
 
 }
 

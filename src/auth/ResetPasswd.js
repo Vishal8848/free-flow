@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Loader } from '../components/Extras'
-import { firebaseResetPasswd } from '../modules/firebaseAuth';
+import { firebaseResetPasswd } from '../firebase/firebaseAuth';
 
 // Regex
 const Pass = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/);

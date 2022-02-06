@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Loader } from '../components/Extras'
-import { firebaseResetRequest } from '../modules/firebaseAuth';
+import { firebaseResetRequest } from '../firebase/firebaseAuth';
 
 // Captcha Creation
 const charSet = "aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ0123456789";
@@ -48,7 +48,8 @@ const RequestReset = ({ shiftAuth, Inform }) => {
                     error.status = true;
                     switch(res.data)  {
                         case 'auth/network-request-failed': error.message = "Please check your internet connection"; break;
-                        default: error.message = "Server issues. Please try again later"
+                        case 'auth/user-not-found': error.message = "Username does not exist"; break;
+                        default: error.message = "Some server issues, please try again later";
                     }   setError({...error});
                 }   else Inform({ state: true, code: 2 })
             })
@@ -80,8 +81,7 @@ const RequestReset = ({ shiftAuth, Inform }) => {
                 <div className="row mb-3">
                         
                     <div className="col-md-6 form-floating" style={{ width: "200px" }}>
-                        <input type="text" className="form-control text-center pb-3" id="captcha-img" name="captcha-img"
-                            disabled value={captcha}/>
+                        <input type="text" className="form-control text-center pb-3" id="captcha-img" name="captcha-img" disabled value={captcha}/>
                     </div>
                     
                     <div className="col-md-6 form-floating" style={{ width: "200px" }}>
@@ -95,7 +95,7 @@ const RequestReset = ({ shiftAuth, Inform }) => {
                 
                 </div>
 
-                <input type="submit" className="btn btn-primary mt-2 px-3 py-2 w-100" value="Verify"/>
+                <input type="submit" className="btn btn-primary mt-2 px-3 py-2 w-100" defaultValue="Verify"/>
 
             </form>
 

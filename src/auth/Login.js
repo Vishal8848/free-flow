@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import { UserContext } from '../App';
 import AuthProvider from './AuthProvider'
 import { Loader } from '../components/Extras'
-import { firebaseLogin } from '../modules/firebaseAuth'
+import { firebaseLogin } from '../firebase/firebaseAuth'
 
 const Login = ({ shiftAuth }) => {
 
