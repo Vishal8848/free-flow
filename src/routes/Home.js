@@ -8,6 +8,8 @@ import Register from '../auth/Register'
 import Login from '../auth/Login'
 import { UserContext } from "../App"
 
+import { firebaseUser } from '../firebase/firebaseStore'
+
 const Authentication = ({ Inform, setRoute }) => {
 
     const [ activeAuth, setActiveAuth ] = useState(0);
@@ -32,7 +34,14 @@ const Home = () => {
 
     if(access != null) setUser({ auth: true, data: access });
 
-    useEffect(() => { user.auth ? setRoute('/feed') : setRoute('/') }, [user.auth, setRoute])
+    useEffect(() => { 
+        if(user.auth)   {
+            firebaseUser(user.data.uid).then(res => {  
+                // if(!res.error) res.data.lastActive ? setRoute('/feed') : setRoute('/profile')
+                console.log(res)
+            })
+        }
+    }, [user, setRoute])
 
     return (<>
         <div id="home" className="container-fluid bg-light">

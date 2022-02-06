@@ -61,7 +61,10 @@ const Register = ({ shiftAuth, Inform }) => {
                         case 'auth/network-request-failed': error.message = "Please check your internet connection"; break;
                         default:  error.message = "Server issues. Please try again later"; console.log(res.data)
                     }   setError({...error});
-                }   else Inform({ state: true, code: 0 })
+                }   else {
+                    Inform({ state: true, code: 0 });
+                    shiftAuth(0);
+                }
             })
         }
     }

@@ -51,7 +51,10 @@ const RequestReset = ({ shiftAuth, Inform }) => {
                         case 'auth/user-not-found': error.message = "Username does not exist"; break;
                         default: error.message = "Some server issues, please try again later";
                     }   setError({...error});
-                }   else Inform({ state: true, code: 2 })
+                }   else {
+                    Inform({ state: true, code: 1 });
+                    shiftAuth(0);
+                }
             })
         }
     }

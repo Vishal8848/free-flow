@@ -1,4 +1,4 @@
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from 'firebase/auth'
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, sendEmailVerification } from 'firebase/auth'
 import { getFirestore, doc, setDoc } from 'firebase/firestore/lite'
 import firebase from './firebase'
 
@@ -10,8 +10,10 @@ const cast = (data) => { return data.split('(')[1].slice(0, -2) }
 export const firebaseLogin = async (cred) => {
     
     try {
-        let response = await signInWithEmailAndPassword(auth, cred.email, cred.passwd);
+        let response = await signInWithEmailAndPassword(auth, cred.email, cred.passwd)
 
+        if(!response.user.emailVerified)  return { error: true, data: "auth/user-not-verified" }
+        
         let access = { uid: response.user.uid, verified: true, on: Date.now() };
 
         // Cookie Access
@@ -19,7 +21,7 @@ export const firebaseLogin = async (cred) => {
 
         else window.localStorage.removeItem('access')
 
-        return { error: false, data: access };
+        return { error: false, data: response.user };
 
     }   catch(err)  { return { error: true, data: cast(err.message) } }
 
@@ -52,6 +54,7 @@ export const firebaseRegister = async (cred) => {
             dob: cred.dob,
             gender: cred.gender,
             theme: themes[Math.floor(Math.random() * themes.length)],
+            lastActive: false,
             cred: {
                 email: cred.email,
                 type: 'auth/email-and-password'
@@ -75,6 +78,8 @@ export const firebaseRegister = async (cred) => {
             updatedAt: Date.now()
         });
 
+        await sendEmailVerification(response.user);
+
         return { error: false, data: response.user };
 
     }   catch(err)  { return { error: true, data: cast(err.message) } }
@@ -85,6 +90,8 @@ export const firebaseResetRequest = async (cred) => {
 
     try {
         await sendPasswordResetEmail(auth, cred.email);
+
+        return { error: false, data: true }
 
     }   catch(err)   { return { error: true, data: cast(err.message) } }
 

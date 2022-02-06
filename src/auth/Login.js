@@ -45,8 +45,9 @@ const Login = ({ shiftAuth }) => {
                 if(res.error)   {
                     error.status = true;
                     switch(res.data)    {
-                        case 'auth/wrong-password': error.message = "Invalid password"; break;
-                        case 'auth/user-not-found': error.message = "Invalid username"; break;
+                        case 'auth/wrong-password': error.message = "Invalid credentials"; break;
+                        case 'auth/user-not-found': error.message = "Username does not exist"; break;
+                        case 'auth/user-not-verified': error.message = "Username not verified"; break;
                         case 'auth/too-many-requests': error.message = "Too many invalid attempts. Try again later"; break;
                         case 'auth/network-request-failed': error.message = "Please check your internet connection"; break;
                         default:  error.message = "Server issues. Please try again later"

@@ -21,28 +21,12 @@ const Inform = ({ status }) => {
             code: 0
         },
         {
-            title: "Reset Password Successful",
-            body: "Your credentials has been updated successfully. Login with new credentials and enjoy using Freeflow",
-            skin: "success",
-            icon: "lock",
-            exit: true,
-            code: 1
-        },
-        {
             title: "Reset Password Initiated",
-            body: "Attempt to update credentials has been recognised. Follow the verification link sent to your inbox to reset your password",
+            body: "Attempt to update credentials has been recognised. Follow the link sent to your inbox to reset your password",
             skin: "primary",
             icon: "key",
-            exit: false,
-            code: 2
-        },
-        {
-            title: "Invalid Redirect Request",
-            body: "Please check the link you clicked. The link may be expired or faulty. Use latest link or initiate a new request",
-            skin: "danger",
-            icon: "unlink",
             exit: true,
-            code: 3
+            code: 1
         }
     ]
     

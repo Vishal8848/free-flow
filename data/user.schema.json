@@ -5,6 +5,7 @@
     "dob" : "24-12-2012",
     "gender" : "male",
     "theme" : "primary",
+    "lastActive" : "false | 1642920340798" ,
     "cred" : {
         "email" : "example@domain.com",
         "type" : "auth/email-and-password"
