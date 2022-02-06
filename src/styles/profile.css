@@ -65,7 +65,6 @@
     top: 25%;
     right: 15%;
     border-radius: 50%;
-    background-color: red;
 }
 .profile-pic .pic-edit  {
     width: 250px;
@@ -138,6 +137,9 @@
 }
 
 /* Profile Details */
+.profile-details {
+    width: 100%;
+}
 .friend-avatars {
     display: flex;
 }
@@ -159,6 +161,7 @@
 /* Profile Body */
 .profile-body {
     width: 80%;
+    border-radius: 10px;
 }
 @media screen and ( max-width: 768px ) {
     .profile-body {

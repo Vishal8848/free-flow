@@ -14,7 +14,7 @@ export const firebaseLogin = async (cred) => {
 
         if(!response.user.emailVerified)  return { error: true, data: "auth/user-not-verified" }
         
-        let access = { uid: response.user.uid, verified: true, on: Date.now() };
+        let access = { uid: response.user.uid, verified: response.user.emailVerified, on: Date.now() };
 
         // Cookie Access
         if(cred.save)   window.localStorage.setItem('access', JSON.stringify(access))

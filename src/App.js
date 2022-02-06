@@ -9,7 +9,9 @@ export const UserContext = createContext(null);
 
 function App() {
 
-  const [ user, setUser ] = useState({ auth: false, data: null });
+  const access = JSON.parse(window.localStorage.getItem('access'));
+
+  const [ user, setUser ] = useState(access == null ? { auth: false, data: null } : { auth: true, data: access });
 
   const User = useMemo(() => ({ user, setUser }), [ user, setUser ]);
 
@@ -20,7 +22,6 @@ function App() {
           <Route exact path="/" element={<Home/>}/>
           <Route path="/feed" element={<Feed/>} />
           <Route path="/profile" element={<Profile />}/>
-          <Route path="/verify" element={<Home />}/>
           <Route path="/error" element={<Error />}/>
         </Routes>
       </UserContext.Provider>

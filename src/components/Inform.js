@@ -2,9 +2,8 @@ import { useState } from 'react'
 
 /**
  * 0 - Registration Successful
- * 1 - Reset Password Successful
- * 2 - Reset Password Initiated
- * 3 - Invalid Redirect Request
+ * 1 - Reset Password Initiated
+ * 2 - Welcome to Freeflow
 */
 
 const Inform = ({ status }) => {
@@ -27,11 +26,19 @@ const Inform = ({ status }) => {
             icon: "key",
             exit: true,
             code: 1
+        },
+        {
+            title: "Welcome to Freeflow",
+            body: "It's best to update your profile information to have an amazing experience connecting with people at Freeflow",
+            skin: "primary",
+            icon: "star",
+            exit: true,
+            code: 2
         }
     ]
     
     return ( 
-        <div id="inform-modal" className="modal-container" style={ view ? { display: "block" } : { display: "none" } } >
+        <div id="inform-modal" className={`${info[status].code !== 2 && 'modal-container'}`} style={ view ? { display: "block" } : { display: "none" } } >
             <div className="i-modal shadow animate__animated animate__fadeInDown">
                 <div className={`i-modal-header text-light px-4 py-3 d-flex align-items-center justify-content-between bg-${info[status].skin}`}>
                     <div>{ info[status].title }</div>

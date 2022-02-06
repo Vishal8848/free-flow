@@ -29,19 +29,18 @@ const Home = () => {
     const setRoute = useNavigate();
     const { user, setUser } = useContext(UserContext);
     
-    const access = JSON.parse(window.localStorage.getItem('access'));
     const [ inform, setInform ] = useState({ state: false, code: 0 });
-
-    if(access != null) setUser({ auth: true, data: access });
 
     useEffect(() => { 
         if(user.auth)   {
             firebaseUser(user.data.uid).then(res => {  
-                // if(!res.error) res.data.lastActive ? setRoute('/feed') : setRoute('/profile')
-                console.log(res)
+                setUser({ auth: true, data: res.data });
+                if(!res.error) res.data.lastActive ? setRoute('/feed') : setRoute('/profile')
+                else console.log(res.data)
             })
         }
-    }, [user, setRoute])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user.auth, setRoute])
 
     return (<>
         <div id="home" className="container-fluid bg-light">

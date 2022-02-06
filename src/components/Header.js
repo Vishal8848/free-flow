@@ -56,9 +56,9 @@ const Header = () => {
             document.styleSheets[3].cssRules[64].style.color = "rgb(238, 238, 238)"
         }   else {
             window.localStorage.setItem('fftheme', JSON.stringify({ dark: false, at: Date.now() }))
-            document.styleSheets[3].cssRules[61].style.backgroundColor = "rgb(187, 191, 202)"
-            document.styleSheets[3].cssRules[62].style.backgroundColor = "rgb(232, 232, 232)"
-            document.styleSheets[3].cssRules[63].style.backgroundColor = "rgb(244, 244, 242)"
+            document.styleSheets[3].cssRules[61].style.backgroundColor = "rgb(244, 247, 248)"
+            document.styleSheets[3].cssRules[62].style.backgroundColor = "rgb(255, 255, 255)"
+            document.styleSheets[3].cssRules[63].style.backgroundColor = "rgb(248, 255, 255)"
             document.styleSheets[3].cssRules[64].style.color = "rgb(25, 25, 25)"
         }
     }, [theme]);

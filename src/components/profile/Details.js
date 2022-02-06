@@ -1,25 +1,25 @@
 import { Avatar } from "../Extras";
 
-const Details = () => {
+const Details = ({ data }) => {
     return (
-        <div className="profile-details ps-md-5 ps-3">
+        <div className="profile-details ps-md-5 ps-3 text-start">
             
             <div className="profile-name">
-                <strong className="fs-2 align-middle">Vishal Pranav</strong>
+                <strong className="fs-2 align-middle">{ data.name }</strong>
             </div>
 
             <div className="profile-location">
                 <strong className="fs-6 text-muted">
-                    Chennai
+                    { (data.location.city && data.location.city.length > 0) ? data.location.city : "City" }
                     <i className="fas fa-circle mx-2 align-middle" style={{ fontSize: "5px" }}></i>
-                    TN
+                    { (data.location.state && data.location.state.length > 0) ? data.location.state : "State" }
                     <i className="fas fa-circle mx-2 align-middle" style={{ fontSize: "5px" }}></i>
-                    India
+                    { (data.location.country && data.location.country.length > 0) ? data.location.country : "Country" }
                 </strong>
             </div>
 
             <div className="profile-desc text-muted pe-2">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Non quod nam officiis? Ratione quos voluptatem voluptates soluta molestiae temporibus fuga libero animi inventore ad. Ratione assumenda qui fuga ducimus quia?
+                { (data.description && data.description.length > 0) ? data.description : "Your description lives here" }
             </div>
 
             <div className="friend-avatars mt-2">

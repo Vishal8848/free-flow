@@ -1,4 +1,4 @@
-import { getFirestore, doc, getDoc } from "firebase/firestore/lite"
+import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore/lite"
 import firebase from './firebase'
 
 const store = getFirestore(firebase);
@@ -13,4 +13,15 @@ export const firebaseUser = async (uid) => {
 
     }   catch(err)  { return { error: true, data: cast(err.message) } }
 
+}
+
+export const firebaseUpdateActivity = async (uid) => {
+
+    try {
+        await updateDoc(doc(store, 'users', uid), {
+            lastActive: Date.now(),
+            updatedAt: Date.now()
+        })
+
+    }   catch(err)  { return { error: false, data: cast(err.message) } }
 }

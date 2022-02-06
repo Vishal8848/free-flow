@@ -7,7 +7,10 @@ import Stats from '../components/profile/Stats'
 import User from '../components/profile/User'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import Inform from '../components/Inform'
 import { UserContext } from '../App'
+
+import { firebaseUpdateActivity } from '../firebase/firebaseStore'
 
 const Posts = () => {
     return ( 
@@ -35,10 +38,13 @@ const Saved = () => {
 
 const Profile = () => {
 
-    const redirect = useNavigate();
+    const setRoute = useNavigate();
     const { user } = useContext(UserContext);
+    const name = user.data.fname + ' ' + user.data.lname;
 
-    useEffect(() => { if(!user.auth) redirect('/') }, [user.auth, redirect]);
+    useEffect(() => { if(!user.auth) setRoute('/') }, [user.auth, setRoute]);
+
+    firebaseUpdateActivity(user.data.uid)
 
     const [ params ] = useSearchParams();
     const type = params.get('type');
@@ -80,13 +86,15 @@ const Profile = () => {
                 </div>
 
                 <div className="profile-info pt-4 pb-5 theme-middle">
-                    <Stats/>
+                    <Stats data={{ friends: user.data.friends.length, posts: user.data.posts.length, likes: user.data.likes.length }}/>
 
-                    <Details/>
+                    <Details data={{ name: user.data.fname + ' ' + user.data.lname, location: user.data.location, description: user.data.description, friends: user.data.friends }}/>
                 </div>
 
-                <div className="profile-pic theme-middle">
-                    <div className="profile-initial">VP</div>
+                <div className={`profile-pic bg-${user.data.theme}`}>
+                    <div className="profile-initial">
+                        { name.split(' ').filter((name) => name.length > 1).slice(0, 2).map((each) => each.charAt(0)).join('') }
+                    </div>
                     <div className="pic-edit fw-bold pt-3 rounded-pill">
                         <i className="fas fa-camera fa-lg me-2"></i> Edit Picture
                     </div>
@@ -134,6 +142,8 @@ const Profile = () => {
 
                 </div>
             </div>
+
+            { !user.data.lastActive && <Inform status={2}/> }
         </div>
         <Footer />
     </>);
