@@ -21,7 +21,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home/>}/>
           <Route path="/feed" element={<Feed/>} />
-          <Route path="/profile" element={<Profile />}/>
+          <Route path="/profile/:uid" element={<Profile />}/>
           <Route path="/error" element={<Error />}/>
         </Routes>
       </UserContext.Provider>

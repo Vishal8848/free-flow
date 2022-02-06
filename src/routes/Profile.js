@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useContext } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import PostCard from '../components/profile/PostCard'
 import Details from '../components/profile/Details'
 import Friends from '../components/profile/Friends'
@@ -7,10 +7,11 @@ import Stats from '../components/profile/Stats'
 import User from '../components/profile/User'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import Inform from '../components/Inform'
+// import Inform from '../components/Inform'
+import { getInitial } from '../components/Extras'
 import { UserContext } from '../App'
 
-import { firebaseUpdateActivity } from '../firebase/firebaseStore'
+import { firebaseUser } from '../firebase/firebaseStore'
 
 const Posts = () => {
     return ( 
@@ -38,13 +39,21 @@ const Saved = () => {
 
 const Profile = () => {
 
+    const { uid } = useParams();
     const setRoute = useNavigate();
     const { user } = useContext(UserContext);
-    const name = user.data.fname + ' ' + user.data.lname;
+    const [ profile, setProfile ] = useState(null);
 
     useEffect(() => { if(!user.auth) setRoute('/') }, [user.auth, setRoute]);
 
-    firebaseUpdateActivity(user.data.uid)
+    useEffect(() => {
+        if(!profile)    {
+            firebaseUser(uid).then(res => {
+                if(res.error)   console.log(res.data);
+                else setProfile(res.data)
+            })
+        }
+    }, [profile, uid])
 
     const [ params ] = useSearchParams();
     const type = params.get('type');
@@ -75,76 +84,94 @@ const Profile = () => {
 
     return ( <>
         <Header />
-        <div className="container-md m-auto profile rounded theme-outer">
-            <div className="profile-header m-auto theme-middle">
+        {   profile ?
+            <div className="container-md m-auto profile rounded theme-outer">
+                { user.data.uid === uid ? "Is Authorized" : "Is Not Authorized" }
+                <div className="profile-header m-auto theme-middle">
 
-                <div className="profile-bg bg-dark">
-                    <div className="pic-edit fw-bold pt-3">
-                        <i className="fas fa-camera fa-lg ms-3 me-2"></i> 
-                        Edit Background
+                    <div className="profile-bg bg-dark">
+                        <div className="pic-edit fw-bold pt-3">
+                            <i className="fas fa-camera fa-lg ms-3 me-2"></i> 
+                            Edit Background
+                        </div>
+                    </div>
+
+                    <div className="profile-info pt-4 pb-5 theme-middle">
+                        <Stats data={{ 
+                            friends: profile.friends.length, 
+                            posts: profile.posts.length, 
+                            likes: profile.likes.length 
+                        }}/>
+
+                        <Details data={{ 
+                            name: profile.fname + ' ' + profile.lname, 
+                            location: profile.location, 
+                            description: profile.description, 
+                            friends: profile.friends
+                        }}/>
+                    </div>
+
+                    <div className={`profile-pic bg-${profile.theme}`}>
+                        <div className="profile-initial">
+                            { getInitial(profile.fname + ' ' + profile.lname) }
+                        </div>
+                        <div className="pic-edit fw-bold pt-3 rounded-pill">
+                            <i className="fas fa-camera fa-lg me-2"></i> Edit Picture
+                        </div>
+                    </div>
+
+                </div>
+
+                <div className="profile-body m-auto theme-middle">
+
+                    <div className="profile-nav theme-middle shadow">
+                        <ul className="pnav-list my-2 mx-3">
+                            <li className={`pnav-item py-3 ${ active[0] ? 'active border' : '' }`} onClick={() => setActiveState(0)}>
+                                <i className="fas fa-user fa-lg"></i>
+                                <span className='ps-2'>Profile</span>
+                            </li>
+                            <li className={`pnav-item py-3 text-primary ${ active[1] ? 'active border' : '' }`} onClick={() => setActiveState(1)}>
+                                <i className="fas fa-paper-plane fa-lg"></i>
+                                <span className='ps-2'>Posts</span>
+                            </li>
+                            <li className={`pnav-item py-3 text-danger ${ active[2] ? 'active border' : '' }`} onClick={() => setActiveState(2)}>
+                                <i className="fas fa-heart fa-lg"></i>
+                                <span className='ps-2'>Friends</span>
+                            </li>
+                            <li className={`pnav-item py-3 text-success ${ active[3] ? 'active border' : '' }`} onClick={() => setActiveState(3)}>
+                                <i className="fas fa-bookmark fa-lg"></i>
+                                <span className='ps-2'>Saved</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div className="profile-content mt-3 p-3 theme-middle">
+                        
+                        <div className="profile-title mt-5 mb-3">
+                            <span className="fs-3">
+                                { active[0] ? "Profile" : active[1] ? "Posts" : active[2] ? "Friends" : active[3] ? "Saved" : "Profile" }
+                            </span>
+                        </div>
+
+                        {
+                            active[0] ? <User data={{
+                                occupation: profile.occupation,
+                                description: profile.description,
+                                location: profile.location,
+                                education: profile.education,
+                                dob: profile.dob,
+                                hobbies: profile.hobbies
+                            }}/> :
+                            active[1] ? <Posts data={profile.posts}/> :
+                            active[2] ? <Friends data={profile.friends}/> :
+                            active[3] && <Saved data={profile.saved}/>
+                        }
+
                     </div>
                 </div>
 
-                <div className="profile-info pt-4 pb-5 theme-middle">
-                    <Stats data={{ friends: user.data.friends.length, posts: user.data.posts.length, likes: user.data.likes.length }}/>
-
-                    <Details data={{ name: user.data.fname + ' ' + user.data.lname, location: user.data.location, description: user.data.description, friends: user.data.friends }}/>
-                </div>
-
-                <div className={`profile-pic bg-${user.data.theme}`}>
-                    <div className="profile-initial">
-                        { name.split(' ').filter((name) => name.length > 1).slice(0, 2).map((each) => each.charAt(0)).join('') }
-                    </div>
-                    <div className="pic-edit fw-bold pt-3 rounded-pill">
-                        <i className="fas fa-camera fa-lg me-2"></i> Edit Picture
-                    </div>
-                </div>
-
-            </div>
-
-            <div className="profile-body m-auto theme-middle">
-
-                <div className="profile-nav theme-middle shadow">
-                    <ul className="pnav-list my-2 mx-3">
-                        <li className={`pnav-item py-3 ${ active[0] ? 'active border' : '' }`} onClick={() => setActiveState(0)}>
-                            <i className="fas fa-user fa-lg"></i>
-                            <span className='ps-2'>Profile</span>
-                        </li>
-                        <li className={`pnav-item py-3 text-primary ${ active[1] ? 'active border' : '' }`} onClick={() => setActiveState(1)}>
-                            <i className="fas fa-paper-plane fa-lg"></i>
-                            <span className='ps-2'>Posts</span>
-                        </li>
-                        <li className={`pnav-item py-3 text-danger ${ active[2] ? 'active border' : '' }`} onClick={() => setActiveState(2)}>
-                            <i className="fas fa-heart fa-lg"></i>
-                            <span className='ps-2'>Friends</span>
-                        </li>
-                        <li className={`pnav-item py-3 text-success ${ active[3] ? 'active border' : '' }`} onClick={() => setActiveState(3)}>
-                            <i className="fas fa-bookmark fa-lg"></i>
-                            <span className='ps-2'>Saved</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div className="profile-content mt-3 p-3 theme-middle">
-                    
-                    <div className="profile-title mt-5 mb-3">
-                        <span className="fs-3">
-                            { active[0] ? "Profile" : active[1] ? "Posts" : active[2] ? "Friends" : active[3] ? "Saved" : "Profile" }
-                        </span>
-                    </div>
-
-                    {
-                        active[0] ? <User/> :
-                        active[1] ? <Posts/> :
-                        active[2] ? <Friends/> :
-                        active[3] ? <Saved/> : <User/>
-                    }
-
-                </div>
-            </div>
-
-            { !user.data.lastActive && <Inform status={2}/> }
-        </div>
+            </div> : <div className="text-primary">Loading ...</div>
+        }
         <Footer />
     </>);
 }

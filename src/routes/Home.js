@@ -8,8 +8,6 @@ import Register from '../auth/Register'
 import Login from '../auth/Login'
 import { UserContext } from "../App"
 
-import { firebaseUser } from '../firebase/firebaseStore'
-
 const Authentication = ({ Inform, setRoute }) => {
 
     const [ activeAuth, setActiveAuth ] = useState(0);
@@ -27,18 +25,12 @@ const Authentication = ({ Inform, setRoute }) => {
 const Home = () => {
 
     const setRoute = useNavigate();
-    const { user, setUser } = useContext(UserContext);
+    const { user } = useContext(UserContext);
     
     const [ inform, setInform ] = useState({ state: false, code: 0 });
 
     useEffect(() => { 
-        if(user.auth)   {
-            firebaseUser(user.data.uid).then(res => {  
-                setUser({ auth: true, data: res.data });
-                if(!res.error) res.data.lastActive ? setRoute('/feed') : setRoute('/profile')
-                else console.log(res.data)
-            })
-        }
+        if(user.auth) user.data.lastActive ? setRoute('/feed') : setRoute('/profile/' + user.data.uid)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user.auth, setRoute])
 

@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 
+export const getInitial = (name) => { return name.split(' ').filter((name) => name.length > 1).slice(0, 2).map((each) => each.charAt(0)).join('') }
+
 export const Avatar = ({ name, scale = 'md', theme = 'primary' }) => {
 
     // Parse props.name
-    const initial = name.split(' ').filter((name) => name.length > 1).slice(0, 2).map((each) => each.charAt(0)).join('');
+    const initial = getInitial(name);
 
     return ( 
         <Link to="/profile">

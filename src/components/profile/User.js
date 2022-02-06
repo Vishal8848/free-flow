@@ -1,15 +1,27 @@
-const User = () => {
+import { useState } from "react"
+
+const User = ({ data }) => {
+
+    const [ user, setUser ] = useState(data);
+
+    const updateField = (key, value) => {
+        let fields = user;
+        fields[key] = value;
+        setUser({...fields})
+    }
 
     return ( 
         <div className="user-profile m-auto mt-5 theme-middle">
                 <div className="form-floating theme-inner">
-                    <input type="text" id="user-occu" name="user-occu" className="form-control border-0" placeholder="What best describes you?"/>
+                    <input type="text" id="user-occu" name="user-occu" className="form-control border-0" placeholder="What best describes you?"
+                        value={user.occupation} onChange={(e) => updateField('occupation', e.target.value)}/>
                     <label htmlFor="user-occu">What best describes you?</label>
-                    <div className="text-muted ps-2 theme-middle">Eg: Artist, Skater, Gamer, Sportsman...</div>
+                    <div className="text-muted ps-2 mt-1 theme-middle">Eg: Artist, Skater, Gamer, Sportsman...</div>
                 </div>
 
                 <div className="form-floating mt-3 theme-inner">
-                    <textarea id="user-desc" name="user-desc" maxLength="1000" className="form-control border-0" placeholder="Write down your thoughts" style={{ minHeight: "100px", maxHeight: "200px"}}></textarea>
+                    <textarea id="user-desc" name="user-desc" maxLength="1000" className="form-control border-0" placeholder="Write down your thoughts" style={{ minHeight: "100px", maxHeight: "200px"}}
+                        value={user.description} onChange={(e) => updateField('description', e.target.value)}></textarea>
                     <label htmlFor="user-desc">Give an introduction about yourself ...</label>
                 </div>
                 
@@ -29,20 +41,23 @@ const User = () => {
                 </div>
 
                 <div className="form-floating mt-3 theme-inner">
-                    <input type="text" id="user-occu" name="user-occu" className="form-control border-0" placeholder="Education"/>
-                    <label htmlFor="user-occu">Education <small className="text-muted">- If any</small></label>
-                    <div className="text-muted ps-2 theme-middle">Eg: Delhi Public School</div>
+                    <input type="text" id="user-edu" name="user-edu" className="form-control border-0" placeholder="Education"
+                        value={user.education} onChange={(e) => updateField('education', e.target.value)}/>
+                    <label htmlFor="user-edu">Education <small className="text-muted">- If any</small></label>
+                    <div className="text-muted ps-2 mt-1 theme-middle">Eg: Delhi Public School</div>
                 </div>
 
                 <div className="user-extras theme-middle">    
                     <div className="form-floating mt-3 me-2 theme-inner" style={{ width: "40%" }}>
                         <input type="text" id="dob" name="dob" className="form-control border-0"
-                            onFocus={ (e) => e.target.type = "date" } placeholder="00-00-0000" max="2012-12-31"/>
-                        <label htmlFor="dob">&nbsp;&nbsp;&nbsp;Date of Birth</label>
+                            onFocus={ (e) => e.target.type = "date" } placeholder="00-00-0000" max="2012-12-31"
+                            value={user.dob} onChange={(e) => updateField('dob', e.target.value)}/>
+                        <label htmlFor="dob">Date of Birth</label>
                     </div>
                     <div className="form-floating mt-3 ms-2 theme-inner" style={{ width: "60%" }}>
-                        <input type="text" id="hobbies" name="hobbies" className="form-control border-0" placeholder="Hobbies"/>
-                        <label htmlFor="hobbies">&nbsp;&nbsp;&nbsp;Hobbies <small className="text-muted">- If any</small></label>
+                        <input type="text" id="hobbies" name="hobbies" className="form-control border-0" placeholder="Hobbies"
+                            value={user.hobbies} onChange={(e) => updateField('hobbies', e.target.value)}/>
+                        <label htmlFor="hobbies">Hobbies <small className="text-muted">- If any</small></label>
                     </div>
                 </div>
 
