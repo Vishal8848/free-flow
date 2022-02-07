@@ -8,31 +8,31 @@ import User from '../components/profile/User'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 // import Inform from '../components/Inform'
-import { getInitial } from '../components/Extras'
+import { getInitial, Loader } from '../components/Extras'
 import { UserContext } from '../App'
-
 import { firebaseUser } from '../firebase/firebaseStore'
 
-const Posts = () => {
+const Posts = ({ data }) => {
     return ( 
         <div className="post-set theme-middle">
-            <PostCard />
-            <PostCard />
-            <PostCard />
-            <PostCard />
-            <PostCard />
+            {   (data && data.length > 0) ?
+                data.map(post => (
+                    <PostCard key={post}/>
+                )) : "You have not created any posts"
+            }
         </div>
     );
 }
 
-const Saved = () => {
+const Saved = ({ data }) => {
     return ( 
         <div className="saved-posts theme-middle">
-            <PostCard save={true}/>
-            <PostCard save={true}/>
-            <PostCard save={true}/>
-            <PostCard save={true}/>
-            <PostCard save={true}/>
+            {   (data && data.length > 0) ?
+                data.map(post => (
+                    <PostCard save={true} key={post}/>
+                ))  : "You have not saved any posts"
+
+            }
         </div>
     );
 }
@@ -84,10 +84,9 @@ const Profile = () => {
 
     return ( <>
         <Header />
-        {   profile ?
             <div className="container-md m-auto profile rounded theme-outer">
-                { user.data.uid === uid ? "Is Authorized" : "Is Not Authorized" }
-                <div className="profile-header m-auto theme-middle">
+            {   profile ? 
+                <><div className="profile-header m-auto theme-middle">
 
                     <div className="profile-bg bg-dark">
                         <div className="pic-edit fw-bold pt-3">
@@ -154,24 +153,24 @@ const Profile = () => {
                         </div>
 
                         {
-                            active[0] ? <User data={{
+                            active[0] ? <User auth={user.data} data={{
+                                uid: uid,
                                 occupation: profile.occupation,
                                 description: profile.description,
                                 location: profile.location,
                                 education: profile.education,
                                 dob: profile.dob,
                                 hobbies: profile.hobbies
-                            }}/> :
+                            }} updateProfile={setProfile}/> :
                             active[1] ? <Posts data={profile.posts}/> :
                             active[2] ? <Friends data={profile.friends}/> :
                             active[3] && <Saved data={profile.saved}/>
                         }
 
                     </div>
-                </div>
-
-            </div> : <div className="text-primary">Loading ...</div>
-        }
+                </div></> : <Loader show={true}/>
+            }
+            </div>
         <Footer />
     </>);
 }

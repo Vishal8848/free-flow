@@ -32,23 +32,17 @@ const Friend = ({ side }) => {
     );
 }
  
-const Friends = () => {
+const Friends = ({ data }) => {
     return(
         <div className="friends row">
-            <div className="col-md-6">
-                <Friend side='s' />
-                <Friend side='s' />
-                <Friend side='s' />
-                <Friend side='s' />
-                <Friend side='s' />
-            </div>
-            <div className="col-md-6">
-                <Friend side='e' />
-                <Friend side='e' />
-                <Friend side='e' />
-                <Friend side='e' />
-                <Friend side='e' />
-            </div>
+            {   (data && data.length > 0) ?
+                <><div className="col-md-6">
+                    { data.slice(0, data.length / 2).map(friend => (<Friend side='s' key={friend}/>)) }
+                </div>
+                <div className="col-md-6">
+                    { data.slice(data.length / 2).map(friend => (<Friend side='e' key={friend}/>)) }
+                </div></> : "You have not made any friends yet"
+            }
         </div>
     );
 }

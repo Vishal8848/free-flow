@@ -18,7 +18,7 @@ export const Avatar = ({ name, scale = 'md', theme = 'primary' }) => {
 
 export const Loader = ({ show }) => {
     return ( 
-        <div className="loader" style={ show ? { display: "block" } : { display: "none" } }>
+        <div className={`loader ${show ? 'd-block' : 'd-none'}`}>
             <div className="square-set">
                 <div className="square s-1"></div>
                 <div className="square s-2"></div>
