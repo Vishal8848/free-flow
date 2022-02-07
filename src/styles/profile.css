@@ -17,6 +17,13 @@
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
+#default-bg {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
 .profile-info {
     width: 100%;
     height: auto;
@@ -31,7 +38,7 @@
         width: 100%;
         border-radius: 5px;
     }
-    .profile-bg {
+    .profile-bg, #default-bg {
         height: 200px;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;

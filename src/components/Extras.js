@@ -36,8 +36,8 @@ export const Tooltip = ({ type }) => {
     );
 }
 
-export const parseTime = (timestamp) => {   
-    const datetime = new Date(timestamp);
+export const parseTime = (timestamp) => {
+    const datetime = new Date(parseInt(timestamp));
 
     const day = datetime.toString().slice(0,3);
     

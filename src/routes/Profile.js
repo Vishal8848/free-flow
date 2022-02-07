@@ -1,17 +1,19 @@
 import { useState, useEffect, useRef, useContext } from 'react'
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
+import { getInitial, Loader } from '../components/Extras'
 import PostCard from '../components/profile/PostCard'
 import Details from '../components/profile/Details'
 import Friends from '../components/profile/Friends'
 import Stats from '../components/profile/Stats'
 import User from '../components/profile/User'
+import useProfile from '../hooks/useProfile'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-// import Inform from '../components/Inform'
-import { getInitial, Loader } from '../components/Extras'
 import { UserContext } from '../App'
-import { firebaseUser } from '../firebase/firebaseStore'
 
+import defaultBg from 'C:/Users/VP/Downloads/default-bg.jpg'
+
+// Created Posts 
 const Posts = ({ data }) => {
     return ( 
         <div className="post-set theme-middle">
@@ -24,6 +26,7 @@ const Posts = ({ data }) => {
     );
 }
 
+// Saved Posts
 const Saved = ({ data }) => {
     return ( 
         <div className="saved-posts theme-middle">
@@ -39,40 +42,27 @@ const Saved = ({ data }) => {
 
 const Profile = () => {
 
+    // Requested Profile UID
     const { uid } = useParams();
+
+    // Auth Handler
     const setRoute = useNavigate();
     const { user } = useContext(UserContext);
-    const [ profile, setProfile ] = useState(null);
-
     useEffect(() => { if(!user.auth) setRoute('/') }, [user.auth, setRoute]);
 
-    useEffect(() => {
-        if(!profile)    {
-            firebaseUser(uid).then(res => {
-                if(res.error)   console.log(res.data);
-                else setProfile(res.data)
-            })
-        }
-    }, [profile, uid])
+    // Profile Data
+    const profile = useProfile(uid);
 
+    // Active Profile Component
     const [ params ] = useSearchParams();
     const type = params.get('type');
     const typeRef = useRef(type);
-    let [ active, setActive ] = useState([ 
-        type === null, 
-        type === 'posts', 
-        type === 'friends', 
-        type === 'saved' 
-    ]);
+    let [ active, setActive ] = useState([ type === null, type === 'posts', type === 'friends', type === 'saved' ]);
 
+    // Update Profile State
     useEffect(() => {
         typeRef.current = params.get('type');
-        setActive([
-            typeRef.current === null, 
-            typeRef.current === 'posts', 
-            typeRef.current === 'friends', 
-            typeRef.current === 'saved' 
-        ]);
+        setActive([ typeRef.current === null, typeRef.current === 'posts', typeRef.current === 'friends', typeRef.current === 'saved' ]);
     }, [params])
 
     // Profile Active Selector
@@ -85,10 +75,11 @@ const Profile = () => {
     return ( <>
         <Header />
             <div className="container-md m-auto profile rounded theme-outer">
-            {   profile ? 
+            {   profile.user ? 
                 <><div className="profile-header m-auto theme-middle">
 
-                    <div className="profile-bg bg-dark">
+                    <div className="profile-bg">
+                        <img id='default-bg' src={defaultBg} alt="" />
                         <div className="pic-edit fw-bold pt-3">
                             <i className="fas fa-camera fa-lg ms-3 me-2"></i> 
                             Edit Background
@@ -97,22 +88,22 @@ const Profile = () => {
 
                     <div className="profile-info pt-4 pb-5 theme-middle">
                         <Stats data={{ 
-                            friends: profile.friends.length, 
-                            posts: profile.posts.length, 
-                            likes: profile.likes.length 
+                            friends: profile.user.friends.length, 
+                            posts: profile.user.posts.length, 
+                            likes: profile.user.likes.length 
                         }}/>
 
                         <Details data={{ 
-                            name: profile.fname + ' ' + profile.lname, 
-                            location: profile.location, 
-                            description: profile.description, 
-                            friends: profile.friends
+                            name: profile.user.fname + ' ' + profile.user.lname, 
+                            location: profile.user.location, 
+                            description: profile.user.description, 
+                            friends: profile.user.friends
                         }}/>
                     </div>
 
-                    <div className={`profile-pic bg-${profile.theme}`}>
+                    <div className={`profile-pic bg-${profile.user.theme}`}>
                         <div className="profile-initial">
-                            { getInitial(profile.fname + ' ' + profile.lname) }
+                            { getInitial(profile.user.fname + ' ' + profile.user.lname) }
                         </div>
                         <div className="pic-edit fw-bold pt-3 rounded-pill">
                             <i className="fas fa-camera fa-lg me-2"></i> Edit Picture
@@ -155,16 +146,16 @@ const Profile = () => {
                         {
                             active[0] ? <User auth={user.data} data={{
                                 uid: uid,
-                                occupation: profile.occupation,
-                                description: profile.description,
-                                location: profile.location,
-                                education: profile.education,
-                                dob: profile.dob,
-                                hobbies: profile.hobbies
-                            }} updateProfile={setProfile}/> :
-                            active[1] ? <Posts data={profile.posts}/> :
-                            active[2] ? <Friends data={profile.friends}/> :
-                            active[3] && <Saved data={profile.saved}/>
+                                occupation: profile.user.occupation,
+                                description: profile.user.description,
+                                location: profile.user.location,
+                                education: profile.user.education,
+                                dob: profile.user.dob,
+                                hobbies: profile.user.hobbies
+                            }} updateProfile={profile.setUser}/> : 
+                            active[1] ? <Posts data={profile.posts} updatePosts={profile.setPosts}/> :
+                            active[2] ? <Friends data={profile.friends} updateFriends={profile.setFriends}/> :
+                            active[3] && <Saved data={profile.saved} updateSaved={profile.setSaved}/>
                         }
 
                     </div>

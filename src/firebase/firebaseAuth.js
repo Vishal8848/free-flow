@@ -79,8 +79,8 @@ export const firebaseRegister = async (cred) => {
             posts: [],
             saved: [],
             likes: [],
-            createdAt: Date.now(),
-            updatedAt: Date.now()
+            createdAt: Date.now().toString(),
+            updatedAt: Date.now().toString()
         });
 
         await sendEmailVerification(response.user);
