@@ -64,8 +64,8 @@ export const firebaseRegister = async (cred) => {
                 email: cred.email,
                 type: 'auth/email-and-password'
             },
-            photoURL: false,
-            bgURL: false,
+            hasDP: false,
+            hasBG: false,
             occupation: "",
             description: "",
             location: {

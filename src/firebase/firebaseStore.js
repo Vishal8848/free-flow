@@ -1,6 +1,8 @@
-import { getFirestore, doc, getDoc, updateDoc, getDocs, collection, query } from "firebase/firestore"
+import { getFirestore, doc, getDoc, updateDoc, getDocs, collection, query } from "firebase/firestore/lite"
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
 import firebase from './firebase'
 
+const bulk = getStorage(firebase);
 const store = getFirestore(firebase);
 const cast = (data) => { return data.split('(')[1].slice(0, -2) }
 
@@ -87,4 +89,35 @@ export const firebaseUpdateUser = async (uid, cred) => {
         })
 
     }   catch(err) { return { error: true, data: cast(err.message) } }
+}
+
+export const firebaseUploadImage = async (id, file, type) => {
+
+    try {
+        const imageRef = ref(bulk, type + '/' + id);
+
+        await uploadBytes(imageRef, file);
+
+        if(type === 'bgs' || type === 'dps')    {
+            await updateDoc(doc(store, 'users', id), {
+                hasBG: type === 'bgs',
+                hasDP: type === 'dps',
+                updatedAt: Date.now().toString()
+            })
+        }
+
+    }   catch(err)  { return { error: true, data: cast(err.message) } }
+
+}
+
+export const firebaseDownloadImage = async (type, id = null) => {
+
+    try {
+        const imageRef = ref(bulk, type + '/' + (id ? id : `default-${type.slice(0, -1)}-min.jpg`))
+
+        const URL = await getDownloadURL(imageRef);
+
+        return { error: false, data: URL }
+
+    }   catch(err) { return { error: true, data: err.message } }
 }

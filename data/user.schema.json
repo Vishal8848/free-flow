@@ -10,8 +10,8 @@
         "email" : "example@domain.com",
         "type" : "auth/email-and-password"
     },
-    "photoURL" : "false | https://free-flow-vp.web.app/user_id.png",
-    "bgURL" : "false | https://free-flow-vp.web.app/bg_id.png",
+    "hasDP" : false,
+    "hasBG" : false,
     "occupation" : "Artist",
     "description": "Consistency is the key. Be patient and observe the art",
     "location" : {

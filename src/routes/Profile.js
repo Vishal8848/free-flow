@@ -11,8 +11,6 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { UserContext } from '../App'
 
-import defaultBg from 'C:/Users/VP/Downloads/default-bg.jpg'
-
 // Created Posts 
 const Posts = ({ data }) => {
     return ( 
@@ -52,6 +50,7 @@ const Profile = () => {
 
     // Profile Data
     const profile = useProfile(uid);
+    const [ bg, setBg ] = useState(profile.user && profile.bg)
 
     // Active Profile Component
     const [ params ] = useSearchParams();
@@ -72,18 +71,26 @@ const Profile = () => {
         setActive([...active]);
     }
 
+    // Update Background Image
+    const setBackground = (e) => {
+        e.preventDefault();
+        setBg(URL.createObjectURL(e.target.files[0]))
+    }
+
     return ( <>
         <Header />
             <div className="container-md m-auto profile rounded theme-outer">
             {   profile.user ? 
                 <><div className="profile-header m-auto theme-middle">
 
-                    <div className="profile-bg">
-                        <img id='default-bg' src={defaultBg} alt="" />
-                        <div className="pic-edit fw-bold pt-3">
-                            <i className="fas fa-camera fa-lg ms-3 me-2"></i> 
-                            Edit Background
-                        </div>
+                    <div className="profile-bg" style={{ background: `url(${bg ? bg : profile.bg}) center center / cover no-repeat` }}>
+                        <input type="file" name="bg" id="bg" accept="image/*" onChange={(e) => setBackground(e)} style={{ visibility: "hidden" }}/>
+                        <label htmlFor="bg" className="pic-edit">
+                            <div className="fw-bold pt-3">
+                                <i className="fas fa-camera fa-lg ms-3 me-2"></i> 
+                                Edit Background
+                            </div>
+                        </label>
                     </div>
 
                     <div className="profile-info pt-4 pb-5 theme-middle">
