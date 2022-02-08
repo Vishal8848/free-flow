@@ -32,7 +32,6 @@ const useProfile = (uid) => {
                 if(!res.error)  setBg(res.data)
 
                 if(imgs[1]) res = await firebaseDownloadImage('dps', uid);
-                else res = await firebaseDownloadImage('dps');
                 if(!res.error)  setDp(res.data)
             }
         }

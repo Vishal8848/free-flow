@@ -91,12 +91,12 @@ export const firebaseUpdateUser = async (uid, cred) => {
     }   catch(err) { return { error: true, data: cast(err.message) } }
 }
 
-export const firebaseUploadImage = async (id, file, type) => {
+export const firebaseUploadImage = async (id, blob, type) => {
 
     try {
         const imageRef = ref(bulk, type + '/' + id);
 
-        await uploadBytes(imageRef, file);
+        await uploadBytes(imageRef, blob);
 
         if(type === 'bgs' || type === 'dps')    {
             await updateDoc(doc(store, 'users', id), {

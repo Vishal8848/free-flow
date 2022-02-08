@@ -14,12 +14,10 @@ const User = ({ auth, data, updateProfile }) => {
     const updateUser = () => {
         let cred = user;
         delete cred.uid;
-        console.log("Loading");
         firebaseUpdateUser(data.uid, cred).then(res => {
             firebaseUser(auth.uid).then(res => {
                 if(res.error)   console.log(res.data);
                 else updateProfile(res.data)
-                console.log("Done");
             })
         })
     }

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useContext } from 'react'
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
-import { getInitial, Loader } from '../components/Extras'
+import { getInitial, formatBytes, Toast, Loader } from '../components/Extras'
+import { firebaseUploadImage } from '../firebase/firebaseStore'
 import PostCard from '../components/profile/PostCard'
 import Details from '../components/profile/Details'
 import Friends from '../components/profile/Friends'
@@ -71,10 +72,20 @@ const Profile = () => {
         setActive([...active]);
     }
 
+    // Toast Handler
+    const [ toast, setToast ] = useState({ show: false, code: 0, data: null })
+
     // Update Background Image
     const setBackground = (e) => {
         e.preventDefault();
-        setBg(URL.createObjectURL(e.target.files[0]))
+        const fileSize = formatBytes(e.target.files[0].size);
+        console.log(parseFloat(fileSize.split(' ')[0]) < 500, fileSize);
+        if(parseFloat(fileSize.split(' ')[0]) < 500)  {
+            firebaseUploadImage(user.data.uid, e.target.files[0], 'bgs').then(() => {
+                setBg(URL.createObjectURL(e.target.files[0]))
+                setToast({ show: true, code: 1, data: "Background Set Successfully" })
+            })
+        }   else setToast({ show: true, code: 0, data: fileSize })
     }
 
     return ( <>
@@ -84,13 +95,15 @@ const Profile = () => {
                 <><div className="profile-header m-auto theme-middle">
 
                     <div className="profile-bg" style={{ background: `url(${bg ? bg : profile.bg}) center center / cover no-repeat` }}>
-                        <input type="file" name="bg" id="bg" accept="image/*" onChange={(e) => setBackground(e)} style={{ visibility: "hidden" }}/>
-                        <label htmlFor="bg" className="pic-edit">
-                            <div className="fw-bold pt-3">
-                                <i className="fas fa-camera fa-lg ms-3 me-2"></i> 
-                                Edit Background
-                            </div>
-                        </label>
+                        {   uid === user.data.uid &&
+                            <><input type="file" name="bg" id="bg" accept="image/*" onChange={(e) => setBackground(e)} style={{ visibility: "hidden" }}/>
+                            <label htmlFor="bg" className="pic-edit">
+                                <div className="fw-bold pt-3">
+                                    <i className="fas fa-camera fa-lg ms-3 me-2"></i> 
+                                    Edit Background
+                                </div>
+                            </label></>
+                        }
                     </div>
 
                     <div className="profile-info pt-4 pb-5 theme-middle">
@@ -170,6 +183,7 @@ const Profile = () => {
             }
             </div>
         <Footer />
+        <Toast show={toast.show} code={toast.code} value={toast.data}/>
     </>);
 }
  
