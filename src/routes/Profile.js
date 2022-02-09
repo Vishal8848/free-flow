@@ -11,7 +11,7 @@ import User from '../components/profile/User'
 import useProfile from '../hooks/useProfile'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import { UserContext } from '../App'
+import { AuthContext } from '../App'
 
 // Created Posts 
 const Posts = ({ data }) => {
@@ -47,8 +47,8 @@ const Profile = () => {
 
     // Auth Handler
     const setRoute = useNavigate();
-    const { user } = useContext(UserContext);
-    useEffect(() => { if(!user.auth) setRoute('/') }, [user.auth, setRoute]);
+    const { auth } = useContext(AuthContext);
+    useEffect(() => { if(!auth.status) setRoute('/') }, [auth.status, setRoute]);
 
     // Profile Data
     const profile = useProfile(uid);
@@ -80,7 +80,7 @@ const Profile = () => {
         e.preventDefault();
         const fileSize = formatBytes(e.target.files[0].size);
         if(parseFloat(fileSize.split(' ')[0]) < 500)  {
-            firebaseUploadImage(user.data.uid, e.target.files[0], 'bgs').then(() => {
+            firebaseUploadImage(auth.data.uid, e.target.files[0], 'bgs').then(() => {
                 setBg(URL.createObjectURL(e.target.files[0]))
             })
         }   else console.log("File Size Exceeded", fileSize)
@@ -91,7 +91,7 @@ const Profile = () => {
         e.preventDefault();
         const fileSize = formatBytes(e.target.files[0].size);
         if(parseFloat(fileSize.split(' ')[0]) < 500)  {
-            firebaseUploadImage(user.data.uid, e.target.files[0], 'dps').then(() => {
+            firebaseUploadImage(auth.data.uid, e.target.files[0], 'dps').then(() => {
                 setDp(URL.createObjectURL(e.target.files[0]))
             })
         }   else console.log("File Size Exceeded", fileSize)
@@ -104,7 +104,7 @@ const Profile = () => {
                 <><div className="profile-header m-auto shadow theme-middle">
 
                     <div className="profile-bg" style={{ background: `url(${bg ? bg : profile.bg}) center center / cover no-repeat` }}>
-                        {   uid === user.data.uid &&
+                        {   uid === auth.data.uid &&
                             <><input type="file" name="bg" id="bg" accept="image/*" onChange={(e) => setBackground(e)} style={{ visibility: "hidden" }}/>
                             <label htmlFor="bg" className="pic-edit">
                                 <div className="fw-bold pt-3">
@@ -135,7 +135,7 @@ const Profile = () => {
                                 { getInitial(profile.user.fname + ' ' + profile.user.lname) }
                             </div>
                         }
-                        {   uid === user.data.uid &&
+                        {   uid === auth.data.uid &&
                             <><input type="file" name="dp" id="dp" accept="image/*" onChange={(e) => setProfilePicture(e)} style={{ visibility: "hidden" }}/>
                             <label htmlFor="dp" className="pic-edit rounded-pill">
                                 <div className="fw-bold pt-3">
@@ -178,8 +178,8 @@ const Profile = () => {
                             </span>
                         </div>
 
-                        {   user.data.uid === uid &&
-                            <div className="editor-check form-check form-switch pb-2 theme-inner">
+                        {   auth.data.uid === uid &&
+                            <div className="editor-check form-check theme-switch form-switch pb-2">
                                 <label className="form-check-label me-5 pt-1 pe-2" htmlFor="editorMode">Editor</label>
                                 <input className="form-check-input" role="switch" type="checkbox" id="editorMode"
                                     checked={editor} onChange={(e) => setEditor(e.target.checked)}/>
@@ -187,8 +187,8 @@ const Profile = () => {
                         }
 
                         {
-                            active[0] ? ((user.data.uid === uid && editor) ?
-                            <User auth={user.data} data={{
+                            active[0] ? ((auth.data.uid === uid && editor) ?
+                            <User auth={auth.data} data={{
                                 uid: uid,
                                 occupation: profile.user.occupation,
                                 description: profile.user.description,

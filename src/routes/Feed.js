@@ -8,16 +8,15 @@ import Post from '../components/feed/Post'
 import useWindow from '../hooks/useWindow'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import { UserContext } from '../App'
+import { AuthContext } from '../App'
 
 const Feed = () => {
 
+
+    // Authorize auth or Redirect
     const setRoute = useNavigate();
-
-    // Global User Context
-    const { user } = useContext(UserContext);
-
-    useEffect(() => { if(!user.auth) setRoute('/') }, [user.auth, setRoute]);
+    const { auth } = useContext(AuthContext);
+    useEffect(() => { if(!auth.status) setRoute('/') }, [auth.status, setRoute]);
 
     const { width } = useWindow();
     const [ params ] = useSearchParams();
@@ -59,16 +58,16 @@ const Feed = () => {
                             <span className="feed-title ps-3 text-muted fw-bold">Actions</span>
                             <div className="action-set theme-middle">
                                 <div className="action theme-inner" style={{ borderTopLeftRadius: "10px", borderTopRightRadius: "10px" }}>
-                                    <Link to="/profile"><i className="fas fa-user mx-3"></i> Profile</Link>
+                                    <Link to={`/profile/${auth.data.uid}`}><i className="fas fa-user mx-3"></i> Profile</Link>
                                 </div>
                                 <div className="action theme-inner">
-                                    <Link to="/profile?type=posts"><i className="fas fa-paper-plane mx-3"></i> Posts</Link>
+                                    <Link to={`/profile/${auth.data.uid}?type=posts`}><i className="fas fa-paper-plane mx-3"></i> Posts</Link>
                                 </div>
                                 <div className="action theme-inner">
-                                    <Link to="/profile?type=friends"><i className="fas fa-heart mx-3"></i> Friends</Link>
+                                    <Link to={`/profile/${auth.data.uid}?type=friends`}><i className="fas fa-heart mx-3"></i> Friends</Link>
                                 </div>
                                 <div className="action theme-inner">
-                                    <Link to="/profile?type=saved"><i className="fas fa-bookmark mx-3"></i> Saved</Link>
+                                    <Link to={`/profile/${auth.data.uid}?type=saved`}><i className="fas fa-bookmark mx-3"></i> Saved</Link>
                                 </div>
                                 <div className="action theme-inner" style={{ borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
                                     <Link to="/contact"><i className="fas fa-lightbulb mx-3"></i> Feedback</Link>

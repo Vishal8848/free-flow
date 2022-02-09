@@ -10,7 +10,7 @@ const Notification = ({ accept }) => {
 
     return (
         <div className={`search-user p-2 theme-inner`}>
-            <Avatar name="Vishal Pranav" scale="sm" theme="success"/>
+            <Avatar name="Vishal Pranav" scale="square-sm" theme="success"/>
             <div className="fs-6 mx-3 w-100">
                 <div>Abishek Prasannaa</div>
                 <div className="text-muted" style={{ fontSize: "12.5px" }}>{ time } <i className="fas fa-circle px-1 align-middle" style={{ fontSize: "5px" }}></i> { date }</div>

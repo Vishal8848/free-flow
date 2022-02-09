@@ -6,7 +6,7 @@ import RequestReset from '../auth/RequestReset'
 import Inform from '../components/Inform'
 import Register from '../auth/Register'
 import Login from '../auth/Login'
-import { UserContext } from "../App"
+import { AuthContext } from "../App"
 
 const Authentication = ({ Inform, setRoute }) => {
 
@@ -25,14 +25,14 @@ const Authentication = ({ Inform, setRoute }) => {
 const Home = () => {
 
     const setRoute = useNavigate();
-    const { user } = useContext(UserContext);
+    const { auth } = useContext(AuthContext);
     
     const [ inform, setInform ] = useState({ state: false, code: 0 });
 
     useEffect(() => { 
-        if(user.auth) user.data.lastActive ? setRoute('/feed') : setRoute('/profile/' + user.data.uid)
+        if(auth.status) auth.data.lastActive ? setRoute('/feed') : setRoute('/profile/' + auth.data.uid)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [user.auth, setRoute])
+    }, [auth.status, setRoute])
 
     return (<>
         <div id="home" className="container-fluid bg-light">

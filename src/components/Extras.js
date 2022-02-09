@@ -16,7 +16,7 @@ export const Avatar = ({ name, scale = 'md', theme = 'primary' }) => {
     const initial = getInitial(name);
 
     return ( 
-        <div className={`avatar avatar-${scale} bg-${theme}`}>
+        <div className={`avatar avatar-${scale} bg-${theme} m-0 px-${ scale === 'sm' ? '2' : '3' }`}>
             { initial.length > 0 ? initial : '~' }
         </div>
     );

@@ -5,7 +5,7 @@ import Home from './routes/Home'
 import Feed from './routes/Feed'
 import Error from './routes/Error'
 
-export const UserContext = createContext(null);
+export const AuthContext = createContext(null);
 
 function App() {
 
@@ -13,20 +13,20 @@ function App() {
 
   if(access == null)  access = JSON.parse(window.localStorage.getItem('access'))
 
-  const [ user, setUser ] = useState(access == null ? { auth: false, data: null } : { auth: true, data: access });
+  const [ auth, setAuth ] = useState(access == null ? { status: false, data: null } : { status: true, data: access });
 
-  const User = useMemo(() => ({ user, setUser }), [ user, setUser ]);
+  const Auth = useMemo(() => ({ auth, setAuth }), [ auth, setAuth ]);
 
   return (
     <Router>
-      <UserContext.Provider value={User}>
+      <AuthContext.Provider value={Auth}>
         <Routes>
           <Route exact path="/" element={<Home/>}/>
           <Route path="/feed" element={<Feed/>} />
           <Route path="/profile/:uid" element={<Profile />}/>
           <Route path="/error" element={<Error />}/>
         </Routes>
-      </UserContext.Provider>
+      </AuthContext.Provider>
     </Router>
   );
 }

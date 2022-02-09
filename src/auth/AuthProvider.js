@@ -1,10 +1,14 @@
-import { firebaseGoogleLogin } from "../firebase/firebaseAuth";
+import { firebaseGoogleLogin } from "../firebase/firebaseAuth"
+import { useContext } from "react"
+import { AuthContext } from "../App"
 
 const AuthProvider = () => {
 
+    const { setAuth } = useContext(AuthContext);
+
     const handleProvider = () => {
         firebaseGoogleLogin()
-        .then(data => console.log('Google Login'))
+        .then(res => setAuth({ status: true, data: res.data }))
         .catch(err => console.log(err));
     }
 

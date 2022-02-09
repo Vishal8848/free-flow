@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { UserContext } from '../App';
+import { AuthContext } from '../App';
 import AuthProvider from './AuthProvider'
 import { Loader } from '../components/Extras'
 import { firebaseLogin } from '../firebase/firebaseAuth'
@@ -7,7 +7,7 @@ import { firebaseLogin } from '../firebase/firebaseAuth'
 const Login = ({ shiftAuth }) => {
 
     const [ load, setLoad ] = useState(false);
-    const { setUser } = useContext(UserContext);
+    const { setAuth } = useContext(AuthContext);
 
     // User Cred
     const initial = { email: "", passwd: "", save: true };
@@ -52,7 +52,7 @@ const Login = ({ shiftAuth }) => {
                         case 'auth/network-request-failed': error.message = "Please check your internet connection"; break;
                         default:  error.message = "Server issues. Please try again later"
                     }   setError({...error});
-                }   else setUser({ auth: true, data: res.data });
+                }   else setAuth({ status: true, data: res.data });
             })   
         }
     }

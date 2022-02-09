@@ -405,5 +405,9 @@
     }
     .editor-check {
         width: 100%;
+        pointer-events: none;
+    }
+    .editor-check input {
+        pointer-events: all;
     }
 }

@@ -18,7 +18,7 @@ const SearchUser = () => {
 
     return (
         <div className={`search-user p-2 theme-middle`}>
-            <Avatar name="Vishal Pranav" scale="sm" theme="success"/>
+            <Avatar name="Vishal Pranav" scale="square-sm" theme="success"/>
             <div className="fs-6 mx-3 w-100">Abishek Prasannaa</div>
             <button className={`btn btn-${ request ? 'secondary' : 'primary' } btn-sm`} onClick={() => setRequest(true)} disabled={ request ? "disabled" : "" }>
                 { !request && <i className="fas fa-plus me-2"></i> }
@@ -30,7 +30,7 @@ const SearchUser = () => {
 
 const Search = () => {
     return (
-        <div className="search p-2 theme-middle">
+        <div className="search p-2 theme-middle shadow">
             <span className="feed-title ps-3 text-muted fw-bold">Search Results</span>
             <SearchUser />
             <SearchUser />
@@ -90,13 +90,13 @@ const Header = () => {
 
                     <div className="item me-3 system theme-middle shadow">
                         <Link to="/feed" className="nav-link"><i className="fas fa-home fa-lg theme-inner"></i></Link>
-                        <Tooltip type="Home"/>
+                        <Tooltip body="Home"/>
                     </div>
 
                     <div className="item me-3 system position-relative theme-middle shadow">
                         <div className="docker bg-danger"></div>
                         <i className="fas fa-bell fa-lg theme-inner" onClick={() => setNotify(!notify)}></i>
-                        { notify ? <Notifications top/> : <Tooltip type="Notifications"/> }
+                        { notify ? <Notifications top/> : <Tooltip body="Notifications"/> }
                     </div>
 
                     <div className="dropdown">
