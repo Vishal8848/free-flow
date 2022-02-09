@@ -52,7 +52,7 @@ const Profile = () => {
 
     // Profile Data
     const profile = useProfile(uid);
-    const [ visitor, setVisitor ] = useState(true);
+    const [ editor, setEditor ] = useState(true);
     const [ bg, setBg ] = useState(profile.user && profile.bg)
     const [ dp, setDp ] = useState(profile.user && profile.dp)
 
@@ -179,15 +179,15 @@ const Profile = () => {
                         </div>
 
                         {   user.data.uid === uid &&
-                            <div className="visitor-check form-check theme-switch form-switch pb-2 theme-inner">
-                                <label className="form-check-label me-5 pt-1 pe-2" htmlFor="visitorMode">Visitor</label>
-                                <input className="form-check-input" role="switch" type="checkbox" id="visitorMode"
-                                    checked={visitor} onChange={(e) => setVisitor(e.target.checked)}/>
+                            <div className="editor-check form-check form-switch pb-2 theme-inner">
+                                <label className="form-check-label me-5 pt-1 pe-2" htmlFor="editorMode">Editor</label>
+                                <input className="form-check-input" role="switch" type="checkbox" id="editorMode"
+                                    checked={editor} onChange={(e) => setEditor(e.target.checked)}/>
                             </div>
                         }
 
                         {
-                            active[0] ? ((user.data.uid === uid && !visitor) ? 
+                            active[0] ? ((user.data.uid === uid && editor) ?
                             <User auth={user.data} data={{
                                 uid: uid,
                                 occupation: profile.user.occupation,
@@ -196,7 +196,7 @@ const Profile = () => {
                                 education: profile.user.education,
                                 dob: profile.user.dob,
                                 hobbies: profile.user.hobbies
-                            }} updateProfile={profile.setUser}/> : 
+                            }} updateProfile={profile.setUser}/> :
                             <Visitor data={{
                                 occupation: profile.user.occupation,
                                 location: profile.user.location,

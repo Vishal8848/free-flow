@@ -296,7 +296,7 @@
     align-items: center;
     justify-content: center;
 }
-.user-save > button {
+.user-save .btn {
     width: 100%;
 }
 .user-location {
@@ -364,7 +364,7 @@
     width: 75%;
     margin: auto;
 }
-.visitor-check {
+.editor-check {
     position: absolute;
     top: 0;
     right: 0;
@@ -401,6 +401,9 @@
 }
 @media screen and ( max-width: 768px )  {
     .visitor {
+        width: 100%;
+    }
+    .editor-check {
         width: 100%;
     }
 }
