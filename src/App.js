@@ -9,7 +9,9 @@ export const UserContext = createContext(null);
 
 function App() {
 
-  const access = JSON.parse(window.localStorage.getItem('access'));
+  let access = JSON.parse(window.sessionStorage.getItem('access'));
+
+  if(access == null)  access = JSON.parse(window.localStorage.getItem('access'))
 
   const [ user, setUser ] = useState(access == null ? { auth: false, data: null } : { auth: true, data: access });
 

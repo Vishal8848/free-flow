@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 
 export const getInitial = (name) => { return name.split(' ').filter((name) => name.length > 1).slice(0, 2).map((each) => each.charAt(0)).join('') }
 
@@ -9,11 +8,9 @@ export const Avatar = ({ name, scale = 'md', theme = 'primary' }) => {
     const initial = getInitial(name);
 
     return ( 
-        <Link to="/profile">
-            <div className={`avatar avatar-${scale} bg-${theme}`}>
-                { initial.length > 0 ? initial : '~' }
-            </div>
-        </Link>
+        <div className={`avatar avatar-${scale} bg-${theme}`}>
+            { initial.length > 0 ? initial : '~' }
+        </div>
     );
 }
 
@@ -28,11 +25,11 @@ export const Loader = ({ show }) => {
     );
 }
 
-export const Tooltip = ({ type }) => {
+export const Tooltip = ({ body }) => {
     return ( 
         <div className="tool-tip theme-middle shadow-sm">
             <div className="tint theme-middle tint-tm"></div>
-            <div className="tooltip-content px-2">{ type }</div>
+            <div className="tooltip-content px-2">{ body }</div>
         </div>
     );
 }

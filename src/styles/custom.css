@@ -306,7 +306,6 @@ div:hover > .tool-tip {
 .tool-tip {
     position: absolute;
     transform: translateY(150%);
-    background-color: white;
     border-radius: 16px;
     min-width: 100px;
     width: auto;
@@ -316,7 +315,6 @@ div:hover > .tool-tip {
 .tooltip-content {
     text-align: center;
     padding-top: 2.5px;
-    font-weight: bold;
 }
 
 /* Inform Modal */

@@ -23,7 +23,7 @@ const User = ({ auth, data, updateProfile }) => {
     }
 
     return ( 
-        <div className="user-profile m-auto mt-5 theme-middle">
+        <div className="user-profile m-auto mt-3 theme-middle">
             <div className="form-floating theme-inner">
                 <input type="text" id="user-occu" name="user-occu" className="form-control border-0" placeholder="What best describes you?"
                     value={user.occupation} onChange={(e) => updateField('occupation', e.target.value)} disabled={auth.uid === data.uid ? "" : "disabled"}/>
@@ -77,8 +77,8 @@ const User = ({ auth, data, updateProfile }) => {
             </div>
 
             {   (auth.uid === data.uid) &&
-                <div className="user-save mt-3">
-                    <button className="btn btn-success fw-bold" onClick={() => updateUser()}>
+                <div className="user-save mt-3 mb-3">
+                    <button className="btn btn-success fw-bold btn-lg" onClick={() => updateUser()}>
                         <i className="fas fa-check me-2"></i>Save
                     </button>
                 </div>

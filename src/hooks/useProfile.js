@@ -27,12 +27,12 @@ const useProfile = (uid) => {
                 res = await firebasePosts(result.saved)
                 if(!res.error) setSaved(res.data)
 
+                if(imgs[1]) res = await firebaseDownloadImage('dps', uid);
+                if(!res.error)  setDp(res.data.length && res.data)
+
                 if(imgs[0]) res = await firebaseDownloadImage('bgs', uid);
                 else res = await firebaseDownloadImage('bgs');
-                if(!res.error)  setBg(res.data)
-
-                if(imgs[1]) res = await firebaseDownloadImage('dps', uid);
-                if(!res.error)  setDp(res.data)
+                if(!res.error)  setBg(res.data.length && res.data)
             }
         }
         firebaseFetch();

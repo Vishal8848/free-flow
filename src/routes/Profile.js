@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useContext } from 'react'
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
-import { getInitial, formatBytes, Toast, Loader } from '../components/Extras'
+import { getInitial, formatBytes, Loader } from '../components/Extras'
 import { firebaseUploadImage } from '../firebase/firebaseStore'
 import PostCard from '../components/profile/PostCard'
 import Details from '../components/profile/Details'
@@ -52,6 +52,7 @@ const Profile = () => {
     // Profile Data
     const profile = useProfile(uid);
     const [ bg, setBg ] = useState(profile.user && profile.bg)
+    const [ dp, setDp ] = useState(profile.user && profile.dp)
 
     // Active Profile Component
     const [ params ] = useSearchParams();
@@ -72,27 +73,33 @@ const Profile = () => {
         setActive([...active]);
     }
 
-    // Toast Handler
-    const [ toast, setToast ] = useState({ show: false, code: 0, data: null })
-
     // Update Background Image
     const setBackground = (e) => {
         e.preventDefault();
         const fileSize = formatBytes(e.target.files[0].size);
-        console.log(parseFloat(fileSize.split(' ')[0]) < 500, fileSize);
         if(parseFloat(fileSize.split(' ')[0]) < 500)  {
             firebaseUploadImage(user.data.uid, e.target.files[0], 'bgs').then(() => {
                 setBg(URL.createObjectURL(e.target.files[0]))
-                setToast({ show: true, code: 1, data: "Background Set Successfully" })
             })
-        }   else setToast({ show: true, code: 0, data: fileSize })
+        }   else console.log("File Size Exceeded", fileSize)
+    }
+
+    // Update Profile Picture
+    const setProfilePicture = (e) => {
+        e.preventDefault();
+        const fileSize = formatBytes(e.target.files[0].size);
+        if(parseFloat(fileSize.split(' ')[0]) < 500)  {
+            firebaseUploadImage(user.data.uid, e.target.files[0], 'dps').then(() => {
+                setDp(URL.createObjectURL(e.target.files[0]))
+            })
+        }   else console.log("File Size Exceeded", fileSize)
     }
 
     return ( <>
         <Header />
             <div className="container-md m-auto profile rounded theme-outer">
             {   profile.user ? 
-                <><div className="profile-header m-auto theme-middle">
+                <><div className="profile-header m-auto shadow theme-middle">
 
                     <div className="profile-bg" style={{ background: `url(${bg ? bg : profile.bg}) center center / cover no-repeat` }}>
                         {   uid === user.data.uid &&
@@ -121,18 +128,25 @@ const Profile = () => {
                         }}/>
                     </div>
 
-                    <div className={`profile-pic bg-${profile.user.theme}`}>
-                        <div className="profile-initial">
-                            { getInitial(profile.user.fname + ' ' + profile.user.lname) }
-                        </div>
-                        <div className="pic-edit fw-bold pt-3 rounded-pill">
-                            <i className="fas fa-camera fa-lg me-2"></i> Edit Picture
-                        </div>
+                    <div className={`profile-pic bg-${profile.user.theme} border border-secondary`} style={{ background: `url(${dp ? dp : profile.dp}) center center / cover no-repeat` }}>
+                        {   (!dp && !profile.dp) &&
+                            <div className="profile-initial">
+                                { getInitial(profile.user.fname + ' ' + profile.user.lname) }
+                            </div>
+                        }
+                        {   uid === user.data.uid &&
+                            <><input type="file" name="dp" id="dp" accept="image/*" onChange={(e) => setProfilePicture(e)} style={{ visibility: "hidden" }}/>
+                            <label htmlFor="dp" className="pic-edit rounded-pill">
+                                <div className="fw-bold pt-3">
+                                    <i className="fas fa-camera fa-lg me-2"></i> Edit Picture
+                                </div>
+                            </label></>
+                        }
                     </div>
 
                 </div>
 
-                <div className="profile-body m-auto theme-middle">
+                <div className="profile-body m-auto shadow theme-middle">
 
                     <div className="profile-nav theme-middle shadow">
                         <ul className="pnav-list my-2 mx-3">
@@ -157,7 +171,7 @@ const Profile = () => {
 
                     <div className="profile-content mt-3 p-3 theme-middle">
                         
-                        <div className="profile-title mt-5 mb-3">
+                        <div className="profile-title mt-5">
                             <span className="fs-3">
                                 { active[0] ? "Profile" : active[1] ? "Posts" : active[2] ? "Friends" : active[3] ? "Saved" : "Profile" }
                             </span>
@@ -183,7 +197,6 @@ const Profile = () => {
             }
             </div>
         <Footer />
-        <Toast show={toast.show} code={toast.code} value={toast.data}/>
     </>);
 }
  

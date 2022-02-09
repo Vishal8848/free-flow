@@ -14,12 +14,12 @@ export const firebaseLogin = async (cred) => {
 
         if(!response.user.emailVerified)  return { error: true, data: "auth/user-not-verified" }
         
-        let access = { uid: response.user.uid, lastActive: false, verified: response.user.emailVerified, on: Date.now() };
+        let access = { uid: response.user.uid, verified: response.user.emailVerified, on: Date.now() };
 
         // Cookie Access
         if(cred.save)   window.localStorage.setItem('access', JSON.stringify(access))
 
-        else window.localStorage.removeItem('access')
+        window.sessionStorage.setItem('access', JSON.stringify(access))
 
         return { error: false, data: access };
 
@@ -34,10 +34,12 @@ export const firebaseGoogleLogin = async () => {
 
         const response = await signInWithPopup(auth, Google);
         
-        let access = { uid: response.user.uid, lastActive: false, verified: response.user.emailVerified, on: Date.now() };
+        let access = { uid: response.user.uid, verified: response.user.emailVerified, on: Date.now() };
 
         // Cookie Access
         window.localStorage.setItem('access', JSON.stringify(access))
+
+        window.sessionStorage.setItem('access', JSON.stringify(access))
 
         return { error: false, data: access };
 

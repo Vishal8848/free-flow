@@ -98,13 +98,9 @@ export const firebaseUploadImage = async (id, blob, type) => {
 
         await uploadBytes(imageRef, blob);
 
-        if(type === 'bgs' || type === 'dps')    {
-            await updateDoc(doc(store, 'users', id), {
-                hasBG: type === 'bgs',
-                hasDP: type === 'dps',
-                updatedAt: Date.now().toString()
-            })
-        }
+        if(type === 'bgs') await updateDoc(doc(store, 'users', id), { hasBG: true, updatedAt: Date.now().toString() })
+
+        if(type === 'dps') await updateDoc(doc(store, 'users', id), { hasDP: true, updatedAt: Date.now().toString() })
 
     }   catch(err)  { return { error: true, data: cast(err.message) } }
 
