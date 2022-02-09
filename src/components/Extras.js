@@ -2,6 +2,14 @@ import { useState, useEffect } from 'react'
 
 export const getInitial = (name) => { return name.split(' ').filter((name) => name.length > 1).slice(0, 2).map((each) => each.charAt(0)).join('') }
 
+export const parseDOB = (dob) => { 
+    const months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+    
+    const day = dob.split('-')[2], month = parseInt(dob.split('-')[1]) - 1;
+    
+    return day + ' ' + months[month];
+}
+
 export const Avatar = ({ name, scale = 'md', theme = 'primary' }) => {
 
     // Parse props.name

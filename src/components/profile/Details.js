@@ -11,16 +11,6 @@ const Details = ({ data }) => {
                 <strong className="fs-2 align-middle">{ data.name }</strong>
             </div>
 
-            <div className="profile-location">
-                <strong className="fs-6 text-muted">
-                    { (data.location.city && data.location.city.length > 0) ? data.location.city : "City" }
-                    <i className="fas fa-circle mx-2 align-middle" style={{ fontSize: "5px" }}></i>
-                    { (data.location.state && data.location.state.length > 0) ? data.location.state : "State" }
-                    <i className="fas fa-circle mx-2 align-middle" style={{ fontSize: "5px" }}></i>
-                    { (data.location.country && data.location.country.length > 0) ? data.location.country : "Country" }
-                </strong>
-            </div>
-
             <div className="profile-desc text-muted pe-2">
                 { (data.description && data.description.length > 0) ? data.description : "Your description lives here" }
             </div>

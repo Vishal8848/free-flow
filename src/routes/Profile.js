@@ -5,6 +5,7 @@ import { firebaseUploadImage } from '../firebase/firebaseStore'
 import PostCard from '../components/profile/PostCard'
 import Details from '../components/profile/Details'
 import Friends from '../components/profile/Friends'
+import Visitor from '../components/profile/Visitor'
 import Stats from '../components/profile/Stats'
 import User from '../components/profile/User'
 import useProfile from '../hooks/useProfile'
@@ -51,6 +52,7 @@ const Profile = () => {
 
     // Profile Data
     const profile = useProfile(uid);
+    const [ visitor, setVisitor ] = useState(true);
     const [ bg, setBg ] = useState(profile.user && profile.bg)
     const [ dp, setDp ] = useState(profile.user && profile.dp)
 
@@ -121,8 +123,7 @@ const Profile = () => {
                         }}/>
 
                         <Details data={{ 
-                            name: profile.user.fname + ' ' + profile.user.lname, 
-                            location: profile.user.location, 
+                            name: profile.user.fname + ' ' + profile.user.lname,
                             description: profile.user.description, 
                             friends: profile.user.friends
                         }}/>
@@ -146,7 +147,7 @@ const Profile = () => {
 
                 </div>
 
-                <div className="profile-body m-auto shadow theme-middle">
+                <div className="profile-body m-auto shadow position-relative theme-middle">
 
                     <div className="profile-nav theme-middle shadow">
                         <ul className="pnav-list my-2 mx-3">
@@ -177,8 +178,17 @@ const Profile = () => {
                             </span>
                         </div>
 
+                        {   user.data.uid === uid &&
+                            <div className="visitor-check form-check theme-switch form-switch pb-2 theme-inner">
+                                <label className="form-check-label me-5 pt-1 pe-2" htmlFor="visitorMode">Visitor</label>
+                                <input className="form-check-input" role="switch" type="checkbox" id="visitorMode"
+                                    checked={visitor} onChange={(e) => setVisitor(e.target.checked)}/>
+                            </div>
+                        }
+
                         {
-                            active[0] ? <User auth={user.data} data={{
+                            active[0] ? ((user.data.uid === uid && !visitor) ? 
+                            <User auth={user.data} data={{
                                 uid: uid,
                                 occupation: profile.user.occupation,
                                 description: profile.user.description,
@@ -187,6 +197,13 @@ const Profile = () => {
                                 dob: profile.user.dob,
                                 hobbies: profile.user.hobbies
                             }} updateProfile={profile.setUser}/> : 
+                            <Visitor data={{
+                                occupation: profile.user.occupation,
+                                location: profile.user.location,
+                                education: profile.user.education,
+                                dob: profile.user.dob,
+                                hobbies: profile.user.hobbies
+                            }}/>) :
                             active[1] ? <Posts data={profile.posts} updatePosts={profile.setPosts}/> :
                             active[2] ? <Friends data={profile.friends} updateFriends={profile.setFriends}/> :
                             active[3] && <Saved data={profile.saved} updateSaved={profile.setSaved}/>
