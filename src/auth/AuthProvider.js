@@ -7,9 +7,11 @@ const AuthProvider = () => {
     const { setAuth } = useContext(AuthContext);
 
     const handleProvider = () => {
-        firebaseGoogleLogin()
-        .then(res => setAuth({ status: true, data: res.data }))
-        .catch(err => console.log(err));
+        firebaseGoogleLogin().then(res => {
+            if(res.error)   {
+                console.log(res.data)
+            }   else setAuth({ status: true, data: res.data })
+        })
     }
 
     return (<>

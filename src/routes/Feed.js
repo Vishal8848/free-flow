@@ -88,8 +88,6 @@ const Feed = () => {
                     <div className="feed-post mt-3">
                         <span className="feed-title ps-3 text-muted fw-bold">Posts</span>
                         <div className="posts-set">
-                            <Post/><br/>
-                            <Post/>
                         </div>
                     </div>
 

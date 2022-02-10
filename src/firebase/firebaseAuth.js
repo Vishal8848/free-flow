@@ -1,11 +1,61 @@
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, sendEmailVerification } from 'firebase/auth'
-import { getFirestore, doc, setDoc } from 'firebase/firestore/lite'
+import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore/lite'
 import firebase from './firebase'
 
 const auth = getAuth(firebase);
 const store = getFirestore(firebase);
 const themes = [ 'danger', 'success', 'primary', 'dark' ];
 const cast = (data) => { return data.split('(')[1].slice(0, -2) }
+
+const firebaseUserDocExists = async (uid) => {
+
+    try {
+        const user = await getDoc(doc(store, 'users', uid))
+
+        return { error: false, data: user.exists() }
+
+    }   catch(err)  { return { error: true, data: cast(err.message) } }
+}
+
+const firebaseCreateUserDoc = async (uid, cred, type) => {
+
+    const providers = [ 'auth/email-and-password', 'auth/google-provider', 'auth/facebook-provider', 'auth/twitter-provider', 'auth/github-provider' ];
+
+    try {
+        await setDoc(doc(store, 'users', uid), {
+            fname: cred.fname,
+            lname: cred.lname,
+            dob: cred.dob,
+            gender: cred.gender,
+            theme: themes[Math.floor(Math.random() * themes.length)],
+            lastActive: false,
+            cred: {
+                email: cred.email,
+                type: providers[type]
+            },
+            hasDP: false,
+            hasBG: false,
+            occupation: "",
+            description: "",
+            location: {
+                country: "",
+                state: "",
+                city: ""
+            },
+            education: "",
+            hobbies:  "",
+            friends: [],
+            posts: [],
+            saved: [],
+            likes: [],
+            createdAt: Date.now().toString(),
+            updatedAt: Date.now().toString()
+        });
+
+        return { error: false, data: true }
+
+    }   catch(err) { return { error: true, data: cast(err.message) } }
+}
 
 export const firebaseLogin = async (cred) => {
     
@@ -33,6 +83,22 @@ export const firebaseGoogleLogin = async () => {
         const Google = new GoogleAuthProvider();
 
         const response = await signInWithPopup(auth, Google);
+
+        const userExists = await firebaseUserDocExists(response.user.uid)
+
+        if(!userExists.data)  {
+
+            const cred = {
+                fname: response.user.displayName.split(' ')[0],
+                lname: response.user.displayName.split(' ')[1] != null ? response.user.displayName.split(' ')[1] : '',
+                dob: '',
+                gender: '',
+                email: response.user.email
+            }
+
+            await firebaseCreateUserDoc(response.user.uid, cred, 1)
+
+        }
         
         let access = { uid: response.user.uid, verified: response.user.emailVerified, on: Date.now() };
 
@@ -55,35 +121,7 @@ export const firebaseRegister = async (cred) => {
         response.user.displayName = cred.fname + ' ' + cred.lname;
 
         // Write User Document
-        await setDoc(doc(store, 'users', response.user.uid), {
-            fname: cred.fname,
-            lname: cred.lname,
-            dob: cred.dob,
-            gender: cred.gender,
-            theme: themes[Math.floor(Math.random() * themes.length)],
-            lastActive: false,
-            cred: {
-                email: cred.email,
-                type: 'auth/email-and-password'
-            },
-            hasDP: false,
-            hasBG: false,
-            occupation: "",
-            description: "",
-            location: {
-                country: "",
-                state: "",
-                city: ""
-            },
-            education: "",
-            hobbies:  "",
-            friends: [],
-            posts: [],
-            saved: [],
-            likes: [],
-            createdAt: Date.now().toString(),
-            updatedAt: Date.now().toString()
-        });
+        await firebaseCreateUserDoc(response.user.uid, cred, 0)
 
         await sendEmailVerification(response.user);
 
@@ -102,11 +140,4 @@ export const firebaseResetRequest = async (cred) => {
 
     }   catch(err)   { return { error: true, data: cast(err.message) } }
 
-}
-
-export const firebaseVerifyCode = async (code) => {
-
-    try {
-
-    }   catch(err) { return { error: true, data: cast(err.message) } }
 }

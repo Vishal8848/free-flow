@@ -52,7 +52,7 @@ const Profile = () => {
 
     // Profile Data
     const profile = useProfile(uid);
-    const [ editor, setEditor ] = useState(true);
+    const [ editor, setEditor ] = useState(false);
     const [ bg, setBg ] = useState(profile.user && profile.bg)
     const [ dp, setDp ] = useState(profile.user && profile.dp)
 
