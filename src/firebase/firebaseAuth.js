@@ -5,7 +5,7 @@ import firebase from './firebase'
 const auth = getAuth(firebase);
 const store = getFirestore(firebase);
 const themes = [ 'danger', 'success', 'primary', 'dark' ];
-const cast = (data) => { return data.split('(')[1].slice(0, -2) }
+const cast = (data) => { return data.substring(data.lastIndexOf('(') + 1, data.lastIndexOf(')')) }
 
 const firebaseUserDocExists = async (uid) => {
 

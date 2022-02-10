@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { firebaseUser, firebaseFriends, firebasePosts, firebaseDownloadImage } from '../firebase/firebaseStore'
+import { firebaseUser, firebaseFriends, firebasePostCards } from '../firebase/firebaseStore'
+import { firebaseDownloadImage } from '../firebase/firebaseBulk'
 
 const useProfile = (uid) => {
     const Abort = new AbortController();
@@ -21,10 +22,10 @@ const useProfile = (uid) => {
                 res = await firebaseFriends(result.friends)
                 if(!res.error)  setFriends(res.data)
 
-                res = await firebasePosts(result.posts)
+                res = await firebasePostCards(result.posts)
                 if(!res.error) setPosts(res.data)
 
-                res = await firebasePosts(result.saved)
+                res = await firebasePostCards(result.saved)
                 if(!res.error) setSaved(res.data)
 
                 if(imgs[1]) res = await firebaseDownloadImage('dps', uid);

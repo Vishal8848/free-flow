@@ -20,27 +20,36 @@ const Visitor = ({ data }) => {
                         <i className="fas fa-gift fa-3x"></i>
                     </div>
                     <div className="v-body theme-inner shadow">
-                        Wish me on <strong>{ parseDOB(data.dob) }</strong>
+                        {   data.dob.length > 0 ?
+                            ["Wish me on", <strong>{ parseDOB(data.dob) }</strong>] :
+                            "Will reveal my birthday soon"
+                        }
                     </div>
                 </div>
                 <div className="v-detail theme-inner shadow mt-4">
                     <div className="v-icon"><i className="fas fa-skiing-nordic fa-3x me-2"></i></div>
                     <div className="v-body text-nowrap">
-                        My hobbies are <br/>
-                        <strong>{ data.hobbies }</strong>
+                        {   data.hobbies.length > 0 ?
+                            ["My hobbies are", <br/>,
+                            <strong>{ data.hobbies }</strong>] :
+                            "Yet to decide my hobbies"
+                        }
                     </div>
                 </div>
                 <div className="v-detail theme-inner shadow mt-4">
                     { !position && <div className="v-icon"><i className="fas fa-globe-asia fa-3x"></i></div> }
                     <div className="v-body">
-                        <strong>
-                            { data.location.city }
-                            <i className="fas fa-circle mx-2 align-middle" style={{ fontSize: "5px" }}></i>
-                            { data.location.state }
-                            <i className="fas fa-circle mx-2 align-middle" style={{ fontSize: "5px" }}></i>
-                            { data.location.country }
-                        </strong>
-                        <br/> Is my home place
+                        {   (data.location.country || data.location.state || data.location.city) ?
+                            [<strong>
+                                { data.location.city }
+                                <i className="fas fa-circle mx-2 align-middle" style={{ fontSize: "5px" }}></i>
+                                { data.location.state }
+                                <i className="fas fa-circle mx-2 align-middle" style={{ fontSize: "5px" }}></i>
+                                { data.location.country }
+                            </strong>,
+                            <br/>, "Is my home place"] :
+                            "My homeplace is a secret"
+                        }
                     </div>
                     { position && <div className="v-icon"><i className="fas fa-globe-asia fa-3x"></i></div> }
                 </div>
@@ -50,8 +59,11 @@ const Visitor = ({ data }) => {
                     <div className="v-detail theme-inner shadow mt-4">
                         <div className="v-icon"><i className="fas fa-trophy fa-3x"></i></div>
                         <div className="v-body">
-                            I'm best being a <br/>
-                            <strong>{ data.occupation }</strong>
+                            {   data.occupation ?
+                                ["I'm best being a", <br/>,
+                                <strong>{ data.occupation }</strong>] :
+                                "Working on my passion"
+                            }
                         </div>
                     </div> :
                     <div className="v-set">
@@ -59,23 +71,32 @@ const Visitor = ({ data }) => {
                             <i className="fas fa-trophy fa-3x"></i>
                         </div>
                         <div className="v-body theme-inner shadow">
-                            I'm best being a <strong>{ data.occupation }</strong>
+                            {   data.occupation ?
+                                ["I'm best being a", <strong>{ data.occupation }</strong>] :
+                                "Working on my passion"
+                            }
                         </div>
                     </div>
                 }
                 <div className="v-detail theme-inner shadow mt-4">
                     { !position && <div className="v-icon"><i className="fas fa-school fa-3x"></i></div>}
                     <div className="v-body">
-                        <strong>{ data.education }</strong> 
-                        <br/> Helped me learn
+                        {   data.education ?
+                            [<strong>{ data.education }</strong>,
+                            <br/>, "Helped me learn"] :
+                            "I'm still learning"
+                        }
                     </div>
                     { position && <div className="v-icon"><i className="fas fa-school fa-3x"></i></div>}
                 </div>
                 <div className="v-detail theme-inner shadow mt-4">
                     <div className="v-icon"><i className="fas fa-users fa-3x"></i></div>
                     <div className="v-body">
-                        My latest connection <br/>
-                        <strong>Abishek Prasannaa</strong>
+                        {   data.latest ?
+                            ["My latest connection", <br/>,
+                            <strong>Abishek Prasannaa</strong>] :
+                            "No connections recently"
+                        }
                     </div>
                 </div>
             </div>

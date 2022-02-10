@@ -3,6 +3,7 @@ import { useState } from "react";
 
 const CreatePost = ({ width }) => {
 
+    const [ post, setPost ] = useState(null);
     const [ image, setImg ] = useState({ imageURL: '', status: false });
     const [ form, openForm ] = useState(false);
 
@@ -14,7 +15,7 @@ const CreatePost = ({ width }) => {
         setImg({...data})
     }
 
-    const createPost = () => {
+    const resetPost = () => {
         document.createPost.reset();
         setImg({ imageURL: '', status: false });
     }
@@ -24,7 +25,7 @@ const CreatePost = ({ width }) => {
             { width > 768 && <Avatar name="Vishal Pranav" scale="md" theme="primary"/> }
             <div className="w-100 fs-6 px-3 py-2 ms-md-3 rounded-pill border-dark theme-inner text-muted" onClick={() => form ? openForm(false) : openForm(true)}>Create New Wave</div>
             <div className="vr mx-3"></div>
-            <i className="fas fa-paper-plane text-primary fa-lg me-3" onClick={() => createPost()}></i>
+            <i className="fas fa-paper-plane text-primary fa-lg me-3" onClick={() => resetPost()}></i>
         </div>
         <form name="createPost" className="create-form theme-middle p-3" style={{ display: `${ form ? 'block' : 'none' }` }}>
             <div className="d-flex align-middle justify-content-start">

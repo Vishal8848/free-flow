@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useContext } from 'react'
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { getInitial, formatBytes, Loader } from '../components/Extras'
-import { firebaseUploadImage } from '../firebase/firebaseStore'
+import { firebaseUploadImage } from '../firebase/firebaseBulk'
 import PostCard from '../components/profile/PostCard'
 import Details from '../components/profile/Details'
 import Friends from '../components/profile/Friends'
@@ -202,7 +202,8 @@ const Profile = () => {
                                 location: profile.user.location,
                                 education: profile.user.education,
                                 dob: profile.user.dob,
-                                hobbies: profile.user.hobbies
+                                hobbies: profile.user.hobbies,
+                                latest: (profile.friends && profile.friends.length > 0) ? profile.friends[profile.friends.length - 1] : null
                             }}/>) :
                             active[1] ? <Posts data={profile.posts} updatePosts={profile.setPosts}/> :
                             active[2] ? <Friends data={profile.friends} updateFriends={profile.setFriends}/> :
