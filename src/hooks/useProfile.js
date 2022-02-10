@@ -36,11 +36,11 @@ const useProfile = (uid) => {
                 if(!res.error)  setBg(res.data.length && res.data)
             }
         }
-        firebaseFetch();
+        if(uid) firebaseFetch();
         return () => Abort.abort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [uid])
-    return { user, friends, posts, saved, bg, dp, setUser, setFriends, setPosts, setSaved, setBg, setDp }
+    return { user, friends, posts, saved, bg, dp, setUser, setFriends, setPosts, setSaved }
 }
  
 export default useProfile;

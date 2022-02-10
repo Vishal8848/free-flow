@@ -21,7 +21,7 @@ const Visitor = ({ data }) => {
                     </div>
                     <div className="v-body theme-inner shadow">
                         {   data.dob.length > 0 ?
-                            ["Wish me on", <strong>{ parseDOB(data.dob) }</strong>] :
+                            ["Wish me on ", <strong>{ parseDOB(data.dob) }</strong>] :
                             "Will reveal my birthday soon"
                         }
                     </div>
@@ -72,7 +72,7 @@ const Visitor = ({ data }) => {
                         </div>
                         <div className="v-body theme-inner shadow">
                             {   data.occupation ?
-                                ["I'm best being a", <strong>{ data.occupation }</strong>] :
+                                [`I'm best being a${ (/^[aeiouAEIOU].*/).test(data.occupation) ? 'n ' : ' ' }`, <strong>{ data.occupation }</strong>] :
                                 "Working on my passion"
                             }
                         </div>

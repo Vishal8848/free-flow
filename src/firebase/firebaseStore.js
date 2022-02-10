@@ -41,10 +41,17 @@ export const firebaseFriends = async (uids) => {
     }   catch(err) { return { error: true, data: cast(err.message) } }
 }
 
-export const firebaseCreatePost = async (uid, data) => {
+export const firebaseCreatePost = async (data) => {
 
     try {
-        
+        await addDoc(doc(store, 'posts'), {
+            creator: data.uid,
+            private: data.private,
+            title: data.title,
+            description: data.description,
+            hasImage: data.hasImage,
+            createdAt: Date.now().toString()
+        })
 
     }   catch(err)  { return { error: true, data: cast(err.message) } }
 

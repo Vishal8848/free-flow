@@ -4,8 +4,10 @@ import Profile from './routes/Profile'
 import Home from './routes/Home'
 import Feed from './routes/Feed'
 import Error from './routes/Error'
+import useProfile from './hooks/useProfile'
 
 export const AuthContext = createContext(null);
+export const UserContext = createContext(null);
 
 function App() {
 
@@ -16,16 +18,21 @@ function App() {
   const [ auth, setAuth ] = useState(access == null ? { status: false, data: null } : { status: true, data: access });
 
   const Auth = useMemo(() => ({ auth, setAuth }), [ auth, setAuth ]);
-
+  
+  const user = useProfile(access.uid)
+  
   return (
     <Router>
       <AuthContext.Provider value={Auth}>
+      <UserContext.Provider value={user}>
         <Routes>
           <Route exact path="/" element={<Home/>}/>
-          <Route path="/feed" element={<Feed/>} />
-          <Route path="/profile/:uid" element={<Profile />}/>
-          <Route path="/error" element={<Error />}/>
+          
+            <Route path="/feed" element={<Feed/>} />
+            <Route path="/profile/:uid" element={<Profile />}/>
+            <Route path="/error" element={<Error />}/>
         </Routes>
+          </UserContext.Provider>
       </AuthContext.Provider>
     </Router>
   );
