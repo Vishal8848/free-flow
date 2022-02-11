@@ -19,20 +19,19 @@ function App() {
 
   const Auth = useMemo(() => ({ auth, setAuth }), [ auth, setAuth ]);
   
-  const user = useProfile(access.uid)
+  const User = useProfile(access ? access.uid : null)
   
   return (
     <Router>
       <AuthContext.Provider value={Auth}>
-      <UserContext.Provider value={user}>
-        <Routes>
-          <Route exact path="/" element={<Home/>}/>
-          
+        <UserContext.Provider value={User}>
+          <Routes>
+            <Route exact path="/" element={<Home/>}/>
             <Route path="/feed" element={<Feed/>} />
             <Route path="/profile/:uid" element={<Profile />}/>
             <Route path="/error" element={<Error />}/>
-        </Routes>
-          </UserContext.Provider>
+          </Routes>
+        </UserContext.Provider>
       </AuthContext.Provider>
     </Router>
   );

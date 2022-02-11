@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom'
 import { Avatar, Tooltip } from './Extras'
 import Notifications from './Notifications'
+import { AuthContext, UserContext } from '../App'
+import { firebaseLogout } from '../firebase/firebaseAuth';
 
 const readStoredTheme = () => {
 
@@ -41,6 +43,20 @@ const Search = () => {
 
 const Header = () => {
 
+    const { auth, setAuth } = useContext(AuthContext);
+    const { user } = useContext(UserContext);
+
+    const userLogout = () => {
+        window.sessionStorage.removeItem('access')
+        window.localStorage.removeItem('access')
+        firebaseLogout().then(res => {
+            if(!res.error) {
+                console.log("Sign Out Successful")
+                setAuth({ status: false, data: null })
+            }
+        })
+    }
+
     const mode = readStoredTheme();
 
     const [ search, setSearch ] = useState({ open: false, input: "" });
@@ -50,21 +66,22 @@ const Header = () => {
     useEffect(() => {
         if(theme)  {
             window.localStorage.setItem('fftheme', JSON.stringify({ dark: true, at: Date.now() }))
-            document.styleSheets[3].cssRules[61].style.backgroundColor = "rgb(24, 25, 26)"
-            document.styleSheets[3].cssRules[62].style.backgroundColor = "rgb(28, 30, 33)"
-            document.styleSheets[3].cssRules[63].style.backgroundColor = "rgb(32, 35, 40)"
-            document.styleSheets[3].cssRules[64].style.color = "rgb(238, 238, 238)"
+            document.styleSheets[3].cssRules[62].style.backgroundColor = "rgb(24, 25, 26)"
+            document.styleSheets[3].cssRules[63].style.backgroundColor = "rgb(28, 30, 33)"
+            document.styleSheets[3].cssRules[64].style.backgroundColor = "rgb(32, 35, 40)"
+            document.styleSheets[3].cssRules[65].style.color = "rgb(238, 238, 238)"
         }   else {
             window.localStorage.setItem('fftheme', JSON.stringify({ dark: false, at: Date.now() }))
-            document.styleSheets[3].cssRules[61].style.backgroundColor = "rgb(244, 247, 248)"
-            document.styleSheets[3].cssRules[62].style.backgroundColor = "rgb(255, 255, 255)"
-            document.styleSheets[3].cssRules[63].style.backgroundColor = "rgb(248, 255, 255)"
-            document.styleSheets[3].cssRules[64].style.color = "rgb(25, 25, 25)"
+            document.styleSheets[3].cssRules[62].style.backgroundColor = "rgb(244, 247, 248)"
+            document.styleSheets[3].cssRules[63].style.backgroundColor = "rgb(255, 255, 255)"
+            document.styleSheets[3].cssRules[64].style.backgroundColor = "rgb(248, 255, 255)"
+            document.styleSheets[3].cssRules[65].style.color = "rgb(25, 25, 25)"
         }
     }, [theme]);
 
     return ( 
         <nav className="navbar header navbar-expand-lg navbar-light mb-md-3 shadow-sm theme-middle">
+            {   user ?
             <div className="container-fluid theme-middle">
 
                 <div className="brand me-2">
@@ -105,31 +122,35 @@ const Header = () => {
                             <Avatar name="Vishal Pranav" theme="danger" scale="md"/>
                         </div>
 
-                        <div className="dropdown-menu dropdown-menu-end theme-inner" aria-labelledby="user-drop">
-                            <div className="tint tint-tr theme-inner"></div>
-                            <div className="user-partition">
-                                <Avatar name="Vishal Pranav" scale="lg" theme="success"/>
-                                <div className="u-name mt-2 text-center"><h5>Vishal Pranav</h5></div>
-                            </div>
-                            <div className="dropdown-divider"></div>
-                            <div className="actions-partition text-start theme-inner">
-                                <Link to="/profile" className="dropdown-item pb-2 theme-inner"><i className="fas fa-user me-2"></i> Profile</Link>
-                                <Link to="/profile?type=posts" className="dropdown-item pb-2 theme-inner"><i className="fas fa-paper-plane me-2"></i>Posts</Link>
-                                <Link to="/profile?type=friends" className="dropdown-item pb-2 theme-inner"><i className="fas fa-heart me-2"></i>Friends</Link>
-                                <Link to="/profile?type=saved" className="dropdown-item pb-2 theme-inner"><i className="fas fa-bookmark me-2"></i>Saved</Link>
-                                <Link to="/contact" className="dropdown-item pb-2 theme-inner"><i className="fas fa-pen-alt fa-rotate-270 me-2"></i>Feedback</Link>
-                                <div className="form-check theme-switch form-switch pb-2 theme-inner">
-                                    <label className="form-check-label" htmlFor="themeColor"><i className={`fas fa-${ theme ? 'moon' : 'sun' } me-2`}></i>Dark Mode</label>
-                                    <input className="form-check-input" role="switch" type="checkbox" id="themeColor"
-                                        checked={theme} onChange={(e) => setTheme(e.target.checked)}/>
+                        {   auth.status &&
+                            <div className="dropdown-menu dropdown-menu-end theme-inner" aria-labelledby="user-drop">
+                                <div className="tint tint-tr theme-inner"></div>
+                                <div className="user-partition">
+                                    <Avatar name="Vishal Pranav" scale="lg" theme="success"/>
+                                    <div className="u-name text-center"><h5 className="mt-2">{ user.fname + ' ' + user.lname }</h5></div>
                                 </div>
-                                <Link to="/" className="dropdown-item pt-2 theme-inner"><i className="fas fa-sign-out-alt me-2"></i>Logout</Link>
+                                <div className="dropdown-divider"></div>
+                                <div className="actions-partition text-start theme-inner">
+                                    <Link to={`/profile/${auth.data.uid}`} className="dropdown-item pb-2 theme-inner"><i className="fas fa-user me-2"></i> Profile</Link>
+                                    <Link to={`/profile/${auth.data.uid}?type=posts`} className="dropdown-item pb-2 theme-inner"><i className="fas fa-paper-plane me-2"></i>Posts</Link>
+                                    <Link to={`/profile/${auth.data.uid}?type=friends`} className="dropdown-item pb-2 theme-inner"><i className="fas fa-heart me-2"></i>Friends</Link>
+                                    <Link to={`/profile/${auth.data.uid}?type=saved`} className="dropdown-item pb-2 theme-inner"><i className="fas fa-bookmark me-2"></i>Saved</Link>
+                                    <Link to="/contact" className="dropdown-item pb-2 theme-inner"><i className="fas fa-pen-alt fa-rotate-270 me-2"></i>Feedback</Link>
+                                    <div className="form-check theme-switch form-switch pb-2 theme-inner">
+                                        <label className="form-check-label" htmlFor="themeColor"><i className={`fas fa-${ theme ? 'moon' : 'sun' } me-2`}></i>Dark Mode</label>
+                                        <input className="form-check-input" role="switch" type="checkbox" id="themeColor"
+                                            checked={theme} onChange={(e) => setTheme(e.target.checked)}/>
+                                    </div>
+                                    <div className="dropdown-item pt-2 theme-inner" style={{ cursor: "pointer" }} onClick={() => userLogout()}>
+                                        <i className="fas fa-sign-out-alt me-2"></i>Logout
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        }
                     </div>
                 </div>
 
-            </div>
+            </div> : "Loading" }
         </nav>
     );
 }

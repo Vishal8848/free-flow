@@ -48,7 +48,8 @@ const Profile = () => {
     // Auth Handler
     const setRoute = useNavigate();
     const { auth } = useContext(AuthContext);
-    useEffect(() => { if(!auth.status) setRoute('/') }, [auth.status, setRoute]);
+
+    useEffect(() => { if(!auth.status) setRoute('/') }, [auth, setRoute]);
 
     // Profile Data
     const profile = useProfile(uid);
@@ -104,7 +105,7 @@ const Profile = () => {
                 <><div className="profile-header m-auto shadow theme-middle">
 
                     <div className="profile-bg" style={{ background: `url(${bg ? bg : profile.bg}) center center / cover no-repeat` }}>
-                        {   uid === auth.data.uid &&
+                        {   auth.data && (uid === auth.data.uid) &&
                             <><input type="file" name="bg" id="bg" accept="image/*" onChange={(e) => setBackground(e)} style={{ visibility: "hidden" }}/>
                             <label htmlFor="bg" className="pic-edit">
                                 <div className="fw-bold pt-3">
@@ -135,7 +136,7 @@ const Profile = () => {
                                 { getInitial(profile.user.fname + ' ' + profile.user.lname) }
                             </div>
                         }
-                        {   uid === auth.data.uid &&
+                        {   auth.data && (uid === auth.data.uid) &&
                             <><input type="file" name="dp" id="dp" accept="image/*" onChange={(e) => setProfilePicture(e)} style={{ visibility: "hidden" }}/>
                             <label htmlFor="dp" className="pic-edit rounded-pill">
                                 <div className="fw-bold pt-3">
@@ -178,7 +179,7 @@ const Profile = () => {
                             </span>
                         </div>
 
-                        {   auth.data.uid === uid &&
+                        {   auth.data && (uid === auth.data.uid) &&
                             <div className="editor-check form-check theme-switch form-switch pb-2">
                                 <label className="form-check-label me-5 pt-1 pe-2" htmlFor="editorMode">Editor</label>
                                 <input className="form-check-input" role="switch" type="checkbox" id="editorMode"
@@ -187,7 +188,7 @@ const Profile = () => {
                         }
 
                         {
-                            active[0] ? ((auth.data.uid === uid && editor) ?
+                            active[0] ? ((auth.data && (uid === auth.data.uid) && editor) ?
                             <User auth={auth.data} data={{
                                 uid: uid,
                                 occupation: profile.user.occupation,

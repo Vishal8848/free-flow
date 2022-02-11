@@ -31,8 +31,7 @@ const Home = () => {
 
     useEffect(() => { 
         if(auth.status) auth.data.lastActive ? setRoute('/feed') : setRoute('/profile/' + auth.data.uid)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [auth.status, setRoute])
+    }, [auth, setRoute])
 
     return (<>
         <div id="home" className="container-fluid bg-light">

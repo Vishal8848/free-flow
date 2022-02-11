@@ -1,4 +1,4 @@
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, sendEmailVerification } from 'firebase/auth'
+import { getAuth, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, sendEmailVerification } from 'firebase/auth'
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore/lite'
 import firebase from './firebase'
 
@@ -55,6 +55,17 @@ const firebaseCreateUserDoc = async (uid, cred, type) => {
         return { error: false, data: true }
 
     }   catch(err) { return { error: true, data: cast(err.message) } }
+}
+
+export const firebaseLogout = async () => {
+
+    try {
+        await signOut(auth)
+
+        return { error: false }
+
+    }   catch(err) { return { error: true, data: cast(err.message) } }
+
 }
 
 export const firebaseLogin = async (cred) => {

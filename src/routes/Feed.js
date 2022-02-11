@@ -8,17 +8,14 @@ import Post from '../components/feed/Post'
 import useWindow from '../hooks/useWindow'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import { AuthContext, UserContext } from '../App'
+import { AuthContext } from '../App'
 
 const Feed = () => {
 
     // Authorize auth or Redirect
     const setRoute = useNavigate();
-    const user = useContext(UserContext);
     const { auth } = useContext(AuthContext);
-    useEffect(() => { if(!auth.status) setRoute('/') }, [auth.status, setRoute]);
-
-    console.log(user);
+    useEffect(() => { if(!auth.status) setRoute('/') }, [auth, setRoute]);
 
     const { width } = useWindow();
     const [ params ] = useSearchParams();
