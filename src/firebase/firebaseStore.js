@@ -87,17 +87,6 @@ export const firebasePostCards = async (pids) => {
 
 }
 
-export const firebaseUpdateActivity = async (uid) => {
-
-    try {
-        await updateDoc(doc(store, 'users', uid), {
-            lastActive: Date.now().toString(),
-            updatedAt: Date.now().toString()
-        })
-
-    }   catch(err)  { return { error: false, data: cast(err.message) } }
-}
-
 export const firebaseUpdateUser = async (uid, cred) => {
 
     try {

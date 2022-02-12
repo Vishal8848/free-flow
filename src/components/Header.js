@@ -7,7 +7,7 @@ import { firebaseLogout } from '../firebase/firebaseAuth';
 
 const readStoredTheme = () => {
 
-    const theme = JSON.parse(window.localStorage.getItem('fftheme'));
+    const theme = JSON.parse(window.localStorage.getItem('theme'));
 
     if(theme != null) return theme.dark;
 
@@ -47,14 +47,10 @@ const Header = () => {
     const { user } = useContext(UserContext);
 
     const userLogout = () => {
+        window.localStorage.setItem('signout', Date.now().toString())
         window.sessionStorage.removeItem('access')
         window.localStorage.removeItem('access')
-        firebaseLogout().then(res => {
-            if(!res.error) {
-                console.log("Sign Out Successful")
-                setAuth({ status: false, data: null })
-            }
-        })
+        firebaseLogout().then(() => setAuth({ status: false, data: null }))
     }
 
     const mode = readStoredTheme();
@@ -65,13 +61,13 @@ const Header = () => {
 
     useEffect(() => {
         if(theme)  {
-            window.localStorage.setItem('fftheme', JSON.stringify({ dark: true, at: Date.now() }))
+            window.localStorage.setItem('theme', JSON.stringify({ dark: true, at: Date.now() }))
             document.styleSheets[3].cssRules[62].style.backgroundColor = "rgb(24, 25, 26)"
             document.styleSheets[3].cssRules[63].style.backgroundColor = "rgb(28, 30, 33)"
             document.styleSheets[3].cssRules[64].style.backgroundColor = "rgb(32, 35, 40)"
             document.styleSheets[3].cssRules[65].style.color = "rgb(238, 238, 238)"
         }   else {
-            window.localStorage.setItem('fftheme', JSON.stringify({ dark: false, at: Date.now() }))
+            window.localStorage.setItem('theme', JSON.stringify({ dark: false, at: Date.now() }))
             document.styleSheets[3].cssRules[62].style.backgroundColor = "rgb(244, 247, 248)"
             document.styleSheets[3].cssRules[63].style.backgroundColor = "rgb(255, 255, 255)"
             document.styleSheets[3].cssRules[64].style.backgroundColor = "rgb(248, 255, 255)"

@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { useState, useMemo, createContext } from 'react'
+import useProfile from './hooks/useProfile'
 import Profile from './routes/Profile'
 import Home from './routes/Home'
 import Feed from './routes/Feed'
 import Error from './routes/Error'
-import useProfile from './hooks/useProfile'
 
 export const AuthContext = createContext(null);
 export const UserContext = createContext(null);

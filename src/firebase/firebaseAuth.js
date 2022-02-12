@@ -28,7 +28,6 @@ const firebaseCreateUserDoc = async (uid, cred, type) => {
             dob: cred.dob,
             gender: cred.gender,
             theme: themes[Math.floor(Math.random() * themes.length)],
-            lastActive: false,
             cred: {
                 email: cred.email,
                 type: providers[type]
@@ -62,8 +61,6 @@ export const firebaseLogout = async () => {
     try {
         await signOut(auth)
 
-        return { error: false }
-
     }   catch(err) { return { error: true, data: cast(err.message) } }
 
 }
@@ -75,7 +72,7 @@ export const firebaseLogin = async (cred) => {
 
         if(!response.user.emailVerified)  return { error: true, data: "auth/user-not-verified" }
         
-        let access = { uid: response.user.uid, verified: response.user.emailVerified, on: Date.now() };
+        let access = { uid: response.user.uid, lastActive: JSON.parse(window.localStorage.getItem('signout')) };
 
         // Cookie Access
         if(cred.save)   window.localStorage.setItem('access', JSON.stringify(access))
@@ -111,7 +108,7 @@ export const firebaseGoogleLogin = async () => {
 
         }
         
-        let access = { uid: response.user.uid, verified: response.user.emailVerified, on: Date.now() };
+        let access = { uid: response.user.uid, lastActive: JSON.parse(window.localStorage.getItem('signout')) };
 
         // Cookie Access
         window.localStorage.setItem('access', JSON.stringify(access))
