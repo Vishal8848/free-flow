@@ -81,7 +81,7 @@ const Feed = () => {
                 <div className="col-md-6 mb-md-2">
 
                     <div className="feed-create">
-                        <CreatePost width={width}/>
+                        <CreatePost width={width} user={auth.data.uid}/>
                     </div>
 
                     <div className="feed-post mt-3">

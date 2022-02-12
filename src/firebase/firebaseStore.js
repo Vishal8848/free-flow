@@ -1,4 +1,4 @@
-import { getFirestore, doc, addDoc, getDoc, updateDoc, getDocs, collection, query } from "firebase/firestore/lite"
+import { getFirestore, doc, addDoc, getDoc, updateDoc, getDocs, collection, query, arrayUnion } from "firebase/firestore/lite"
 import firebase from './firebase'
 
 const store = getFirestore(firebase);
@@ -44,14 +44,24 @@ export const firebaseFriends = async (uids) => {
 export const firebaseCreatePost = async (data) => {
 
     try {
-        await addDoc(doc(store, 'posts'), {
+        const newPost = await addDoc(collection(store, 'posts'), {
             creator: data.uid,
-            private: data.private,
+            private: data.private === 'private',
             title: data.title,
-            description: data.description,
+            content: data.content,
             hasImage: data.hasImage,
+            likes: [],
+            saved: [],
+            comments: [],
             createdAt: Date.now().toString()
         })
+
+        await updateDoc(doc(store, 'users', data.uid), {    
+            posts: arrayUnion(newPost.id.toString()),
+            updatedAt: Date.now().toString()
+        })
+
+        return { error: false, data: newPost.id }
 
     }   catch(err)  { return { error: true, data: cast(err.message) } }
 

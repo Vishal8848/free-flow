@@ -3,7 +3,7 @@
     "creator" : "AAFtnYWqqXTezTgmlwns6fU4sIA3",
     "private" : false,
     "title" : "My First Post",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates esse nihil impedit at perspiciatis temporibus dolor dicta dolorem ut, aliquam suscipit quis labore expedita molestias quia doloremque neque exercitationem nostrum.",
+    "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates esse nihil impedit at perspiciatis temporibus dolor dicta dolorem ut, aliquam suscipit quis labore expedita molestias quia doloremque neque exercitationem nostrum.",
     "hasImage" : false,
     "likes" : [ "U1", "U2", "U3", "..." ],
     "saved" : [ "U1", "U2", "U3", "..." ],
