@@ -30,19 +30,19 @@ const Comment = () => {
     );
 }
 
-const Post = () => {
+const Post = ({ data }) => {
 
-    const { date, time } = parseTime(164266299431223);
+    const { date, time } = parseTime(data.createdAt)
 
     return ( 
-        <div className="post theme-middle rounded rounded-3">
+        <div className="post theme-middle rounded rounded-3 mt-3">
             
             <div className="post-header px-3 px-md-4 py-2 py-md-3 theme-middle">
             
                 <div className="post-creator">
-                    <Avatar name="Vishal Pranav" scale='md' theme='danger'/>
+                    <Avatar name={data.name} scale='md' theme={data.theme}/>
                     <div className="creator fs-5 ps-3">
-                        Vishal Pranav
+                        { data.name }
                     </div>
                 </div>
             
@@ -54,24 +54,27 @@ const Post = () => {
             
             <div className="post-body">
                 <div className="content theme-inner text-muted">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates esse nihil impedit at perspiciatis temporibus dolor dicta dolorem ut, aliquam suscipit quis labore expedita molestias quia doloremque neque exercitationem nostrum? Deleniti quis illo, quos ipsa ea maiores saepe. Incidunt recusandae enim pariatur a assumenda impedit debitis sapiente dolorum ullam voluptatibus?
+                    { data.content }
                 </div>
-                <div className="image bg-dark"></div>
+                { data.URL && <div className="image bg-dark" style={{ background: `url(${data.URL}) center center / cover no-repeat` }}></div> }
             </div>
             
             <div className="post-actions">
-                <div className="py-3 px-2 text-center theme-middle text-danger"><i className="fas fa-heart fa-lg me-2"></i> <strong>234</strong> Likes</div>
-                <div className="py-3 px-2 text-center theme-middle text-success"><i className="fas fa-bookmark fa-lg me-2"></i> Save </div>
+                <div className="py-3 px-2 text-center theme-middle text-danger"><i className="fas fa-heart fa-lg me-2"></i> <strong>{ data.likes.length > 0 && data.likes.length }</strong> Like{ data.likes.length > 0 ? 's' : '' }</div>
+                <div className="py-3 px-2 text-center theme-middle text-success"><i className="fas fa-bookmark fa-lg me-2"></i> <strong>{ data.saved.length > 0 && data.saved.length }</strong> Save{ data.saved.length > 0 ? 'd' : '' }</div>
                 <div className="py-3 px-2 text-center theme-middle text-primary"><i className="fas fa-share-square fa-lg me-2"></i> Share</div>
             </div>
             
+            { data.comments &&
             <div className="post-comments theme-inner">
-                <Comment/>
-                <Comment/>
-            </div>
+                {   data.comments && data.comments.sort((x, y) => parseInt(x.commentedAt) - parseInt(y.commentedAt)).map(comment => (
+                        <Comment data={comment} key={comment.commentor}/>
+                    ))
+                }
+            </div>  }
             
             <div className="post-create-comment theme-middle px-2 px-md-4 py-3">
-                <Avatar name="Vishal Pranav" scale='md' theme='success'/>
+                <Avatar name={data.name} scale='md' theme={data.theme}/>
                 <input className="w-75 theme-middle" placeholder="Add your comment"/>
                 <div className="submit-comment"><i className="fas fa-paper-plane fa-lg"></i></div>
             </div>

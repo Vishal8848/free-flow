@@ -1,21 +1,25 @@
 import { useState } from 'react'
-import { Avatar } from '../Extras'
+import { Avatar, parseTime } from '../Extras'
 
-const PostCard = ({ save = false }) => {
+const PostCard = ({ user, data, save = false }) => {
 
     // Usage: for saved posts of other users
     const [ saved, setSaved ] = useState(true);
 
+    console.log(user, data, save)
+
+    const { date } = parseTime(data.createdAt)
+
     return ( 
         <div className="postcard m-md-3 mt-3 theme-outer">
             <div className="postcard-header px-3 py-2 theme-inner">
-                <Avatar name="Vishal Pranav" scale="md" theme="success"/>
+                <Avatar name={user.name} scale="md" theme={user.theme}/>
                 <div className="postcard-setter ps-3">
                     <div className="fs-5 fw-bold">
-                        Vishal Pranav
+                        { user.name }
                     </div>
                     <div className="postcard-time text-muted">
-                        20 Mar 2018
+                        { date }
                     </div>
                 </div>
                 <div className={`postcard-actions ${ save ? "" : "dropdown" }`}>
@@ -33,13 +37,13 @@ const PostCard = ({ save = false }) => {
                 </div>
             </div>
             <div className="postcard-body theme-inner">
-                <div className="image bg-dark"></div>
+                {  false && data.URL && <div className="image bg-dark" style={{ background: `url(${data.URL}) center center / cover no-repeat` }}></div> }
                 <div className="content text-muted">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora, ...
+                    { [data.content.substring(0, 50), ' ...' ] }
                 </div>
             </div>
             <div className="postcard-status p-3 text-danger theme-inner">
-                <i className="fas fa-heart me-2"></i> <strong>234 Likes</strong>
+                <i className="fas fa-heart me-2"></i> <strong>{ data.totalLikes } Likes</strong>
             </div>
         </div>
     );

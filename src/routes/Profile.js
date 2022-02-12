@@ -14,12 +14,12 @@ import Footer from '../components/Footer'
 import { AuthContext } from '../App'
 
 // Created Posts 
-const Posts = ({ data }) => {
+const Posts = ({ user, data }) => {
     return ( 
         <div className="post-set theme-middle">
             {   (data && data.length > 0) ?
                 data.map(post => (
-                    <PostCard key={post}/>
+                    <PostCard user={user} data={post} key={post.creator}/>
                 )) : "You have not created any posts"
             }
         </div>
@@ -101,7 +101,7 @@ const Profile = () => {
     return ( <>
         <Header />
             <div className="container-md m-auto profile rounded theme-outer">
-            {   profile.user ? 
+            {   (profile.user && profile.friends && profile.posts && profile.saved) ? 
                 <><div className="profile-header m-auto shadow theme-middle">
 
                     <div className="profile-bg" style={{ background: `url(${bg ? bg : profile.bg}) center center / cover no-repeat` }}>
@@ -206,7 +206,10 @@ const Profile = () => {
                                 hobbies: profile.user.hobbies,
                                 latest: (profile.friends && profile.friends.length > 0) ? profile.friends[profile.friends.length - 1] : null
                             }}/>) :
-                            active[1] ? <Posts data={profile.posts} updatePosts={profile.setPosts}/> :
+                            active[1] ? <Posts user={{
+                                name: profile.user.fname + ' ' + profile.user.lname,
+                                theme: profile.user.theme
+                            }} data={profile.posts.sort((x, y) => parseInt(y.createdAt) - parseInt(x.createdAt))} updatePosts={profile.setPosts}/> :
                             active[2] ? <Friends data={profile.friends} updateFriends={profile.setFriends}/> :
                             active[3] && <Saved data={profile.saved} updateSaved={profile.setSaved}/>
                         }

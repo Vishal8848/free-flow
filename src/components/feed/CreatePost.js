@@ -12,13 +12,13 @@ const CreatePost = ({ width, user }) => {
 
     const submitPost = () => {
         firebaseCreatePost(post).then(res => {
-            if(!res.error && post.hasImage)   {
+            if(!res.error && post.hasImage)   
                 firebaseUploadImage(res.data, image.blob, 'posts').then(() => {
                     console.log("Post Image Uploaded")
-                    setPost(initial)
-                    openForm(false)
                 })
-            }   console.log("Post Created Successfully")
+            console.log("Post Created Successfully")
+            setPost(initial)
+            openForm(false)
         })
     }
 

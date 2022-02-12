@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { firebaseAllPosts } from '../firebase/firebaseStore'
 import CreatePost from '../components/feed/CreatePost'
 import Trending from '../components/feed/Trending'
 import Updates from '../components/feed/Updates'
@@ -8,7 +9,7 @@ import Post from '../components/feed/Post'
 import useWindow from '../hooks/useWindow'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import { AuthContext } from '../App'
+import { AuthContext, UserContext } from '../App'
 
 const Feed = () => {
 
@@ -17,6 +18,20 @@ const Feed = () => {
     const { auth } = useContext(AuthContext);
     useEffect(() => { if(!auth.status) setRoute('/') }, [auth, setRoute]);
 
+    // Use UserContext
+    const { user } = useContext(UserContext);
+    const [ posts, setPosts ] = useState(null);
+
+    // Fetch Posts
+    useEffect(() => {
+        if(user) {
+            firebaseAllPosts(user.friends).then(res => {
+                if(!res.error)  setPosts(res.data)
+            })
+        }
+    }, [user])
+
+    // Adapt to Window Size
     const { width } = useWindow();
     const [ params ] = useSearchParams();
     const type = params.get('type');
@@ -45,7 +60,7 @@ const Feed = () => {
         <Header />
         <div className="container-md feed row gx-0 gx-md-4 m-auto justify-content-center theme-outer">
             
-            {   ((!feed.restrict && feed.state === 0) || (feed.restrict && feed.state === 1)) &&
+            {   auth.data && ((!feed.restrict && feed.state === 0) || (feed.restrict && feed.state === 1)) &&
                 <div className="col-md-3 mb-md-2">
                     
                     <div className="feed-chat">
@@ -77,7 +92,7 @@ const Feed = () => {
                 </div>
             }
 
-            {   (!feed.restrict || (feed.restrict && feed.state === 0)) &&
+            {   auth.data && (!feed.restrict || (feed.restrict && feed.state === 0)) &&
                 <div className="col-md-6 mb-md-2">
 
                     <div className="feed-create">
@@ -86,17 +101,16 @@ const Feed = () => {
 
                     <div className="feed-post mt-3">
                         <span className="feed-title ps-3 text-muted fw-bold">Posts</span>
-                        <div className="posts-set">
-                            <Post /><br/>
-                            <Post /><br/>
-                            <Post />
-                        </div>
+                        {   posts && posts.sort((x, y) => parseInt(y.createdAt) - parseInt(x.createdAt)).map(post => (
+                                <Post data={post} key={post.pid}/>
+                            ))
+                        }
                     </div>
 
                 </div>
             }
 
-            {   ((!feed.restrict && feed.state === 0) || (feed.restrict && feed.state === 2)) &&
+            {   auth.data && ((!feed.restrict && feed.state === 0) || (feed.restrict && feed.state === 2)) &&
                 <div className="col-md-3">
 
                     <div className="feed-updates">
