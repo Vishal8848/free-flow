@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { Avatar, parseTime } from '../Extras'
+import { firebasePostReaction } from '../../firebase/firebaseStore'
 
 const Comment = () => {
 
@@ -30,7 +32,21 @@ const Comment = () => {
     );
 }
 
-const Post = ({ data }) => {
+const Post = ({ user, data }) => {
+
+    const [ like, setLike ] = useState(data.likes.some(like => like === user.uid));
+    const [ save, setSave ] = useState(data.likes.some(save => save === user.uid));
+    
+    const handleReaction = (type) => {
+
+        if(type === 'like') {
+            firebasePostReaction(data.pid, user.uid, type, !like ? 'add' : 'remove')
+            setLike(!like)
+        }   else {
+            firebasePostReaction(data.pid, user.uid, type, !save ? 'add' : 'remove')
+            setSave(!save)
+        }
+    }
 
     const { date, time } = parseTime(data.createdAt)
 
@@ -60,9 +76,20 @@ const Post = ({ data }) => {
             </div>
             
             <div className="post-actions">
-                <div className="py-3 px-2 text-center theme-middle text-danger"><i className="fas fa-heart fa-lg me-2"></i> <strong>{ data.likes.length > 0 && data.likes.length }</strong> Like{ data.likes.length > 0 ? 's' : '' }</div>
-                <div className="py-3 px-2 text-center theme-middle text-success"><i className="fas fa-bookmark fa-lg me-2"></i> <strong>{ data.saved.length > 0 && data.saved.length }</strong> Save{ data.saved.length > 0 ? 'd' : '' }</div>
-                <div className="py-3 px-2 text-center theme-middle text-primary"><i className="fas fa-share-square fa-lg me-2"></i> Share</div>
+                <div className="py-3 px-2 text-center theme-middle text-danger" onClick={() => handleReaction('like')}>
+                    <i className="fas fa-heart fa-lg me-2" style={{ fontWeight: like ? 'unset' : 'normal' }}></i>
+                    <strong>{ data.likes.length > 0 && like ? data.likes.length + 1 : data.likes.length }</strong>
+                    &nbsp; Like{ like ? 'd' : '' }
+                </div>
+                <div className="py-3 px-2 text-center theme-middle text-success" onClick={() => handleReaction('save')}>
+                    <i className="fas fa-bookmark fa-lg me-2" style={{ fontWeight: save ? 'unset' : 'normal' }}></i>
+                    <strong>{ data.saved.length > 0 && save ? data.saved.length + 1 : data.saved.length }</strong>
+                    &nbsp; Save{ save ? 'd' : '' }
+                </div>
+                <div className="py-3 px-2 text-center theme-middle text-primary">
+                    <i className="fas fa-share-square fa-lg me-2"></i> 
+                    &nbsp; Share
+                </div>
             </div>
             
             { data.comments &&

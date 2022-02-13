@@ -4,9 +4,7 @@ import { Avatar, parseTime } from '../Extras'
 const PostCard = ({ user, data, save = false }) => {
 
     // Usage: for saved posts of other users
-    const [ saved, setSaved ] = useState(true);
-
-    console.log(user, data, save)
+    const [ saved, setSaved ] = useState(save);
 
     const { date } = parseTime(data.createdAt)
 
@@ -37,7 +35,7 @@ const PostCard = ({ user, data, save = false }) => {
                 </div>
             </div>
             <div className="postcard-body theme-inner">
-                {  false && data.URL && <div className="image bg-dark" style={{ background: `url(${data.URL}) center center / cover no-repeat` }}></div> }
+                {  data.URL && <div className="image bg-dark" style={{ background: `url(${data.URL}) center center / cover no-repeat` }}></div> }
                 <div className="content text-muted">
                     { [data.content.substring(0, 50), ' ...' ] }
                 </div>

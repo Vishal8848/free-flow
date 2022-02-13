@@ -211,7 +211,10 @@ const Profile = () => {
                                 theme: profile.user.theme
                             }} data={profile.posts.sort((x, y) => parseInt(y.createdAt) - parseInt(x.createdAt))} updatePosts={profile.setPosts}/> :
                             active[2] ? <Friends data={profile.friends} updateFriends={profile.setFriends}/> :
-                            active[3] && <Saved data={profile.saved} updateSaved={profile.setSaved}/>
+                            active[3] && <Saved user={{
+                                name: profile.user.fname + ' ' + profile.user.lname,
+                                theme: profile.user.theme
+                            }} data={profile.saved} updateSaved={profile.setSaved}/>
                         }
 
                     </div>

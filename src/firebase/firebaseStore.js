@@ -1,4 +1,4 @@
-import { getFirestore, doc, addDoc, getDoc, updateDoc, getDocs, collection, query, where, arrayUnion } from "firebase/firestore/lite"
+import { getFirestore, doc, addDoc, getDoc, updateDoc, getDocs, collection, query, where, arrayUnion, arrayRemove } from "firebase/firestore/lite"
 import { firebaseDownloadImage } from "./firebaseBulk";
 import firebase from './firebase'
 
@@ -186,6 +186,39 @@ export const firebaseAllPosts = async (friends) => {
         }
 
         return { error: false, data: posts }
+
+    }   catch(err) { return { error: true, data: cast(err.message) } }
+
+}
+
+export const firebasePostReaction = async (pid, uid, type, action) => {
+
+    const types = [ type === 'like', type === 'save' ]
+    const actions = [ action === 'add', action === 'remove' ]
+    
+    console.log(types, actions)
+
+    try {
+
+        if(types[0] && actions[0]) {
+            await updateDoc(doc(store, 'posts', pid), { likes: arrayUnion(uid), updatedAt: Date.now().toString() })
+            await updateDoc(doc(store, 'users', uid), { likes: arrayUnion(pid), updatedAt: Date.now().toString() })
+        }
+
+        if(types[0] && actions[1]) {
+            await updateDoc(doc(store, 'posts', pid), { likes: arrayRemove(uid), updatedAt: Date.now().toString() })
+            await updateDoc(doc(store, 'users', uid), { likes: arrayRemove(pid), updatedAt: Date.now().toString() })
+        }
+
+        if(types[1] && actions[0]) {
+            await updateDoc(doc(store, 'posts', pid), { saved: arrayUnion(uid), updatedAt: Date.now().toString() })
+            await updateDoc(doc(store, 'users', uid), { saved: arrayUnion(pid), updatedAt: Date.now().toString() })
+        }
+
+        if(types[1] && actions[1]) {
+            await updateDoc(doc(store, 'posts', pid), { saved: arrayRemove(uid), updatedAt: Date.now().toString() })
+            await updateDoc(doc(store, 'users', uid), { saved: arrayRemove(pid), updatedAt: Date.now().toString() })
+        }
 
     }   catch(err) { return { error: true, data: cast(err.message) } }
 

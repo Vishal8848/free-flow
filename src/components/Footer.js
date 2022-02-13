@@ -1,10 +1,13 @@
-import { useState} from 'react';
-import Notifications from './Notifications';
+import { useContext, useState} from 'react';
 import { Link } from 'react-router-dom'
+import { AuthContext } from '../App';
+import Notifications from './Notifications'
 
 const Footer = () => {
 
     // const page = window.location.href.split('/')[3].startsWith('profile');
+
+    const { auth } = useContext(AuthContext);
 
     let [ notify, setNotify ] = useState(false);
 
@@ -28,7 +31,7 @@ const Footer = () => {
             </div>
 
             <div className="item theme-middle">
-                <Link to="/profile" className="theme-middle">
+                <Link to={`/profile/${auth.data.uid}`} className="theme-middle">
                     <i className={`fas fa-user fa-lg`}></i>
                     You
                 </Link>
