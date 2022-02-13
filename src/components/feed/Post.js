@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { Avatar, parseTime } from '../Extras'
-import { firebasePostReaction } from '../../firebase/firebaseStore'
+import { firebasePostReaction, firebaseAddComment } from '../../firebase/firebaseStore'
 
-const Comment = () => {
+const Comment = ({ data }) => {
 
-    const { date, time }  = parseTime(Date.now())
+    const { date, time }  = parseTime(data.commentedAt)
 
     return ( 
         <div className="comment">
@@ -25,7 +25,7 @@ const Comment = () => {
             </div>
             
             <div className="comment-body text-muted">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis minima necessitatibus accusantium quis, debitis eum.
+                { data.comment }
             </div>
         
         </div>
@@ -36,7 +36,22 @@ const Post = ({ user, data }) => {
 
     const [ like, setLike ] = useState(data.likes.some(like => like === user.uid));
     const [ save, setSave ] = useState(data.likes.some(save => save === user.uid));
-    
+    const commentInitial = { commenter: user.uid, comment: "", commentedAt: null };
+    let [ newComment, setNewComment ] = useState(commentInitial);
+    let [ comments, setComments ] = useState(data.comments);
+
+    const addNewComment = () => {
+
+        if(newComment.comment.length > 0)  {
+            newComment.commentedAt = Date.now().toString();
+            setNewComment({...newComment});
+            firebaseAddComment(data.pid, newComment).then(res => setNewComment(commentInitial))
+            comments.push(newComment)
+            setComments([...comments])
+        }
+
+    }
+
     const handleReaction = (type) => {
 
         if(type === 'like') {
@@ -78,13 +93,13 @@ const Post = ({ user, data }) => {
             <div className="post-actions">
                 <div className="py-3 px-2 text-center theme-middle text-danger" onClick={() => handleReaction('like')}>
                     <i className="fas fa-heart fa-lg me-2" style={{ fontWeight: like ? 'unset' : 'normal' }}></i>
-                    <strong>{ data.likes.length > 0 && like ? data.likes.length + 1 : data.likes.length }</strong>
-                    &nbsp; Like{ like ? 'd' : '' }
+                    <strong>{ data.likes.length > 0 && data.likes.length }</strong>
+                    &nbsp; Like{ like ? 'd' : data.likes.length > 1 ? 's' : '' }
                 </div>
                 <div className="py-3 px-2 text-center theme-middle text-success" onClick={() => handleReaction('save')}>
                     <i className="fas fa-bookmark fa-lg me-2" style={{ fontWeight: save ? 'unset' : 'normal' }}></i>
-                    <strong>{ data.saved.length > 0 && save ? data.saved.length + 1 : data.saved.length }</strong>
-                    &nbsp; Save{ save ? 'd' : '' }
+                    <strong>{ data.saved.length > 0 && data.saved.length }</strong>
+                    &nbsp; Save{ save ? 'd' : data.saved.length > 1 ? 's' : '' }
                 </div>
                 <div className="py-3 px-2 text-center theme-middle text-primary">
                     <i className="fas fa-share-square fa-lg me-2"></i> 
@@ -92,9 +107,9 @@ const Post = ({ user, data }) => {
                 </div>
             </div>
             
-            { data.comments &&
+            { comments &&
             <div className="post-comments theme-inner">
-                {   data.comments && data.comments.sort((x, y) => parseInt(x.commentedAt) - parseInt(y.commentedAt)).map(comment => (
+                {   comments && comments.sort((x, y) => parseInt(x.commentedAt) - parseInt(y.commentedAt)).map(comment => (
                         <Comment data={comment} key={comment.commentor}/>
                     ))
                 }
@@ -102,8 +117,11 @@ const Post = ({ user, data }) => {
             
             <div className="post-create-comment theme-middle px-2 px-md-4 py-3">
                 <Avatar name={data.name} scale='md' theme={data.theme}/>
-                <input className="w-75 theme-middle" placeholder="Add your comment"/>
-                <div className="submit-comment"><i className="fas fa-paper-plane fa-lg"></i></div>
+                <input className="w-75 theme-middle" placeholder="Add your comment"
+                    value={newComment.comment} onChange={(e) => { newComment.comment = e.target.value; setNewComment({...newComment}) }}/>
+                <div className="submit-comment" onClick={() => addNewComment()} style={{ cursor: "pointer" }}>
+                    <i className="fas fa-paper-plane fa-lg"></i>
+                </div>
             </div>
         
         </div>

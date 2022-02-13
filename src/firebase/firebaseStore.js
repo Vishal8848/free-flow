@@ -195,8 +195,6 @@ export const firebasePostReaction = async (pid, uid, type, action) => {
 
     const types = [ type === 'like', type === 'save' ]
     const actions = [ action === 'add', action === 'remove' ]
-    
-    console.log(types, actions)
 
     try {
 
@@ -219,6 +217,18 @@ export const firebasePostReaction = async (pid, uid, type, action) => {
             await updateDoc(doc(store, 'posts', pid), { saved: arrayRemove(uid), updatedAt: Date.now().toString() })
             await updateDoc(doc(store, 'users', uid), { saved: arrayRemove(pid), updatedAt: Date.now().toString() })
         }
+
+    }   catch(err) { return { error: true, data: cast(err.message) } }
+
+}
+
+export const firebaseAddComment = async (pid, comment) => {
+
+    try {
+        await updateDoc(doc(store, 'posts', pid), {
+            comments: arrayUnion(comment),
+            updatedAt: Date.now().toString()
+        })
 
     }   catch(err) { return { error: true, data: cast(err.message) } }
 

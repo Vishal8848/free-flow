@@ -1,10 +1,25 @@
 import { Avatar } from "../Extras";
 
-const Details = ({ data }) => {
+const Content = ({ data }) => {
 
     const themes = [ 'danger', 'success', 'primary', 'dark' ];
 
-    return (
+    return (<>
+        <div className="profile-stats fw-bold">
+            <div className="friend-stats px-3 px-md-4 text-center">
+                <div className="fs-5">{ data.friends.length }</div>
+                <div className="text-muted">Friends</div>
+            </div>
+            <div className="post-stats px-3 px-md-4 text-center border-top">
+                <div className="fs-5">{ data.posts }</div>
+                <div className="text-muted">Posts</div>
+            </div>
+            <div className="likes-stats px-3 px-md-4 text-center border-top">
+                <div className="fs-5">{ data.likes }</div>
+                <div className="text-muted">Likes</div>
+            </div>
+        </div>
+
         <div className="profile-details ps-md-5 ps-3 text-start">
             
             <div className="profile-name">
@@ -24,7 +39,7 @@ const Details = ({ data }) => {
             </div>
             
         </div>
-    );
+    </>);
 }
  
-export default Details;
+export default Content;

@@ -30,12 +30,14 @@ const Footer = () => {
                 </Link>
             </div>
 
-            <div className="item theme-middle">
-                <Link to={`/profile/${auth.data.uid}`} className="theme-middle">
-                    <i className={`fas fa-user fa-lg`}></i>
-                    You
-                </Link>
-            </div>
+            {   auth.data &&
+                <div className="item theme-middle">
+                    <Link to={`/profile/${auth.data.uid}`} className="theme-middle">
+                        <i className={`fas fa-user fa-lg`}></i>
+                        You
+                    </Link>
+                </div>
+            }
 
             <div className="item theme-middle position-relative">
                 <div className="docker me-2 bg-danger"></div>

@@ -3,10 +3,9 @@ import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { getInitial, formatBytes, Loader } from '../components/Extras'
 import { firebaseUploadImage } from '../firebase/firebaseBulk'
 import PostCard from '../components/profile/PostCard'
-import Details from '../components/profile/Details'
+import Content from '../components/profile/Content'
 import Friends from '../components/profile/Friends'
 import Visitor from '../components/profile/Visitor'
-import Stats from '../components/profile/Stats'
 import User from '../components/profile/User'
 import useProfile from '../hooks/useProfile'
 import Header from '../components/Header'
@@ -117,16 +116,12 @@ const Profile = () => {
                     </div>
 
                     <div className="profile-info pt-4 pb-5 theme-middle">
-                        <Stats data={{ 
-                            friends: profile.user.friends.length, 
-                            posts: profile.user.posts.length, 
-                            likes: profile.user.likes.length 
-                        }}/>
-
-                        <Details data={{ 
+                        <Content data={{ 
                             name: profile.user.fname + ' ' + profile.user.lname,
                             description: profile.user.description, 
-                            friends: profile.user.friends
+                            friends: profile.user.friends,
+                            posts: profile.user.posts.length, 
+                            likes: profile.user.likes.length 
                         }}/>
                     </div>
 
