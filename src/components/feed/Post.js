@@ -4,7 +4,8 @@ import { firebasePostReaction, firebaseAddComment } from '../../firebase/firebas
 
 const Comment = ({ data }) => {
 
-    const { date, time }  = parseTime(data.commentedAt)
+    // Parsed Time Values
+    const { date, time, status }  = parseTime(data.commentedAt)
 
     return ( 
         <div className="comment">
@@ -19,7 +20,7 @@ const Comment = ({ data }) => {
                 </div>
             
                 <div className="comment-timestamp text-muted">
-                    { time } <i className="fas fa-circle px-1 align-middle" style={{ fontSize: "5px" }}></i> { date }
+                    { time } <i className="fas fa-circle px-1 align-middle" style={{ fontSize: "5px" }}></i> { status !== "" ? status : date }
                 </div>
             
             </div>
@@ -34,11 +35,17 @@ const Comment = ({ data }) => {
 
 const Post = ({ user, data }) => {
 
-    const [ like, setLike ] = useState(data.likes.some(like => like === user.uid));
-    const [ save, setSave ] = useState(data.likes.some(save => save === user.uid));
+    // Likes and Saves Handler
+    const liked = data.likes.some(like => like === user.uid), saved = data.saved.some(save => save === user.uid);
+    const [ like, setLike ] = useState(liked), [ save, setSave ] = useState(saved);
+
+    // Comments Handler
     const commentInitial = { commenter: user.uid, comment: "", commentedAt: null };
     let [ newComment, setNewComment ] = useState(commentInitial);
     let [ comments, setComments ] = useState(data.comments);
+
+    // Parsed Time Values
+    const { date, time, status } = parseTime(data.createdAt)
 
     const addNewComment = () => {
 
@@ -63,8 +70,6 @@ const Post = ({ user, data }) => {
         }
     }
 
-    const { date, time } = parseTime(data.createdAt)
-
     return ( 
         <div className="post theme-middle rounded rounded-3 mt-3">
             
@@ -78,7 +83,7 @@ const Post = ({ user, data }) => {
                 </div>
             
                 <div className="post-timestamp text-muted">
-                    { time } <i className="fas fa-circle align-middle px-1" style={{ fontSize: "5px" }}></i> { date }
+                    { time } <i className="fas fa-circle align-middle px-1" style={{ fontSize: "5px" }}></i> { status !== "" ? status : date }
                 </div>
             
             </div>
@@ -93,12 +98,12 @@ const Post = ({ user, data }) => {
             <div className="post-actions">
                 <div className="py-3 px-2 text-center theme-middle text-danger" onClick={() => handleReaction('like')}>
                     <i className="fas fa-heart fa-lg me-2" style={{ fontWeight: like ? 'unset' : 'normal' }}></i>
-                    <strong>{ data.likes.length > 0 && data.likes.length }</strong>
+                    <strong>{ liked ? (!like ? data.likes.length - 1 : data.likes.length > 0 && data.likes.length) : (like ? data.likes.length + 1 : data.likes.length > 0 && data.likes.length) }</strong>
                     &nbsp; Like{ like ? 'd' : data.likes.length > 1 ? 's' : '' }
                 </div>
                 <div className="py-3 px-2 text-center theme-middle text-success" onClick={() => handleReaction('save')}>
                     <i className="fas fa-bookmark fa-lg me-2" style={{ fontWeight: save ? 'unset' : 'normal' }}></i>
-                    <strong>{ data.saved.length > 0 && data.saved.length }</strong>
+                    <strong>{ saved ? (!save ? data.saved.length - 1 : data.saved.length > 0 && data.saved.length) : (save ? data.saved.length + 1 : data.saved.length > 0 && data.saved.length) }</strong>
                     &nbsp; Save{ save ? 'd' : data.saved.length > 1 ? 's' : '' }
                 </div>
                 <div className="py-3 px-2 text-center theme-middle text-primary">

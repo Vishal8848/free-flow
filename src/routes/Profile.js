@@ -26,12 +26,12 @@ const Posts = ({ user, data }) => {
 }
 
 // Saved Posts
-const Saved = ({ data }) => {
+const Saved = ({ user, data }) => {
     return ( 
         <div className="saved-posts theme-middle">
             {   (data && data.length > 0) ?
                 data.map(post => (
-                    <PostCard save={true} key={post}/>
+                    <PostCard user={user} data={post} save={true} key={post.creator}/>
                 ))  : "You have not saved any posts"
 
             }
@@ -126,7 +126,7 @@ const Profile = () => {
                     </div>
 
                     <div className={`profile-pic bg-${profile.user.theme} border border-secondary`} style={{ background: `url(${dp ? dp : profile.dp}) center center / cover no-repeat` }}>
-                        {   (!dp && !profile.dp) &&
+                        {   !(dp || profile.dp) &&
                             <div className="profile-initial">
                                 { getInitial(profile.user.fname + ' ' + profile.user.lname) }
                             </div>

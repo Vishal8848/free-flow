@@ -101,6 +101,7 @@ const Feed = () => {
 
                     <div className="feed-post mt-3">
                         <span className="feed-title ps-3 text-muted fw-bold">Posts</span>
+                        <div className="posts-set">
                         {   posts && posts.sort((x, y) => parseInt(y.createdAt) - parseInt(x.createdAt)).map(post => (
                                 <Post user={{
                                     uid: auth.data.uid,
@@ -108,6 +109,7 @@ const Feed = () => {
                                 }} data={post} key={post.pid}/>
                             ))
                         }
+                        </div>
                     </div>
 
                 </div>

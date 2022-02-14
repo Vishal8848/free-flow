@@ -233,3 +233,26 @@ export const firebaseAddComment = async (pid, comment) => {
     }   catch(err) { return { error: true, data: cast(err.message) } }
 
 }
+
+export const firebaseTrendingPost = async () => {
+
+    try {
+        let posts = [];
+
+        const trendQuery = await query(collection(store, 'posts'))
+
+        const trendSnapshot = await getDocs(trendQuery);
+
+        trendSnapshot.forEach(post => posts.push(post.data()))
+
+        posts = posts.filter(post => !post.private).sort((x, y) => { 
+            if(x.likes.length === y.likes.length) 
+                return parseInt(y.createdAt) - parseInt(x.createdAt);
+            return y.likes.length - x.likes.length;
+        })
+
+        return { error: false, data: posts[0] }
+        
+    }   catch(err) { return { error: true, data: cast(err.message) } }
+
+}

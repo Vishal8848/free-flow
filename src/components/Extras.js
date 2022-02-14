@@ -89,20 +89,30 @@ export const Toast = ({ show, code, value = null }) => {
     )
 }
 
-export const parseTime = (timestamp) => {
-    const datetime = new Date(parseInt(timestamp));
+export const parseTime = (timestring) => {
+    const timestamp = parseInt(timestring)
 
-    const day = datetime.toString().slice(0,3);
+    const thisDate = new Date(timestamp), today = new Date();
+
+    const day = thisDate.toString().slice(0,3);
     
-    const date = datetime.toDateString().slice(4);
+    const date = thisDate.toDateString().slice(4);
     
-    let time = datetime.toTimeString().split(' ')[0].slice(0,5);
+    let time = thisDate.toTimeString().split(' ')[0].slice(0,5);
     
     time = (parseInt(time.split(':')[0]) > 12) ? (parseInt(time.split(':')[0]) - 12) + time.slice(2) + ' PM' : time + ' AM';
     
     if(time.length === 7) time = '0' + time;
     
-    return { date, day, time };
+    /* ---------------------------------------------- */
+
+    const dayDiff = today.getDate() - thisDate.getDate();
+    const monthDiff = today.getMonth() - thisDate.getMonth();
+    const yearDiff = today.getFullYear() - thisDate.getFullYear();
+
+    const status = yearDiff === 0 ? monthDiff === 0 ? dayDiff === 0 ? "Today" : dayDiff === 1 ? "Yesterday" : "" : "" : ""
+
+    return { date, day, time, status };
 }
 
 export const formatBytes = (bytes, decimals = 2) => {

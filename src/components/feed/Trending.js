@@ -1,9 +1,18 @@
 import { Avatar } from "../Extras";
 import TypeWriter from 'typewriter-effect'
+import { firebaseTrendingPost } from '../../firebase/firebaseStore'
+import { useEffect } from "react";
 
 const Trending = () => {
 
-    let timeString = 'an hour ago';
+    const timeString = "a day ago"
+
+    useEffect(() => {
+        firebaseTrendingPost().then(res => {
+            if(!res.error)
+                console.log(res.data)
+        })
+    }, [])
 
     return ( 
         <div className="trend theme-middle">
