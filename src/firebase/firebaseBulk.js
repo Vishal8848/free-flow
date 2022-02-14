@@ -1,4 +1,4 @@
-import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
+import { getDownloadURL, getStorage, ref, uploadBytes, updateMetadata } from 'firebase/storage'
 import { doc, getFirestore, updateDoc } from 'firebase/firestore/lite'
 import firebase from './firebase'
 
@@ -12,6 +12,10 @@ export const firebaseUploadImage = async (id, blob, type) => {
         const imageRef = ref(bulk, type + '/' + id);
 
         await uploadBytes(imageRef, blob);
+
+        const metadata = { cacheControl: "public,max-age=172800" }
+
+        await updateMetadata(imageRef, metadata)
 
         if(type === 'bgs') await updateDoc(doc(store, 'users', id), { hasBG: true, updatedAt: Date.now().toString() })
 

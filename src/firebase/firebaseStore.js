@@ -275,19 +275,33 @@ export const firebaseAddComment = async (pid, comment) => {
 export const firebaseTrendingPost = async () => {
 
     try {
-        let posts = [];
+        let posts = [], res = null;
 
         const trendQuery = await query(collection(store, 'posts'))
 
         const trendSnapshot = await getDocs(trendQuery);
 
-        trendSnapshot.forEach(post => posts.push(post.data()))
+        trendSnapshot.forEach(post => posts.push({ pid: post.id, ...post.data()}))
 
         posts = posts.filter(post => !post.private).sort((x, y) => { 
             if(x.likes.length === y.likes.length) 
-                return parseInt(y.createdAt) - parseInt(x.createdAt);
+                return parseInt(x.createdAt) - parseInt(y.createdAt);
             return y.likes.length - x.likes.length;
         })
+
+        if(posts[0].hasImage)   {
+            res = await firebaseDownloadImage('posts', posts[0].pid);
+
+            if(!res.error)  posts[0].URL = res.data
+        }
+
+        res = await firebaseUser(posts[0].creator, true);
+
+        if(!res.error)  {
+            posts[0].name = res.data.name
+            posts[0].theme = res.data.theme
+            posts[0].dp = res.data.dp
+        }
 
         return { error: false, data: posts[0] }
         

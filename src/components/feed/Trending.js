@@ -1,26 +1,25 @@
-import { Avatar } from "../Extras";
+import { useState, useEffect } from "react"
+import { Avatar } from "../Extras"
 import TypeWriter from 'typewriter-effect'
 import { firebaseTrendingPost } from '../../firebase/firebaseStore'
-import { useEffect } from "react";
 
 const Trending = () => {
 
-    const timeString = "a day ago"
-
+    const [ trend, setTrend ] = useState(null)
+    
     useEffect(() => {
         firebaseTrendingPost().then(res => {
-            if(!res.error)
-                console.log(res.data)
+            if(!res.error) setTrend(res.data)
         })
     }, [])
 
-    return ( 
-        <div className="trend theme-middle">
+    return ( trend &&
+        (<div className="trend theme-middle">
             <div className="trend-header px-3 py-2 theme-middle">
-                <Avatar name="Vishal Pranav" scale="md" theme="success"/>
+                <Avatar image={trend.dp} name={trend.name} scale="md" theme={trend.theme}/>
                 <div className="trend-setter ps-3">
                     <div className="fs-5 fw-bold">
-                        Vishal Pranav
+                        {trend.name}
                     </div>
                     <div className="trend-time text-muted">
                         <TypeWriter
@@ -34,11 +33,11 @@ const Trending = () => {
                             onInit={(type) => {
                                 type.pasteString('<strong class="text-danger">Trending </strong>')
                                     .pauseFor(500)
-                                    .typeString(timeString)
+                                    .typeString(trend.createdAt)
                                     .pauseFor(3000)
-                                    .deleteChars(timeString.length)
+                                    .deleteChars(trend.createdAt.length)
                                     .pauseFor(1000)
-                                    .typeString(timeString)
+                                    .typeString(trend.createdAt)
                                     .pauseFor(5000)
                                     .deleteAll()
                                     .start();
@@ -50,15 +49,15 @@ const Trending = () => {
                 </div>
             </div>
             <div className="trend-body theme-inner">
-                <div className="image bg-dark"></div>
+                <div className="image bg-dark" style={{ background: `url(${trend.URL}) center center / cover no-repeat` }}></div>
                 <div className="content text-muted">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora, ...
+                    { trend.content.substring(0, 50) + ' ...' }
                 </div>
             </div>
             <div className="trend-status p-3 text-danger theme-middle">
-                <i className="fas fa-heart me-2"></i> <strong>234 Likes</strong>
+                <i className="fas fa-heart me-2"></i> <strong>{ trend.likes.length } &nbsp; Likes</strong>
             </div>
-        </div>
+        </div>)
     );
 }
  
