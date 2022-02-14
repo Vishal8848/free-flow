@@ -62,16 +62,16 @@ const Header = () => {
     useEffect(() => {
         if(theme)  {
             window.localStorage.setItem('theme', JSON.stringify({ dark: true, at: Date.now() }))
-            document.styleSheets[3].cssRules[62].style.backgroundColor = "rgb(24, 25, 26)"
-            document.styleSheets[3].cssRules[63].style.backgroundColor = "rgb(28, 30, 33)"
-            document.styleSheets[3].cssRules[64].style.backgroundColor = "rgb(32, 35, 40)"
-            document.styleSheets[3].cssRules[65].style.color = "rgb(238, 238, 238)"
+            document.styleSheets[3].cssRules[61].style.backgroundColor = "rgb(24, 25, 26)"
+            document.styleSheets[3].cssRules[62].style.backgroundColor = "rgb(28, 30, 33)"
+            document.styleSheets[3].cssRules[63].style.backgroundColor = "rgb(32, 35, 40)"
+            document.styleSheets[3].cssRules[64].style.color = "rgb(238, 238, 238)"
         }   else {
             window.localStorage.setItem('theme', JSON.stringify({ dark: false, at: Date.now() }))
-            document.styleSheets[3].cssRules[62].style.backgroundColor = "rgb(244, 247, 248)"
-            document.styleSheets[3].cssRules[63].style.backgroundColor = "rgb(255, 255, 255)"
-            document.styleSheets[3].cssRules[64].style.backgroundColor = "rgb(248, 255, 255)"
-            document.styleSheets[3].cssRules[65].style.color = "rgb(25, 25, 25)"
+            document.styleSheets[3].cssRules[61].style.backgroundColor = "rgb(244, 247, 248)"
+            document.styleSheets[3].cssRules[62].style.backgroundColor = "rgb(255, 255, 255)"
+            document.styleSheets[3].cssRules[63].style.backgroundColor = "rgb(248, 255, 255)"
+            document.styleSheets[3].cssRules[64].style.color = "rgb(25, 25, 25)"
         }
     }, [theme]);
 
@@ -115,17 +115,12 @@ const Header = () => {
                     <div className="dropdown">
 
                         <div id="user-drop" data-bs-toggle="dropdown" style={{ cursor: "pointer", userSelect: "none" }}>
-                            <Avatar name="Vishal Pranav" theme="danger" scale="md"/>
+                            <Avatar image={user.dp} name={user.fname + ' ' + user.lname} scale="md" theme={user.theme}/>
                         </div>
 
                         {   auth.status &&
                             <div className="dropdown-menu dropdown-menu-end theme-inner" aria-labelledby="user-drop">
                                 <div className="tint tint-tr theme-inner"></div>
-                                <div className="user-partition">
-                                    <Avatar name="Vishal Pranav" scale="lg" theme="success"/>
-                                    <div className="u-name text-center"><h5 className="mt-2">{ user.fname + ' ' + user.lname }</h5></div>
-                                </div>
-                                <div className="dropdown-divider"></div>
                                 <div className="actions-partition text-start theme-inner">
                                     <Link to={`/profile/${auth.data.uid}`} className="dropdown-item pb-2 theme-inner"><i className="fas fa-user me-2"></i> Profile</Link>
                                     <Link to={`/profile/${auth.data.uid}?type=posts`} className="dropdown-item pb-2 theme-inner"><i className="fas fa-paper-plane me-2"></i>Posts</Link>

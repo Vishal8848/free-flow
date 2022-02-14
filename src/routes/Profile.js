@@ -17,8 +17,8 @@ const Posts = ({ user, data }) => {
     return ( 
         <div className="post-set theme-middle">
             {   (data && data.length > 0) ?
-                data.map(post => (
-                    <PostCard user={user} data={post} key={post.creator}/>
+                data.sort((x, y) => parseInt(y.createdAt) - parseInt(x.createdAt)).map(post => (
+                    <PostCard user={user} data={post} key={post.createdAt}/>
                 )) : "You have not created any posts"
             }
         </div>
@@ -26,12 +26,12 @@ const Posts = ({ user, data }) => {
 }
 
 // Saved Posts
-const Saved = ({ user, data }) => {
+const Saved = ({ data }) => {
     return ( 
         <div className="saved-posts theme-middle">
             {   (data && data.length > 0) ?
                 data.map(post => (
-                    <PostCard user={user} data={post} save={true} key={post.creator}/>
+                    <PostCard data={post} save={true} key={post.creator}/>
                 ))  : "You have not saved any posts"
 
             }
@@ -51,10 +51,10 @@ const Profile = () => {
     useEffect(() => { if(!auth.status) setRoute('/') }, [auth, setRoute]);
 
     // Profile Data
-    const profile = useProfile(uid);
+    const { user, posts, friends, saved } = useProfile(uid);
     const [ editor, setEditor ] = useState(false);
-    const [ bg, setBg ] = useState(profile.user && profile.bg)
-    const [ dp, setDp ] = useState(profile.user && profile.dp)
+    const [ dp, setDp ] = useState(user && user.dp)
+    const [ bg, setBg ] = useState(user && user.bg)
 
     // Active Profile Component
     const [ params ] = useSearchParams();
@@ -100,10 +100,10 @@ const Profile = () => {
     return ( <>
         <Header />
             <div className="container-md m-auto profile rounded theme-outer">
-            {   (profile.user && profile.friends && profile.posts && profile.saved) ? 
+            {   (user && posts && saved && friends) ? 
                 <><div className="profile-header m-auto shadow theme-middle">
 
-                    <div className="profile-bg" style={{ background: `url(${bg ? bg : profile.bg}) center center / cover no-repeat` }}>
+                    <div className="profile-bg" style={{ background: `url(${bg ? bg : user.bg}) center center / cover no-repeat` }}>
                         {   auth.data && (uid === auth.data.uid) &&
                             <><input type="file" name="bg" id="bg" accept="image/*" onChange={(e) => setBackground(e)} style={{ visibility: "hidden" }}/>
                             <label htmlFor="bg" className="pic-edit">
@@ -117,18 +117,18 @@ const Profile = () => {
 
                     <div className="profile-info pt-4 pb-5 theme-middle">
                         <Content data={{ 
-                            name: profile.user.fname + ' ' + profile.user.lname,
-                            description: profile.user.description, 
-                            friends: profile.user.friends,
-                            posts: profile.user.posts.length, 
-                            likes: profile.user.likes.length 
+                            name: user.fname + ' ' + user.lname,
+                            description: user.description, 
+                            friends: user.friends,
+                            posts: user.posts.length, 
+                            likes: user.likes.length 
                         }}/>
                     </div>
 
-                    <div className={`profile-pic bg-${profile.user.theme} border border-secondary`} style={{ background: `url(${dp ? dp : profile.dp}) center center / cover no-repeat` }}>
-                        {   !(dp || profile.dp) &&
+                    <div className={`profile-pic bg-${user.theme} border border-secondary`} style={{ background: `url(${dp ? dp : user.dp}) center center / cover no-repeat` }}>
+                        {   !(dp || user.dp) &&
                             <div className="profile-initial">
-                                { getInitial(profile.user.fname + ' ' + profile.user.lname) }
+                                { getInitial(user.fname + ' ' + user.lname) }
                             </div>
                         }
                         {   auth.data && (uid === auth.data.uid) &&
@@ -186,30 +186,28 @@ const Profile = () => {
                             active[0] ? ((auth.data && (uid === auth.data.uid) && editor) ?
                             <User auth={auth.data} data={{
                                 uid: uid,
-                                occupation: profile.user.occupation,
-                                description: profile.user.description,
-                                location: profile.user.location,
-                                education: profile.user.education,
-                                dob: profile.user.dob,
-                                hobbies: profile.user.hobbies
-                            }} updateProfile={profile.setUser}/> :
+                                occupation: user.occupation,
+                                description: user.description,
+                                location: user.location,
+                                education: user.education,
+                                dob: user.dob,
+                                hobbies: user.hobbies
+                            }}/> :
                             <Visitor data={{
-                                occupation: profile.user.occupation,
-                                location: profile.user.location,
-                                education: profile.user.education,
-                                dob: profile.user.dob,
-                                hobbies: profile.user.hobbies,
-                                latest: (profile.friends && profile.friends.length > 0) ? profile.friends[profile.friends.length - 1] : null
+                                occupation: user.occupation,
+                                location: user.location,
+                                education: user.education,
+                                dob: user.dob,
+                                hobbies: user.hobbies,
+                                latest: (friends && friends.length > 0) ? friends[friends.length - 1] : null
                             }}/>) :
                             active[1] ? <Posts user={{
-                                name: profile.user.fname + ' ' + profile.user.lname,
-                                theme: profile.user.theme
-                            }} data={profile.posts.sort((x, y) => parseInt(y.createdAt) - parseInt(x.createdAt))} updatePosts={profile.setPosts}/> :
-                            active[2] ? <Friends data={profile.friends} updateFriends={profile.setFriends}/> :
-                            active[3] && <Saved user={{
-                                name: profile.user.fname + ' ' + profile.user.lname,
-                                theme: profile.user.theme
-                            }} data={profile.saved} updateSaved={profile.setSaved}/>
+                                name: user.fname + ' ' + user.lname,
+                                theme: user.theme,
+                                dp: user.dp
+                            }} data={posts}/> :
+                            active[2] ? <Friends data={friends}/> :
+                            active[3] && <Saved data={saved}/>
                         }
 
                     </div>

@@ -30,5 +30,5 @@ export const firebaseDownloadImage = async (type, id = null) => {
 
         return { error: false, data: URL }
 
-    }   catch(err) { return { error: true, data: err.message } }
+    }   catch(err) { return { error: true, data: cast(err.message) } }
 }

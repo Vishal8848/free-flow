@@ -11,10 +11,10 @@ const PostCard = ({ user, data, save = false }) => {
     return ( 
         <div className="postcard m-md-3 mt-3 theme-outer">
             <div className="postcard-header px-3 py-2 theme-inner">
-                <Avatar name={user.name} scale="md" theme={user.theme}/>
+                <Avatar image={user ? user.dp : data.dp} name={user ? user.name : data.name} scale="md" theme={user ? user.theme : data.theme}/>
                 <div className="postcard-setter ps-3">
                     <div className="fs-5 fw-bold">
-                        { user.name }
+                        { user ? user.name : data.name }
                     </div>
                     <div className="postcard-time text-muted">
                         { date }

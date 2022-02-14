@@ -21,7 +21,7 @@ const Message = () => {
     );
 }
 
-const Chat = () => {
+const Chat = ({user}) => {
     return ( 
         <div className="chat rounded shadow-sm theme-middle">
             <div className="chat-header p-3 border-dark theme-middle">
@@ -34,7 +34,7 @@ const Chat = () => {
                 </div>
             </div>
             <div className="chat-create ps-2 py-3 theme-middle">
-                <Avatar name="Vishal Pranav" scale="sm" theme="danger"/>
+                <Avatar image={user.dp} name={user.name} scale="sm" theme={user.theme}/>
                 <input className="w-75 theme-middle" placeholder="Send a ripple"/>
                 <div className="submit-msg"><i className="fas fa-chevron-right fa-lg" style={{ WebkitTextStroke: "1.5px" }}></i></div>
             </div>

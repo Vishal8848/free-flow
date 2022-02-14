@@ -13,9 +13,9 @@ const Comment = ({ data }) => {
             <div className="comment-header px-2 py-1">
             
                 <div className="comment-creator">
-                    <Avatar name="Vishal Pranav" scale='sm' theme='primary'/>
+                    <Avatar image={data.dp} name={data.name} scale='sm' theme={data.theme}/>
                     <div className="creator ps-2">
-                        Vishal Pranav
+                        {data.name}
                     </div>
                 </div>
             
@@ -70,13 +70,13 @@ const Post = ({ user, data }) => {
         }
     }
 
-    return ( 
+    return ( data &&
         <div className="post theme-middle rounded rounded-3 mt-3">
             
             <div className="post-header px-3 px-md-4 py-2 py-md-3 theme-middle">
             
                 <div className="post-creator">
-                    <Avatar name={data.name} scale='md' theme={data.theme}/>
+                    <Avatar image={data.dp} name={data.name} scale='md' theme={data.theme}/>
                     <div className="creator fs-5 ps-3">
                         { data.name }
                     </div>
@@ -115,13 +115,13 @@ const Post = ({ user, data }) => {
             { comments &&
             <div className="post-comments theme-inner">
                 {   comments && comments.sort((x, y) => parseInt(x.commentedAt) - parseInt(y.commentedAt)).map(comment => (
-                        <Comment data={comment} key={comment.commentor}/>
+                        <Comment data={comment} key={comment.createdAt}/>
                     ))
                 }
             </div>  }
             
             <div className="post-create-comment theme-middle px-2 px-md-4 py-3">
-                <Avatar name={data.name} scale='md' theme={data.theme}/>
+                <Avatar image={user.dp} name={user.name} scale='md' theme={user.theme}/>
                 <input className="w-75 theme-middle" placeholder="Add your comment"
                     value={newComment.comment} onChange={(e) => { newComment.comment = e.target.value; setNewComment({...newComment}) }}/>
                 <div className="submit-comment" onClick={() => addNewComment()} style={{ cursor: "pointer" }}>

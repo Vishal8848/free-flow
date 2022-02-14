@@ -10,14 +10,15 @@ export const parseDOB = (dob) => {
     return day + ' ' + months[month];
 }
 
-export const Avatar = ({ name, scale = 'md', theme = 'primary' }) => {
-
+export const Avatar = ({ image, name, scale = 'md', theme = 'primary' }) => {
+    
     // Parse props.name
     const initial = getInitial(name);
 
     return ( 
-        <div className={`avatar avatar-${scale} bg-${theme} m-0 px-${ scale === 'sm' ? '2' : '3' }`}>
-            { initial.length > 0 ? initial : '~' }
+        <div className={`avatar avatar-${scale} bg-${theme} m-0 px-${ scale === 'sm' ? '2' : '3' }`}
+            style={{ background: image ? `url(${image}) center center / cover no-repeat` : 'unset' }}>
+            { (!image && initial.length > 0) && initial }
         </div>
     );
 }

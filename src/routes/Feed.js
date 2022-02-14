@@ -56,7 +56,7 @@ const Feed = () => {
         else setFeed({ restrict: false, state: 0 });
     }, [params, feed.restrict]);
     
-    return ( <>
+    return ( user && <>
         <Header />
         <div className="container-md feed row gx-0 gx-md-4 m-auto justify-content-center theme-outer">
             
@@ -64,7 +64,11 @@ const Feed = () => {
                 <div className="col-md-3 mb-md-2">
                     
                     <div className="feed-chat">
-                        <Chat/>
+                        <Chat user={{
+                            name: user.fname + ' ' + user.lname,
+                            theme: user.theme,
+                            dp: user.dp
+                        }}/>
                     </div>
                     
                     {   !feed.restrict &&
@@ -96,7 +100,12 @@ const Feed = () => {
                 <div className="col-md-6 mb-md-2">
 
                     <div className="feed-create">
-                        <CreatePost width={width} user={auth.data.uid}/>
+                        <CreatePost width={width} user={{
+                            name: user.fname + ' ' + user.lname,
+                            uid: auth.data.uid,
+                            theme: user.theme,
+                            dp: user.dp
+                        }}/>
                     </div>
 
                     <div className="feed-post mt-3">
@@ -104,8 +113,10 @@ const Feed = () => {
                         <div className="posts-set">
                         {   posts && posts.sort((x, y) => parseInt(y.createdAt) - parseInt(x.createdAt)).map(post => (
                                 <Post user={{
+                                    name: user.fname + ' ' + user.lname,
                                     uid: auth.data.uid,
-                                    name: user.fname + ' ' + user.lname
+                                    theme: user.theme,
+                                    dp: user.dp
                                 }} data={post} key={post.pid}/>
                             ))
                         }

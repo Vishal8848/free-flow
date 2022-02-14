@@ -61,9 +61,6 @@
     width: 100%;
     cursor: pointer;
 }
-.post-comments {
-    padding: 10px;
-}
 .post-create-comment {
     display: flex;
     align-items: center;

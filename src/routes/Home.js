@@ -6,9 +6,9 @@ import RequestReset from '../auth/RequestReset'
 import Inform from '../components/Inform'
 import Register from '../auth/Register'
 import Login from '../auth/Login'
-import { AuthContext, UserContext } from "../App"
+import { AuthContext } from "../App"
 
-const Authentication = ({ Inform, setRoute }) => {
+const Authentication = ({ Inform }) => {
 
     const [ activeAuth, setActiveAuth ] = useState(0);
 
@@ -26,14 +26,13 @@ const Home = () => {
 
     const setRoute = useNavigate();
     const { auth } = useContext(AuthContext);
-    const { user } = useContext(UserContext);
     
     const [ inform, setInform ] = useState({ state: false, code: 0 });
 
     useEffect(() => { 
         if(auth.status) 
             auth.data.lastActive ? setRoute('/feed') : setRoute('/profile/' + auth.data.uid)
-    }, [auth, user, setRoute])
+    }, [auth, setRoute])
 
     return (<>
         <div id="home" className="container-fluid bg-light">

@@ -108,9 +108,6 @@ h1 {
     display: flex;
     align-items: center;
 }
-.user-partition div{
-    margin: auto !important;
-}
 .user-menu {
     display: flex;
     align-items: center;
