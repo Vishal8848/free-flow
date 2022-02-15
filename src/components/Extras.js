@@ -16,7 +16,7 @@ export const Avatar = ({ image, name, scale = 'md', theme = 'primary' }) => {
     const initial = getInitial(name);
 
     return ( 
-        <div className={`avatar avatar-${scale} bg-${theme} m-0 px-${ scale === 'sm' ? '2' : '3' }`}
+        <div className={`avatar avatar-${scale} bg-${theme} m-0 px-${ scale === 'sm' ? '2' : '3' } py-${ scale === 'sm' && '3' }`}
             style={{ background: image ? `url(${image}) center center / cover no-repeat` : 'unset' }}>
             { (!image && initial.length > 0) && initial }
         </div>

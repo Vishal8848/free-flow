@@ -7,6 +7,8 @@ const Comment = ({ data }) => {
     // Parsed Time Values
     const { date, time, status }  = parseTime(data.commentedAt)
 
+    console.log(data)
+
     return ( 
         <div className="comment">
             
@@ -40,7 +42,7 @@ const Post = ({ user, data }) => {
     const [ like, setLike ] = useState(liked), [ save, setSave ] = useState(saved);
 
     // Comments Handler
-    const commentInitial = { commenter: user.uid, comment: "", commentedAt: null };
+    const commentInitial = { commenter: user.uid, name: user.name, dp: user.dp, comment: "", commentedAt: null };
     let [ newComment, setNewComment ] = useState(commentInitial);
     let [ comments, setComments ] = useState(data.comments);
 
@@ -53,8 +55,7 @@ const Post = ({ user, data }) => {
             newComment.commentedAt = Date.now().toString();
             setNewComment({...newComment});
             firebaseAddComment(data.pid, newComment).then(res => setNewComment(commentInitial))
-            comments.push(newComment)
-            setComments([...comments])
+            setComments([...comments, newComment])
         }
 
     }

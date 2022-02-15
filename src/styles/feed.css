@@ -209,8 +209,8 @@
     border-bottom-right-radius: 10px;
 }
 .chat-content {
-    height: 100%;
     min-height: 300px;
+    max-height: 300px;
     overflow-y: auto;
 }
 .chat-create > .avatar {
@@ -258,6 +258,7 @@
 .message {
     padding: 10px;
     display: flex;
+    align-items: top;
     justify-content: flex-start;
     background-color: rgba(25, 25, 25, 0.05);
 }
@@ -266,7 +267,6 @@
     margin-top: 5px;
 }
 .m-content {
-    padding-left: 10px;
     flex: 90%;
 }
 .m-head {

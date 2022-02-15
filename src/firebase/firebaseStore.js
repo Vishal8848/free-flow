@@ -308,3 +308,46 @@ export const firebaseTrendingPost = async () => {
     }   catch(err) { return { error: true, data: cast(err.message) } }
 
 }
+
+export const firebaseChat = async () => {
+
+    try {
+        let chat = [];
+
+        const chatQuery = await query(collection(store, 'chat'));
+
+        const chatSnapshot = await getDocs(chatQuery);
+
+        chatSnapshot.forEach(message => chat.push({ mid: message.id, ...message.data() }))
+
+        for(const message of chat)  {
+            const res = await firebaseUser(message.uid, true);
+            const index = getIndexByValue(chat, 'uid', message.uid)
+
+            if(!res.error)  {
+                chat[index].name = res.data.name;
+                chat[index].theme = res.data.theme;
+                chat[index].dp = res.data.dp;
+            }
+        }
+
+        chat = chat.sort((x, y) => { return parseInt(x.createdAt) - parseInt(y.createdAt) })
+
+        return { error: false, data: chat }
+
+    }   catch(err) { return { error: false, data: cast(err.message) } }
+
+}
+
+export const firebaseCreateMessage = async (msg) => {
+
+    try {
+        await addDoc(collection(store, 'chat'), {
+            uid: msg.uid,
+            content: msg.content,
+            createdAt: msg.createdAt
+        })
+
+    }   catch(err)  { return { error: true, data: cast(err.message) } }
+
+}

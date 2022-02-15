@@ -66,6 +66,7 @@ const Feed = () => {
                     <div className="feed-chat">
                         <Chat user={{
                             name: user.fname + ' ' + user.lname,
+                            uid: auth.data.uid,
                             theme: user.theme,
                             dp: user.dp
                         }}/>

@@ -2,20 +2,20 @@
     "messages" : [
         {
             "_id" : "1",
-            "user_id" : "AAFtnYWqqXTezTgmlwns6fU4sIA3",
-            "message" : "Hi, Everyone",
+            "uid" : "AAFtnYWqqXTezTgmlwns6fU4sIA3",
+            "content" : "Hi, Everyone",
             "createdAt" : "1642920340798"
         },
         {
             "_id" : "2",
-            "user_id" : "AAFtnYWqqXTezTgmlwns6fU4sIA3",
-            "message" : "Hi, Everyone",
+            "uid" : "AAFtnYWqqXTezTgmlwns6fU4sIA3",
+            "content" : "Hi, Everyone",
             "createdAt" : "1642920340798"
         },
         {
             "_id" : "3",
-            "user_id" : "AAFtnYWqqXTezTgmlwns6fU4sIA3",
-            "message" : "Hi, Everyone",
+            "uid" : "AAFtnYWqqXTezTgmlwns6fU4sIA3",
+            "content" : "Hi, Everyone",
             "createdAt" : "1642920340798"
         }
     ]

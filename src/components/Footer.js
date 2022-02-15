@@ -15,7 +15,7 @@ const Footer = () => {
         <div className="w-100 footer-sys text-center py-3 mt-md-3 theme-middle">
             &copy; Copyright: <Link to="/" className="text-primary" style={{ textDecoration: "none" }}>Freeflow</Link>
         </div>
-        <div className="user-menu footer-mob w-100 text-center py-2 mt-md-3 theme-middle fixed-bottom">
+        <div className="user-menu footer-mob w-100 text-center py-2 mt-md-3 theme-middle">
             <div className="item theme-middle d-block">
                 <Link to="/feed" className="theme-middle">
                     <i className={`fas fa-home fa-lg`}></i>
