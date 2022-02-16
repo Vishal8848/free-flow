@@ -114,6 +114,9 @@ h1 {
     align-items: center;
     justify-content: flex-end;
 }
+.navbar {
+    height: 60px;
+}
 .navbar-brand {
     font-size: 25px;
     font-family: 'Poppins';
@@ -437,6 +440,7 @@ div:hover > .tool-tip {
 }
 .footer-mob {
     display: none;
+    height: 60px;
 }
 @media screen and ( max-width: 768px ) {
     .header .mobile {

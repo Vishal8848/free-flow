@@ -61,7 +61,7 @@ const Feed = () => {
         <div className="container-md feed row gx-0 gx-md-4 m-auto justify-content-center theme-outer">
             
             {   auth.data && ((!feed.restrict && feed.state === 0) || (feed.restrict && feed.state === 1)) &&
-                <div className="col-md-3 mb-md-2">
+                <div className="col-md-3 mb-md-2 mt-3">
                     
                     <div className="feed-chat">
                         <Chat user={{
@@ -98,7 +98,7 @@ const Feed = () => {
             }
 
             {   auth.data && (!feed.restrict || (feed.restrict && feed.state === 0)) &&
-                <div className="col-md-6 mb-md-2">
+                <div className="col-md-6 mb-md-2 mt-3">
 
                     <div className="feed-create">
                         <CreatePost width={width} user={{
@@ -128,7 +128,7 @@ const Feed = () => {
             }
 
             {   auth.data && ((!feed.restrict && feed.state === 0) || (feed.restrict && feed.state === 2)) &&
-                <div className="col-md-3">
+                <div className="col-md-3 mt-3">
 
                     <div className="feed-updates">
                         <span className="feed-title ps-3 text-muted fw-bold">Updates</span>

@@ -1,5 +1,13 @@
+.feed {
+    margin-top: 60px !important;
+}
 .feed-title {
     text-transform: uppercase;
+}
+@media screen and ( max-width: 768px )  {
+    .feed {
+        margin-bottom: 60px !important;
+    }
 }
 
 /* Post */

@@ -3,6 +3,7 @@
     width: 100%;
     height: auto;
     user-select: none;
+    margin-top: 60px !important;
 }
 .profile-header {
     width: 80%;
@@ -21,9 +22,7 @@
     position: absolute;
     height: auto;
     width: 100%;
-    /* max-width: 100%; */
     max-height: 100%;
-    /* object-fit: none; */
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
@@ -37,6 +36,9 @@
     border-bottom-right-radius: 10px;
 }
 @media screen and ( max-width: 768px ) {
+    .profile {
+        margin-bottom: 60px !important;
+    }
     .profile-header {
         width: 100%;
         border-radius: 5px;
