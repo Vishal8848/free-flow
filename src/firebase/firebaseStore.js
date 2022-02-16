@@ -201,7 +201,7 @@ export const firebaseAllPosts = async (friends) => {
 
             for(const comment of post.comments) {
                 const res = await firebaseUser(comment.commenter, true);
-                const cIndex = getIndexByValue(post.comments, 'commenter', comment.commenter)
+                const cIndex = getIndexByValue(post.comments, 'commentedAt', comment.commentedAt)
 
                 if(!res.error)  {
                     posts[pIndex].comments[cIndex].name = res.data.name
@@ -260,11 +260,11 @@ export const firebasePostReaction = async (pid, uid, type, action) => {
 
 }
 
-export const firebaseAddComment = async (pid, comment) => {
+export const firebaseAddComment = async (pid, data) => {
 
     try {
         await updateDoc(doc(store, 'posts', pid), {
-            comments: arrayUnion(comment),
+            comments: arrayUnion({ comment: data.comment, commenter: data.commenter, commentedAt: data.commentedAt }),
             updatedAt: Date.now().toString()
         })
 
@@ -322,7 +322,7 @@ export const firebaseChat = async () => {
 
         for(const message of chat)  {
             const res = await firebaseUser(message.uid, true);
-            const index = getIndexByValue(chat, 'uid', message.uid)
+            const index = getIndexByValue(chat, 'mid', message.mid)
 
             if(!res.error)  {
                 chat[index].name = res.data.name;

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Avatar, parseTime } from '../Extras'
 import { firebasePostReaction, firebaseAddComment } from '../../firebase/firebaseStore'
 
@@ -6,8 +6,6 @@ const Comment = ({ data }) => {
 
     // Parsed Time Values
     const { date, time, status }  = parseTime(data.commentedAt)
-
-    console.log(data)
 
     return ( 
         <div className="comment">
@@ -53,12 +51,22 @@ const Post = ({ user, data }) => {
 
         if(newComment.comment.length > 0)  {
             newComment.commentedAt = Date.now().toString();
-            setNewComment({...newComment});
-            firebaseAddComment(data.pid, newComment).then(res => setNewComment(commentInitial))
+            firebaseAddComment(data.pid, newComment)
             setComments([...comments, newComment])
+            setNewComment(commentInitial);
+        }
+    }
+
+    useEffect(() => {
+        const commentInput = document.getElementById('new-comment-' + data.pid)
+        const triggerComment = (e) => {
+            if(e.keyCode === 13 && e.target.value.length > 0)  addNewComment()
         }
 
-    }
+        commentInput.addEventListener('keyup', triggerComment);
+        return () => commentInput.removeEventListener('keyup', triggerComment)
+    
+    })
 
     const handleReaction = (type) => {
 
@@ -116,14 +124,14 @@ const Post = ({ user, data }) => {
             { comments &&
             <div className="post-comments theme-inner">
                 {   comments && comments.sort((x, y) => parseInt(x.commentedAt) - parseInt(y.commentedAt)).map(comment => (
-                        <Comment data={comment} key={comment.createdAt}/>
+                        <Comment data={comment} key={comment.commentedAt}/>
                     ))
                 }
             </div>  }
             
             <div className="post-create-comment theme-middle px-2 px-md-4 py-3">
                 <Avatar image={user.dp} name={user.name} scale='md' theme={user.theme}/>
-                <input className="w-75 theme-middle" placeholder="Add your comment"
+                <input id={`new-comment-${data.pid}`} className="w-75 theme-middle" placeholder="Add your comment"
                     value={newComment.comment} onChange={(e) => { newComment.comment = e.target.value; setNewComment({...newComment}) }}/>
                 <div className="submit-comment" onClick={() => addNewComment()} style={{ cursor: "pointer" }}>
                     <i className="fas fa-paper-plane fa-lg"></i>

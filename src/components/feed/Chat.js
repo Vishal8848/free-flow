@@ -33,13 +33,16 @@ const Message = ({ data, self }) => {
 const Chat = ({user}) => {
 
     let [ chat, setChat ] = useState([])
-    const initial = { content: "", uid: user.uid, name: user.name, theme: user.theme, dp: user.dp };
-    let [ message, setMessage ] = useState(initial)
+    const messageInitial = { content: "", uid: user.uid, name: user.name, theme: user.theme, dp: user.dp };
+    let [ message, setMessage ] = useState(messageInitial)
 
     const sendMessage = () => {
-        firebaseCreateMessage(message)
-        setChat([ ...chat, message ])
-        setMessage(initial)
+        if(message.content.length > 0)  {
+            message.createdAt = Date.now().toString();
+            firebaseCreateMessage(message)
+            setChat([ ...chat, message ])
+            setMessage(messageInitial)
+        }
     }
 
     useEffect(() => {
@@ -57,8 +60,7 @@ const Chat = ({user}) => {
         msgInput.addEventListener('keyup', triggerMessage);
         return () => msgInput.removeEventListener('keyup', triggerMessage)
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [message])
+    })
 
     return ( chat &&
         <div className="chat rounded shadow-sm theme-middle">
@@ -79,7 +81,7 @@ const Chat = ({user}) => {
             <div className="chat-create ps-2 py-3 theme-middle">
                 <Avatar image={user.dp} name={user.name} scale="sm" theme={user.theme}/>
                 <input id="new-msg" className="w-75 theme-middle" placeholder="Send a ripple"
-                    value={message.content} onChange={(e) => { message.content = e.target.value; message.createdAt = Date.now().toString(); setMessage({...message}) }}/>
+                    value={message.content} onChange={(e) => { message.content = e.target.value; setMessage({...message}) }}/>
                 <div className="submit-msg" onClick={() => sendMessage()}>
                     <i className="fas fa-chevron-right fa-lg" style={{ WebkitTextStroke: "1.5px" }}></i>
                 </div>
