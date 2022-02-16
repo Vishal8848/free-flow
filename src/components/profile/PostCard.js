@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Avatar, parseTime } from '../Extras'
 
 const PostCard = ({ user, data, save = false }) => {
@@ -11,10 +12,20 @@ const PostCard = ({ user, data, save = false }) => {
     return ( 
         <div className="postcard m-md-3 mt-3 theme-outer">
             <div className="postcard-header px-3 py-2 theme-inner">
-                <Avatar image={user ? user.dp : data.dp} name={user ? user.name : data.name} scale="md" theme={user ? user.theme : data.theme}/>
+                {   save ?
+                    <Link to={`/profile/${data.creator}`}>
+                        <Avatar image={user ? user.dp : data.dp} name={user ? user.name : data.name} scale="md" theme={user ? user.theme : data.theme}/>
+                    </Link> :
+                    <Avatar image={user ? user.dp : data.dp} name={user ? user.name : data.name} scale="md" theme={user ? user.theme : data.theme}/>
+                }
                 <div className="postcard-setter ps-3">
                     <div className="fs-5 fw-bold">
-                        { user ? user.name : data.name }
+                        {   save ?
+                            <Link to={`/profile/${data.creator}`}>
+                                { user ? user.name : data.name }
+                            </Link> :
+                            user ? user.name : data.name
+                        }
                     </div>
                     <div className="postcard-time text-muted">
                         { date }

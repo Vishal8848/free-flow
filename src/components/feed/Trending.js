@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { Link } from 'react-router-dom'
 import { Avatar } from "../Extras"
 import TypeWriter from 'typewriter-effect'
 import { firebaseTrendingPost } from '../../firebase/firebaseStore'
@@ -16,10 +17,14 @@ const Trending = () => {
     return ( trend &&
         (<div className="trend theme-middle">
             <div className="trend-header px-3 py-2 theme-middle">
-                <Avatar image={trend.dp} name={trend.name} scale="md" theme={trend.theme}/>
+                <Link to={`/profile/${trend.creator}`}>
+                    <Avatar image={trend.dp} name={trend.name} scale="md" theme={trend.theme}/>
+                </Link>
                 <div className="trend-setter ps-3">
                     <div className="fs-5 fw-bold">
-                        {trend.name}
+                        <Link to={`/profile/${trend.creator}`}>
+                            {trend.name}
+                        </Link>
                     </div>
                     <div className="trend-time text-muted">
                         <TypeWriter

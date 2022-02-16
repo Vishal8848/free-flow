@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { firebaseChat, firebaseCreateMessage } from '../../firebase/firebaseStore';
 import { Avatar, parseTime } from "../Extras";
+import { Link } from 'react-router-dom'
 
 const Message = ({ data, self }) => {
 
@@ -10,11 +11,15 @@ const Message = ({ data, self }) => {
 
     return ( data &&
         <div className="message">
-            <Avatar image={data.dp} name={data.name} scale="sm" theme={data.theme}/>
+            <Link to={`/profile/${data.uid}`}>
+                <Avatar image={data.dp} name={data.name} scale="sm" theme={data.theme}/>
+            </Link>
             <div className={`m-content p${ self ? 'e' : 's' }-1`}>
                 <div className="m-head">
                     <div className="m-creator ps-2">
-                        { data.name.length > 15 ? data.name.split(' ')[0].length > 15 ? data.name.substring(0, 10) + ' ...' : data.name.split(' ')[0] : data.name}
+                        <Link to={`/profile/${data.uid}`}>
+                            { data.name.length > 15 ? data.name.split(' ')[0].length > 15 ? data.name.substring(0, 10) + ' ...' : data.name.split(' ')[0] : data.name}
+                        </Link>
                     </div>
                     <div className="m-time text-muted">
                         { data.name.length < 10 && time }
@@ -79,7 +84,9 @@ const Chat = ({user}) => {
                 }
             </div>
             <div className="chat-create ps-2 py-3 theme-middle">
-                <Avatar image={user.dp} name={user.name} scale="sm" theme={user.theme}/>
+                <Link to={`/profile/${user.uid}`}>
+                    <Avatar image={user.dp} name={user.name} scale="sm" theme={user.theme}/>
+                </Link>
                 <input id="new-msg" className="w-75 theme-middle" placeholder="Send a ripple"
                     value={message.content} onChange={(e) => { message.content = e.target.value; setMessage({...message}) }}/>
                 <div className="submit-msg" onClick={() => sendMessage()}>

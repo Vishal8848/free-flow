@@ -1,5 +1,6 @@
 import { Avatar } from "../Extras";
 import { useEffect, useState } from "react";
+import { Link } from 'react-router-dom'
 import { firebaseUploadImage } from '../../firebase/firebaseBulk'
 import { firebaseCreatePost } from "../../firebase/firebaseStore"
 
@@ -44,7 +45,11 @@ const CreatePost = ({ width, user }) => {
 
     return (<>
         <div className="post-trigger p-2 theme-middle" style={{ borderBottomLeftRadius: `${ form ? "0" : "10px" }`, borderBottomRightRadius: `${ form ? "0" : "10px" }` }}>
-            { width > 768 && <Avatar image={user.dp} name={user.name} scale="md" theme={user.theme}/> }
+            { width > 768 && 
+                <Link to={`/profile/${user.uid}`}>
+                    <Avatar image={user.dp} name={user.name} scale="md" theme={user.theme}/>
+                </Link>
+            }
             <div className="w-100 fs-6 px-3 py-2 ms-md-3 rounded-pill border-dark theme-inner text-muted" onClick={() => form ? openForm(false) : openForm(true)}>Create New Wave</div>
             <div className="vr mx-3"></div>
             <i className="fas fa-paper-plane text-primary fa-lg me-3" onClick={() => submitPost()}></i>

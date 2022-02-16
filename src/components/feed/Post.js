@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { Avatar, parseTime } from '../Extras'
 import { firebasePostReaction, firebaseAddComment } from '../../firebase/firebaseStore'
 
@@ -12,12 +13,14 @@ const Comment = ({ data }) => {
             
             <div className="comment-header px-2 py-1">
             
-                <div className="comment-creator">
-                    <Avatar image={data.dp} name={data.name} scale='sm' theme={data.theme}/>
-                    <div className="creator ps-2">
-                        {data.name}
+                <Link to={`/profile/${data.commenter}`}>
+                    <div className="comment-creator">
+                        <Avatar image={data.dp} name={data.name} scale='sm' theme={data.theme}/>
+                        <div className="creator ps-2">
+                            {data.name}
+                        </div>
                     </div>
-                </div>
+                </Link>
             
                 <div className="comment-timestamp text-muted">
                     { time } <i className="fas fa-circle px-1 align-middle" style={{ fontSize: "5px" }}></i> { status !== "" ? status : date }
@@ -84,12 +87,14 @@ const Post = ({ user, data }) => {
             
             <div className="post-header px-3 px-md-4 py-2 py-md-3 theme-middle">
             
-                <div className="post-creator">
-                    <Avatar image={data.dp} name={data.name} scale='md' theme={data.theme}/>
-                    <div className="creator fs-5 ps-3">
-                        { data.name }
+                <Link to={`/profile/${data.creator}`}>
+                    <div className="post-creator">
+                        <Avatar image={data.dp} name={data.name} scale='md' theme={data.theme}/>
+                        <div className="creator fs-5 ps-3">
+                            { data.name }
+                        </div>
                     </div>
-                </div>
+                </Link>
             
                 <div className="post-timestamp text-muted">
                     { time } <i className="fas fa-circle align-middle px-1" style={{ fontSize: "5px" }}></i> { status !== "" ? status : date }
@@ -130,7 +135,9 @@ const Post = ({ user, data }) => {
             </div>  }
             
             <div className="post-create-comment theme-middle px-2 px-md-4 py-3">
-                <Avatar image={user.dp} name={user.name} scale='md' theme={user.theme}/>
+                <Link to={`/profile/${user.uid}`}>
+                    <Avatar image={user.dp} name={user.name} scale='md' theme={user.theme}/>
+                </Link>
                 <input id={`new-comment-${data.pid}`} className="w-75 theme-middle" placeholder="Add your comment"
                     value={newComment.comment} onChange={(e) => { newComment.comment = e.target.value; setNewComment({...newComment}) }}/>
                 <div className="submit-comment" onClick={() => addNewComment()} style={{ cursor: "pointer" }}>
