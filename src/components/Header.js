@@ -4,7 +4,7 @@ import { Avatar, Tooltip } from './Extras'
 import Notifications from './Notifications'
 import { AuthContext, UserContext } from '../App'
 import { firebaseLogout } from '../firebase/firebaseAuth';
-// import { firebaseSearchUsers } from '../firebase/firebaseStore'
+import { firebaseSearchUsers } from '../firebase/firebaseStore'
 
 const readStoredTheme = () => {
 
@@ -41,6 +41,14 @@ const Search = ({ search, uid }) => {
     useEffect(() => {
         setSearchString(search)
     }, [search])
+
+    useEffect(() => {
+        console.log("HiS")
+        firebaseSearchUsers(uid).then(res => {
+            if(!res.error)  setUsers(res.data)
+            console.log("Hi")
+        })
+    }, [uid])
 
     return ( users &&
         <div className="search p-2 theme-middle shadow">
