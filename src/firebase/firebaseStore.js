@@ -1,5 +1,5 @@
 import { getFirestore, doc, addDoc, getDoc, updateDoc, getDocs, collection, query, where, arrayUnion, arrayRemove } from "firebase/firestore/lite"
-import { firebaseDownloadImage } from "./firebaseBulk";
+import { firebaseDownloadImage } from "./firebaseBulk"
 import firebase from './firebase'
 
 const store = getFirestore(firebase);
@@ -350,4 +350,35 @@ export const firebaseCreateMessage = async (msg) => {
 
     }   catch(err)  { return { error: true, data: cast(err.message) } }
 
+}
+
+export const firebaseSearchUsers = async (uid) => {
+
+    try {
+        let users = []
+
+        const usersQuery = query(collection(store, 'users'));
+
+        const usersSnapshot = await getDocs(usersQuery);
+
+        usersSnapshot.forEach(user => users.push({ 
+            uid: user.id,
+            isFriend: user.data().friends.some(friend => friend === uid)
+        }))
+
+        for(const user of users)    {
+            const res = await firebaseUser(user.uid, true);
+            const index = getIndexByValue(users, 'uid', user.uid)
+
+            if(!res.error)  {
+                users[index].name = res.data.name;
+                users[index].theme = res.data.theme;
+                users[index].dp = res.data.dp;
+            }
+
+        }
+
+        return { error: false, data: users }
+
+    }   catch(err) { return { error: true, data: cast(err.message) } }
 }

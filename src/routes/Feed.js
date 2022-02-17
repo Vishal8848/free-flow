@@ -58,7 +58,7 @@ const Feed = () => {
     
     return ( user && <>
         <Header />
-        <div className="container-md feed row gx-0 gx-md-4 m-auto justify-content-center theme-outer">
+        <div className="container-fluid feed row gx-0 gx-md-4 m-auto justify-content-center theme-outer">
             
             {   auth.data && ((!feed.restrict && feed.state === 0) || (feed.restrict && feed.state === 1)) &&
                 <div className="col-md-3 mb-md-2 mt-3">

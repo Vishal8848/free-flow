@@ -4,6 +4,7 @@ import { Avatar, Tooltip } from './Extras'
 import Notifications from './Notifications'
 import { AuthContext, UserContext } from '../App'
 import { firebaseLogout } from '../firebase/firebaseAuth';
+// import { firebaseSearchUsers } from '../firebase/firebaseStore'
 
 const readStoredTheme = () => {
 
@@ -14,29 +15,42 @@ const readStoredTheme = () => {
     return false;
 }
 
-const SearchUser = () => {
+const SearchUser = ({ data }) => {
 
-    const [ request, setRequest ] = useState(false);
+    const [ request, setRequest ] = useState(data.isFriend);
 
     return (
         <div className={`search-user p-2 theme-middle`}>
-            <Avatar name="Vishal Pranav" scale="square-sm" theme="success"/>
-            <div className="fs-6 mx-3 w-100">Abishek Prasannaa</div>
+            <Link to={`/profile/${data.uid}`}>
+                <Avatar image={data.dp} name={data.name} scale="square-sm" theme={data.theme}/>
+            </Link>
+            <div className="fs-6 mx-3 w-100">{ data.name }</div>
             <button className={`btn btn-${ request ? 'secondary' : 'primary' } btn-sm`} onClick={() => setRequest(true)} disabled={ request ? "disabled" : "" }>
                 { !request && <i className="fas fa-plus me-2"></i> }
-                { request ? "Requested" : "Friend" }
+                { request ? data.isFriend ? "Friends" : "Requested" : "Friend" }
             </button>
         </div>
     );
 }
 
-const Search = () => {
-    return (
+const Search = ({ search, uid }) => {
+
+    const [ users, setUsers ] = useState(null);
+    const [ searchString, setSearchString ] = useState("");
+
+    useEffect(() => {
+        setSearchString(search)
+    }, [search])
+
+    return ( users &&
         <div className="search p-2 theme-middle shadow">
             <span className="feed-title ps-3 text-muted fw-bold">Search Results</span>
-            <SearchUser />
-            <SearchUser />
-            <SearchUser/>
+            {   (users.length > 0) &&
+                searchString.length > 0 ?
+                users.filter(user => user.name.startsWith(searchString) || user.name.startsWith(searchString.toLowerCase()) || user.name.startsWith(searchString.toUpperCase())).map(user => (
+                    <SearchUser data={user} key={user.uid}/>
+                )) : <div className="p-3 text-center">Type something to see whose there ...</div>
+            }
         </div>
     );
 }
@@ -92,7 +106,7 @@ const Header = () => {
                     <input id="search" type="search" className={`form-control ${ search.open && 'search-focus' } rounded-pill theme-inner`} placeholder="Search Freeflow"
                         onFocusCapture={() => { search.open = true; setSearch({...search}) }}
                         value={search.input} onChange={(e) => { search.input = e.target.value; setSearch({...search}) }}/>
-                    { search.open && <Search /> }
+                    { search.open && <Search search={search.input} uid={auth.data.uid}/> }
                 </div>
 
                 <div className="brand system me-auto">
