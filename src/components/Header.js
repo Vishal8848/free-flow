@@ -43,12 +43,11 @@ const Search = ({ search, uid }) => {
     }, [search])
 
     useEffect(() => {
-        console.log("HiS")
-        firebaseSearchUsers(uid).then(res => {
-            if(!res.error)  setUsers(res.data)
-            console.log("Hi")
-        })
-    }, [uid])
+        if(!users)
+            firebaseSearchUsers(uid).then(res => {
+                if(!res.error)  setUsers(res.data)
+            })
+    }, [users, uid])
 
     return ( users &&
         <div className="search p-2 theme-middle shadow">
