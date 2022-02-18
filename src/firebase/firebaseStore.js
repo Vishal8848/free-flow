@@ -1,9 +1,16 @@
-import { getFirestore, doc, addDoc, getDoc, updateDoc, getDocs, collection, query, where, arrayUnion, arrayRemove } from "firebase/firestore/lite"
+import { doc, addDoc, getDoc, updateDoc, getDocs, collection, query, where, arrayUnion, arrayRemove, enableIndexedDbPersistence, initializeFirestore, CACHE_SIZE_UNLIMITED } from "firebase/firestore"
 import { firebaseDownloadImage } from "./firebaseBulk"
 import firebase from './firebase'
 
-const store = getFirestore(firebase);
+// let store = getFirestore(firebase);
 const cast = (data) => { return data.substring(data.lastIndexOf('(') + 1, data.lastIndexOf(')')) }
+
+const store =  initializeFirestore(firebase, { cacheSizeBytes: CACHE_SIZE_UNLIMITED });
+
+enableIndexedDbPersistence(store)
+.then(() => console.log("Offline mode enabled"))
+.catch(err => console.log(cast(err.message)))
+
 
 export const getIndexByValue = (array, key, value) => {
     for(let i = 0; i < array.length; i++)
@@ -435,13 +442,14 @@ export const firebaseSearchUsers = async (uid) => {
         const setIsFriend = (fid) => {
             if(reqs.data.length > 0) {
                 const index = getIndexByValue(reqs.data, 'fid', fid);
+                console.log(reqs.data)
                 return index !== null ? reqs.data[index].status : 0
             }   return 0
         }
 
         usersSnapshot.forEach(user => user.id !== uid && users.push({ 
             uid: user.id,
-            isFriend: setIsFriend(user.id)
+            isFriend: user.data().friends.some(friend => friend === uid) ? 2 : setIsFriend(user.id)
         }))
 
         for(const user of users)    {

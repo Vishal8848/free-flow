@@ -23,10 +23,12 @@ const SearchUser = ({ data, request, handleRequest }) => {
                 <Avatar image={data.dp} name={data.name} scale="square-sm" theme={data.theme}/>
             </Link>
             <div className="fs-6 mx-3 w-100">{ data.name }</div>
-            <button className={`btn btn-${ request === 0 ? 'primary' : 'secondary' } btn-sm`} onClick={() => handleRequest(data.uid)} disabled={ request ? "disabled" : "" }>
-                { request === 0 && <i className="fas fa-plus me-2"></i> }
-                { request === 0 ? "Friend" : "Requested" }
-            </button>
+            {   data.isFriend !== 2 &&
+                <button className={`btn btn-${ request === 0 ? 'primary' : 'secondary' } btn-sm`} onClick={() => handleRequest(data.uid)} disabled={ request ? "disabled" : "" }>
+                    { request === 0 && <i className="fas fa-plus me-2"></i> }
+                    { request === 0 ? "Friend" : "Requested" }
+                </button>
+            }
         </div>
     );
 }
@@ -34,6 +36,7 @@ const SearchUser = ({ data, request, handleRequest }) => {
 const Search = ({ search, uid }) => {
 
     const [ users, setUsers ] = useState(null);
+    
     const [ SS, setSS ] = useState("");
 
     useEffect(() => {
@@ -127,7 +130,7 @@ const Header = () => {
                     <input id="search" type="search" className={`form-control ${ search.open && 'search-focus' } rounded-pill theme-inner`} placeholder="Search Freeflow"
                         onFocusCapture={() => { search.open = true; setSearch({...search}) }}
                         value={search.input} onChange={(e) => { search.input = e.target.value; setSearch({...search}) }}/>
-                    { search.open && <Search search={search.input} uid={auth.data.uid}/> }
+                    { search.open && <Search search={search.input} uid={auth.data && auth.data.uid}/> }
                 </div>
 
                 <div className="brand system me-auto">
