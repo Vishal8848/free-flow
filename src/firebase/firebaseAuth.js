@@ -43,7 +43,7 @@ const firebaseCreateUserDoc = async (uid, cred, type) => {
             },
             education: "",
             hobbies:  "",
-            friends: [],
+            friends: [ uid ],
             posts: [],
             saved: [],
             likes: [],

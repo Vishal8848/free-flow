@@ -5,11 +5,11 @@ import firebase from './firebase'
 const store = getFirestore(firebase);
 const cast = (data) => { return data.substring(data.lastIndexOf('(') + 1, data.lastIndexOf(')')) }
 
-const getIndexByValue = (array, key, value) => {
+export const getIndexByValue = (array, key, value) => {
     for(let i = 0; i < array.length; i++)
         if(array[i][key] === value) 
             return i
-    return 0
+    return null
 }
 
 export const firebaseUser = async (uid, restrict = false) => {
@@ -164,30 +164,18 @@ export const firebasePostCards = async (pids, type = null) => {
 export const firebaseAllPosts = async (friends) => {
 
     try {
-        let posts = [], postsQuery = null;
+        let posts = [], friendsPostsQuery = null;
 
-        if(friends.length > 0) 
-            postsQuery = await query(collection(store, 'posts'), where('private', '==', false), where('creator', 'in', friends))
-        else 
-            postsQuery = await query(collection(store, 'posts'), where('private', '==', false))
+        const postsQuery = await query(collection(store, 'posts'), where('private', '==', false))
+
+        friendsPostsQuery = await query(collection(store, 'posts'), where('private', '==', true), where('creator', 'in', friends))            
         
         const postsSnapshot = await getDocs(postsQuery);
+        const friendsPosts = await getDocs(friendsPostsQuery);
 
-        postsSnapshot.forEach(doc => {
-            const post = doc.data()
-            posts.push({
-                pid: doc.id,
-                creator: post.creator,
-                private: post.private,
-                title: post.title,
-                content: post.content,
-                hasImage: post.hasImage,
-                likes: post.likes,
-                saved: post.saved,
-                comments: post.comments,
-                createdAt: post.createdAt
-            })
-        })
+        postsSnapshot.forEach(doc => posts.push({ pid: doc.id, ...doc.data() }) )
+
+        friendsPosts.forEach(doc => posts.push({ pid: doc.id, ...doc.data() }) )
 
         for(const post of posts)    {
             const res = await firebaseUser(post.creator, true);
@@ -352,6 +340,71 @@ export const firebaseCreateMessage = async (msg) => {
 
 }
 
+export const firebaseMakeRequest = async (uid, fid) => {
+
+    try {
+        await addDoc(collection(store, 'friend-requests'), {
+            uid: uid,
+            fid: fid,
+            status: 1,
+            createdAt: Date.now().toString()
+        })
+
+    }   catch(err)  { return { error: true, data: cast(err.message) } }
+
+}
+
+export const firebaseFriendRequests = async (uid, restrict = true) => {
+
+    try {
+        let requests = []
+
+        const requestsQuery = query(collection(store, 'friend-requests'), where('uid', '==', uid))
+
+        const requestsSnapshot = await getDocs(requestsQuery);
+
+        requestsSnapshot.forEach(request => requests.push({ ...request.data() }))
+
+        if(!restrict)   {
+            const otherRequestsQuery = query(collection(store, 'friend-requests'), where('fid', '==', uid))
+            const otherRequestsSnapshot = await getDocs(otherRequestsQuery);
+            otherRequestsSnapshot.forEach(request => requests.push({ ...request.data() }))
+
+            for(const req of requests)  {
+                const id = req.uid === uid ? req.fid : req.uid, me = req.uid === uid;
+                const index = getIndexByValue(requests, me ? 'fid' : 'uid', id)
+                const res = await firebaseUser(id, true);
+
+                if(!res.error)  {
+                    requests[index].name = res.data.name;
+                    requests[index].theme = res.data.theme;
+                    requests[index].dp = res.data.dp;
+                }
+            }
+
+        }
+
+        return { error: false, data: requests }
+
+    }   catch(err)  { return { error: true, data: cast(err.message) } }
+
+}
+
+export const firebaseUpdateRequest = async (uid, fid) => {
+
+    try {
+        let request = null;
+
+        const requestQuery = query(collection(store, 'friend-requests'), where('uid', '==', fid), where('fid', '==', uid));
+
+        const requestSnapshot = await getDocs(requestQuery);
+
+        requestSnapshot.forEach(req => console.log(req.id, req.data()));
+
+    }   catch(err)  { return { error: true, data: cast(err.message) } }
+
+}
+
 export const firebaseSearchUsers = async (uid) => {
 
     try {
@@ -361,9 +414,18 @@ export const firebaseSearchUsers = async (uid) => {
 
         const usersSnapshot = await getDocs(usersQuery);
 
-        usersSnapshot.forEach(user => users.push({ 
+        const reqs = await firebaseFriendRequests(uid);
+
+        const setIsFriend = (fid) => {
+            if(reqs.data.length > 0) {
+                const index = getIndexByValue(reqs.data, 'fid', fid);
+                return index !== null ? reqs.data[index].status : 0
+            }   return 0
+        }
+
+        usersSnapshot.forEach(user => user.id !== uid && users.push({ 
             uid: user.id,
-            isFriend: user.data().friends.some(friend => friend === uid)
+            isFriend: setIsFriend(user.id)
         }))
 
         for(const user of users)    {

@@ -4,7 +4,7 @@ import { Avatar, Tooltip } from './Extras'
 import Notifications from './Notifications'
 import { AuthContext, UserContext } from '../App'
 import { firebaseLogout } from '../firebase/firebaseAuth';
-import { firebaseSearchUsers } from '../firebase/firebaseStore'
+import { firebaseSearchUsers, firebaseMakeRequest, getIndexByValue } from '../firebase/firebaseStore'
 
 const readStoredTheme = () => {
 
@@ -15,9 +15,7 @@ const readStoredTheme = () => {
     return false;
 }
 
-const SearchUser = ({ data }) => {
-
-    const [ request, setRequest ] = useState(data.isFriend);
+const SearchUser = ({ data, request, handleRequest }) => {
 
     return (
         <div className={`search-user p-2 theme-middle`}>
@@ -25,9 +23,9 @@ const SearchUser = ({ data }) => {
                 <Avatar image={data.dp} name={data.name} scale="square-sm" theme={data.theme}/>
             </Link>
             <div className="fs-6 mx-3 w-100">{ data.name }</div>
-            <button className={`btn btn-${ request ? 'secondary' : 'primary' } btn-sm`} onClick={() => setRequest(true)} disabled={ request ? "disabled" : "" }>
-                { !request && <i className="fas fa-plus me-2"></i> }
-                { request ? data.isFriend ? "Friends" : "Requested" : "Friend" }
+            <button className={`btn btn-${ request === 0 ? 'primary' : 'secondary' } btn-sm`} onClick={() => handleRequest(data.uid)} disabled={ request ? "disabled" : "" }>
+                { request === 0 && <i className="fas fa-plus me-2"></i> }
+                { request === 0 ? "Friend" : "Requested" }
             </button>
         </div>
     );
@@ -36,27 +34,43 @@ const SearchUser = ({ data }) => {
 const Search = ({ search, uid }) => {
 
     const [ users, setUsers ] = useState(null);
-    const [ searchString, setSearchString ] = useState("");
+    const [ SS, setSS ] = useState("");
 
     useEffect(() => {
-        setSearchString(search)
+        setSS(search)
     }, [search])
 
     useEffect(() => {
-        if(!users)
-            firebaseSearchUsers(uid).then(res => {
-                if(!res.error)  setUsers(res.data)
-            })
-    }, [users, uid])
+        firebaseSearchUsers(uid).then(res => {
+            if(!res.error)  setUsers(res.data)
+        })
+    }, [uid])
+
+    const stringMatch = (n, s) => {
+        const Us = s.toUpperCase(), Ls = s.toLowerCase();
+        return n.includes(s) || n.includes(Us) || n.includes(Ls)
+    }
+
+    const handleRequest = (fid) => {
+        console.log(fid);
+        firebaseMakeRequest(uid, fid).then(() => {
+            const index = getIndexByValue(users, 'uid', fid), updatedUsers = users;
+            updatedUsers[index].isFriend = 1;
+            setUsers([...updatedUsers])
+        })
+    }
 
     return ( users &&
         <div className="search p-2 theme-middle shadow">
             <span className="feed-title ps-3 text-muted fw-bold">Search Results</span>
             {   (users.length > 0) &&
-                searchString.length > 0 ?
-                users.filter(user => user.name.startsWith(searchString) || user.name.startsWith(searchString.toLowerCase()) || user.name.startsWith(searchString.toUpperCase())).map(user => (
-                    <SearchUser data={user} key={user.uid}/>
-                )) : <div className="p-3 text-center">Type something to see whose there ...</div>
+                SS.length > 0 ?
+                users.filter(user => stringMatch(user.name, SS)).map(user => (
+                    <SearchUser data={user} request={user.isFriend} key={user.uid} handleRequest={handleRequest}/>
+                )) : 
+                <div className="p-3 text-center">
+                    Type something to see whose there ...
+                </div>
             }
         </div>
     );
@@ -130,7 +144,7 @@ const Header = () => {
                     <div className="item me-3 system position-relative theme-middle shadow">
                         <div className="docker bg-danger"></div>
                         <i className="fas fa-bell fa-lg theme-inner" onClick={() => setNotify(!notify)}></i>
-                        { notify ? <Notifications top/> : <Tooltip body="Notifications"/> }
+                        { notify ? <Notifications uid={auth.data.uid} top/> : <Tooltip body="Notifications"/> }
                     </div>
 
                     <div className="dropdown">
