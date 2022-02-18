@@ -206,7 +206,7 @@ const Profile = () => {
                                 theme: user.theme,
                                 dp: user.dp
                             }} data={posts}/> :
-                            active[2] ? <Friends data={friends}/> :
+                            active[2] ? <Friends user={auth.data.uid} data={friends}/> :
                             active[3] && <Saved data={saved}/>
                         }
 

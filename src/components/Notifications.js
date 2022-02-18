@@ -22,7 +22,7 @@ const Notification = ({ you, data, acceptRequest }) => {
                     <span className="text-muted text-center" style={{ fontSize: "12.5px" }}>Request Accepted</span> :
                     <button className="btn btn-secondary btn-sm" disabled="disabled">Requested</button> :
                     <button className={`btn btn-${ data.status === 2 ? 'secondary' : 'success' } btn-sm`} 
-                        onClick={() => acceptRequest(data.fid)}
+                        onClick={() => acceptRequest(data.uid)}
                         disabled={ data.status === 2 ? "disabled" : "" }>
                         { data.status === 1 && <i className="fas fa-check me-2"></i> }
                         { data.status === 2 ? "Accepted" : "Accept" }
@@ -34,9 +34,7 @@ const Notification = ({ you, data, acceptRequest }) => {
 
 const Notifications = ({ uid, bottom, notify }) => {
 
-    const [ notes, setNotes ] = useState(null);
-
-    console.log(notes)
+    let [ notes, setNotes ] = useState(null);
 
     useEffect(() => {
         firebaseFriendRequests(uid, false).then(res => {
@@ -46,11 +44,10 @@ const Notifications = ({ uid, bottom, notify }) => {
 
     const acceptRequest = (fid) => {
         firebaseUpdateRequest(uid, fid).then(() => {
-            const updatedNotes = notes;
-            for(let i = 0; i < updatedNotes.length; i++)
-                if(updatedNotes[i].uid === uid && updatedNotes[i].fid === fid)
-                    updatedNotes[i].status = 2;
-            setNotes([...updatedNotes])
+            for(let i = 0; i < notes.length; i++)
+                if(notes[i].uid === fid && notes[i].fid === uid)
+                    notes[i].status = 2;
+            setNotes([...notes])
         })
     }
 

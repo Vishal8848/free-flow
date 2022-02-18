@@ -68,13 +68,23 @@ export const firebaseFriends = async (uids) => {
             const friend = doc.data();
             if(uids.some(uid => uid === doc.id))    {
                 friends.push({
-                    uid: doc.id,
-                    hadDP: friend.hasDP,
-                    name: friend.fname + ' ' + friend.lname,
+                    fid: doc.id,
                     list: friend.friends
                 })
             }
         })
+
+        for(const friend of friends)    {
+            const res = await firebaseUser(friend.fid, true);
+            const index = getIndexByValue(friends, 'fid', friend.fid);
+
+            if(!res.error)  {
+                friends[index].name = res.data.name;
+                friends[index].theme = res.data.theme;
+                friends[index].dp = res.data.dp;
+            }
+
+        }
 
         return { error: false, data: friends }
 
@@ -399,7 +409,13 @@ export const firebaseUpdateRequest = async (uid, fid) => {
 
         const requestSnapshot = await getDocs(requestQuery);
 
-        requestSnapshot.forEach(req => console.log(req.id, req.data()));
+        requestSnapshot.forEach(req => request = req.id);
+
+        await updateDoc(doc(store, 'friend-requests', request), { status: 2 })
+
+        await updateDoc(doc(store, 'users', uid), { friends: arrayUnion(fid) })
+        
+        await updateDoc(doc(store, 'users', fid), { friends: arrayUnion(uid) })
 
     }   catch(err)  { return { error: true, data: cast(err.message) } }
 
