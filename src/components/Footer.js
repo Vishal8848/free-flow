@@ -51,7 +51,7 @@ const Footer = () => {
                 </Link>
             </div>
         </div>
-        { notify && <Notifications uid={auth.data.uid} bottom notify={setNotify}/> }
+        { notify && <Notifications uid={auth.data && auth.data.uid} bottom notify={setNotify}/> }
     </>);
 }
  

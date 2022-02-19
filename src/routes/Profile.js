@@ -99,7 +99,7 @@ const Profile = () => {
 
     return ( <>
         <Header />
-            <div className="container-fluid profile rounded theme-outer">
+            <div className="container-fluid p-0 profile rounded theme-outer">
             {   (user && posts && saved && friends) ? 
                 <><div className="profile-header m-auto shadow theme-middle">
 

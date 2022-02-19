@@ -147,7 +147,7 @@ const Header = () => {
                     <div className="item me-3 system position-relative theme-middle shadow">
                         <div className="docker bg-danger"></div>
                         <i className="fas fa-bell fa-lg theme-inner" onClick={() => setNotify(!notify)}></i>
-                        { notify ? <Notifications uid={auth.data.uid} top/> : <Tooltip body="Notifications"/> }
+                        { notify ? <Notifications uid={auth.data && auth.data.uid} top/> : <Tooltip body="Notifications"/> }
                     </div>
 
                     <div className="dropdown">
