@@ -13,7 +13,7 @@ const Visitor = ({ data }) => {
     }, [width]);
 
     return ( 
-        <div className="visitor row">
+        <div className="visitor my-3 row">
             <div className="col-md-6">
                 <div className="v-set">
                     <div className="v-head theme-inner shadow">

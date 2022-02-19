@@ -42,7 +42,7 @@ const Friends = ({ user, data }) => {
     data = data.filter(friend => friend.fid !== user);
 
     return(
-        <div className="friends row">
+        <div className="friends m-auto w-100 row">
             {   (data && data.length > 0) ?
                 <><div className="col-md-6">
                     { data.slice(0, data.length / 2).map(friend => (<Friend side='s' data={friend} key={friend.fid}/>)) }

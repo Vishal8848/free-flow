@@ -33,7 +33,7 @@ const SearchUser = ({ data, request, handleRequest }) => {
     );
 }
 
-const Search = ({ search, uid }) => {
+const Search = ({ search, uid, visible }) => {
 
     const [ users, setUsers ] = useState(null);
     
@@ -64,7 +64,7 @@ const Search = ({ search, uid }) => {
     }
 
     return ( users &&
-        <div className="search p-2 theme-middle shadow">
+        <div className="search p-2 theme-middle shadow" style={{ visibility: visible ? "visible" : "hidden" }}>
             <span className="feed-title ps-3 text-muted fw-bold">Search Results</span>
             {   (users.length > 0) &&
                 SS.length > 0 ?
@@ -116,7 +116,7 @@ const Header = () => {
     return ( 
         <nav className="navbar header navbar-expand-lg navbar-light mb-md-3 shadow-sm fixed-top theme-middle">
             {   user ?
-            <div className="container-fluid theme-middle">
+            <div className="container-fluid theme-middle px-3">
 
                 <div className="brand me-2">
                     {   search.open ?
@@ -125,12 +125,11 @@ const Header = () => {
                     }
                 </div>
 
-                { search.open && <div className="show-search bg-transparent"></div> }
                 <div className="search-form me-md-auto ms-md-2 theme-middle">
                     <input id="search" type="search" className={`form-control ${ search.open && 'search-focus' } rounded-pill theme-inner`} placeholder="Search Freeflow"
-                        onFocusCapture={() => { search.open = true; setSearch({...search}) }}
+                        onFocusCapture={() => { search.open = true; setSearch({...search}) }} autoComplete="off"
                         value={search.input} onChange={(e) => { search.input = e.target.value; setSearch({...search}) }}/>
-                    { search.open && <Search search={search.input} uid={auth.data && auth.data.uid}/> }
+                    <Search search={search.input} uid={auth.data && auth.data.uid} visible={search.open ? true : false}/>
                 </div>
 
                 <div className="brand system me-auto">

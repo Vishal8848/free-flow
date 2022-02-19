@@ -6,7 +6,7 @@
 body {
     background-color: rgba(25, 25, 25, 0.0125);
 }
-.container-md {
+.container-fluid {
     margin: 0;
     padding: 0;
 }
@@ -183,6 +183,9 @@ h1 {
     overflow-y: auto;
     border-bottom-right-radius: 16px;
 }
+#search:focus ~ .search {
+    margin-top: 18.5px;
+}
 .search-user {
     display: flex;
     align-items: center;
@@ -192,14 +195,6 @@ h1 {
     display: flex;
     align-items: center;
 }
-.show-search {
-    width: 400px;
-    height: 100%;
-    position: absolute;
-    pointer-events: none;
-    top: 0;
-    left: 0;
-}
 @media screen and ( max-width: 768px )  {
     .search {
         width: 100%;
@@ -207,9 +202,6 @@ h1 {
     }
     .search-user {
         justify-content: space-between;
-    }
-    .show-search {
-        width: 100%;
     }
 }
 

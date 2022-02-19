@@ -99,13 +99,13 @@ const Profile = () => {
 
     return ( <>
         <Header />
-            <div className="container-fluid p-0 profile rounded theme-outer">
+            <div className="container-fluid profile theme-outer">
             {   (user && posts && saved && friends) ? 
-                <><div className="profile-header m-auto shadow theme-middle">
+                <><div className="profile-header m-auto mt-3 shadow theme-middle">
 
                     <div className="profile-bg" style={{ background: `url(${bg ? bg : user.bg}) center center / cover no-repeat` }}>
                         {   auth.data && (uid === auth.data.uid) &&
-                            <><input type="file" name="bg" id="bg" accept="image/*" onChange={(e) => setBackground(e)} style={{ visibility: "hidden" }}/>
+                            <><input type="file" name="bg" id="bg" accept="image/*" onChange={(e) => setBackground(e)} style={{ width: "0", visibility: "hidden" }}/>
                             <label htmlFor="bg" className="pic-edit">
                                 <div className="fw-bold pt-3">
                                     <i className="fas fa-camera fa-lg ms-3 me-2"></i> 
@@ -118,8 +118,8 @@ const Profile = () => {
                     <div className="profile-info pt-4 pb-5 theme-middle">
                         <Content data={{ 
                             name: user.fname + ' ' + user.lname,
-                            description: user.description, 
-                            friends: user.friends,
+                            description: user.description,
+                            friends: user.friends.length,
                             posts: user.posts.length, 
                             likes: user.likes.length 
                         }}/>
@@ -132,7 +132,7 @@ const Profile = () => {
                             </div>
                         }
                         {   auth.data && (uid === auth.data.uid) &&
-                            <><input type="file" name="dp" id="dp" accept="image/*" onChange={(e) => setProfilePicture(e)} style={{ visibility: "hidden" }}/>
+                            <><input type="file" name="dp" id="dp" accept="image/*" onChange={(e) => setProfilePicture(e)} style={{ width: "0", visibility: "hidden" }}/>
                             <label htmlFor="dp" className="pic-edit rounded-pill">
                                 <div className="fw-bold pt-3">
                                     <i className="fas fa-camera fa-lg me-2"></i> Edit Picture

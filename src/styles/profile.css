@@ -4,6 +4,8 @@
     height: auto;
     user-select: none;
     margin-top: 60px !important;
+    padding-top: 20px;
+    padding-bottom: 25px;
 }
 .profile-header {
     width: 80%;
