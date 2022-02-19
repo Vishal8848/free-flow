@@ -115,7 +115,7 @@ h1 {
     justify-content: flex-end;
 }
 .navbar {
-    height: 60px;
+    height: 7.5vh;
 }
 .navbar-brand {
     font-size: 25px;
@@ -429,27 +429,15 @@ div:hover > .tool-tip {
 }
 
 /* Responsiveness */
-.header .mobile {
-    display: none;
-}
 .header .system {
     display: flex;
-}
-.footer-sys {
-    display: block;
 }
 .footer-mob {
     display: none;
     height: 60px;
 }
 @media screen and ( max-width: 768px ) {
-    .header .mobile {
-        display: block;
-    }
     .header .system {
-        display: none;
-    }
-    .footer-sys {
         display: none;
     }
     .footer-mob {

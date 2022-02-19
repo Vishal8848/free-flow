@@ -50,8 +50,8 @@ const Search = ({ search, uid }) => {
     }, [uid])
 
     const stringMatch = (n, s) => {
-        const Us = s.toUpperCase(), Ls = s.toLowerCase();
-        return n.includes(s) || n.includes(Us) || n.includes(Ls)
+        const Us = s.toUpperCase(), Ls = s.toLowerCase(), Fs = s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+        return n.includes(s) || n.includes(Us) || n.includes(Ls) || n.includes(Fs)
     }
 
     const handleRequest = (fid) => {

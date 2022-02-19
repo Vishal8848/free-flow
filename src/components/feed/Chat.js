@@ -53,6 +53,8 @@ const Chat = ({user}) => {
     useEffect(() => {
         firebaseChat().then(res => {
             if(!res.error)  setChat(res.data)
+            const chatBox = document.getElementById('chat-box');
+            chatBox.scrollTop = chatBox.scrollHeight;
         })
     }, [])
 
@@ -67,12 +69,9 @@ const Chat = ({user}) => {
 
     })
 
-    return ( chat &&
-        <div className="chat rounded shadow-sm theme-middle">
-            <div className="chat-header p-3 border-dark theme-middle">
-                <i className="fas fa-comments me-2 text-success"></i> Live Pond
-            </div>
-            <div className="chat-content theme-inner">
+    return ( chat && <>
+        <div className="chat shadow-sm theme-middle">
+            <div id="chat-box" className="chat-content theme-inner">
                 {   (chat && chat.length > 0) ?
                     chat.map(msg => (
                         <Message data={msg} self={msg.uid === user.uid} key={msg.createdAt}/>
@@ -94,6 +93,7 @@ const Chat = ({user}) => {
                 </div>
             </div>
         </div>
+         </>
     );
 }
  

@@ -83,7 +83,7 @@ const Post = ({ user, data }) => {
     }
 
     return ( data &&
-        <div className="post theme-middle rounded rounded-3 mt-3">
+        <div className="post theme-middle rounded rounded-3 mb-3">
             
             <div className="post-header px-3 px-md-4 py-2 py-md-3 theme-middle">
             

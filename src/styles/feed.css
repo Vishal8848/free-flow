@@ -1,30 +1,38 @@
 .feed {
-    margin-top: 60px !important;
+    margin-top: 7.5vh !important;
+    height: 92.5vh;
 }
 .feed-title {
     text-transform: uppercase;
 }
+.feed .col-md-3, .feed .col-md-6 {
+    height: 90vh;
+}
 @media screen and ( max-width: 768px )  {
     .feed {
         margin-bottom: 60px !important;
+        height: auto;
     }
 }
 
 /* Post */
-.posts-set {
-    height: 685px;
+.feed-post {
+    height: 80vh;
     overflow-y: auto;
+}
+.posts-set {
     border-radius: 10px;
 }
 .post {
     width: 100%;
     border-radius: 10px;
-    background-color: white;
 }
 .post-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 .post-creator {
     display: flex;
@@ -73,6 +81,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 .post-create-comment > input {
     border: 0;
@@ -120,12 +130,11 @@
 /* Trending */
 .feed-trending {
     border-radius: 10px;
+    height: 55%;
 }
 .trend {
     width: 100%;
-    height: auto;
     border-radius: 10px;
-    background-color: white;
 }
 .trend-header {
     display: flex;
@@ -170,44 +179,31 @@
     }
 }
 
-/* Feed Actions */
-.action-set {
+/* Feed Stats */
+.feed-stats {
+    height: 32%;
+}
+.stat-set {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.stat {
     width: 100%;
-    height: auto;
-    border-radius: 10px;
-    background-color: white;
+    text-align: center;
 }
-@media screen and ( max-width : 768px ) {
-    .action-set {
-        border-radius: 5px;
+@media screen and (max-width: 768px)    {
+    .feed-stats {
+        display: none;
     }
-}
-.action-set > .action {
-    font-size: 20px;
-    padding-left: 25px;
-    cursor: pointer;
-    padding: 7.5px;
-}
-.action-set > .action i {
-    font-weight: normal;
-}
-.action:hover i{
-    font-weight: bold;
-}
-.action a {
-    color: inherit;
-    text-decoration: none;
 }
 
 /* Feed Chat */
 .feed-chat {
-    border-radius: 10px;
+    height: 65%;
 }
-.chat-header {
-    font-size: 20px;
-    font-weight: bolder;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+.chat {
+    border-radius: 10px;
 }
 .chat-create {
     display: flex;
@@ -217,8 +213,9 @@
     border-bottom-right-radius: 10px;
 }
 .chat-content {
-    min-height: 300px;
-    max-height: 300px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 50vh;
     overflow-y: auto;
 }
 .chat-create > .avatar {
@@ -248,9 +245,7 @@
 @media screen and ( max-width : 768px ) {
     .feed-chat {
         border-radius: 5px;
-    }
-    .chat-content {
-        height: 70vh;
+        height: 100%;
     }
     .chat-header {
         border-top-left-radius: 0;
@@ -287,11 +282,12 @@
 }
 
 /* Updates */
+.feed-updates {
+    height: 42.5%;
+    overflow-y: auto;
+}
 .updates {
     width: 100%;
-    min-height: 250px;
-    max-height: 320px;
-    overflow-y: auto;
     border-radius: 10px;
 }
 .update {
@@ -330,6 +326,7 @@
 /* Create Post */
 .feed-create {
     border-radius: 10px;
+    position: relative;
 }
 .post-trigger {
     display: flex;
@@ -348,6 +345,9 @@
 .create-form {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    position: absolute;
+    z-index: 9999;
+    width: 100%;
 }
 .post-trigger div:hover {
     cursor: pointer;

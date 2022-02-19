@@ -12,9 +12,6 @@ const Footer = () => {
     let [ notify, setNotify ] = useState(false);
 
     return ( <>
-        <div className="w-100 footer-sys text-center py-3 mt-md-3 theme-middle">
-            &copy; Copyright: <Link to="/" className="text-primary" style={{ textDecoration: "none" }}>Freeflow</Link>
-        </div>
         <div className="user-menu footer-mob w-100 text-center py-2 mt-md-3 fixed-bottom theme-middle">
             <div className="item theme-middle d-block">
                 <Link to="/feed" className="theme-middle">

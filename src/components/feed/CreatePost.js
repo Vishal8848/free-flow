@@ -12,15 +12,17 @@ const CreatePost = ({ width, user }) => {
     const [ form, openForm ] = useState(false);
 
     const submitPost = () => {
-        firebaseCreatePost(post).then(res => {
-            if(!res.error && post.hasImage)   
-                firebaseUploadImage(res.data, image.blob, 'posts').then(() => {
-                    console.log("Post Image Uploaded")
-                })
-            console.log("Post Created Successfully")
-            setPost(initial)
-            openForm(false)
-        })
+        if(post.content.length > 0) {
+            firebaseCreatePost(post).then(res => {
+                if(!res.error && post.hasImage)   
+                    firebaseUploadImage(res.data, image.blob, 'posts').then(() => {
+                        console.log("Post Image Uploaded")
+                    })
+                console.log("Post Created Successfully")
+                setPost(initial)
+                openForm(false)
+            })
+        }   else console.log("Post Content is Required")
     }
 
     const updateField = (key, value) => {
@@ -56,17 +58,17 @@ const CreatePost = ({ width, user }) => {
         </div>
         <form className="create-form theme-middle p-3" style={{ display: `${ form ? 'block' : 'none' }` }}>
             <div className="d-flex align-middle justify-content-start">
-                <label htmlFor="post-visibility" style={{ width: "150px" }} className="pt-3 text-muted text-center">Wave Exposure</label>
-                <select id="post-visibility" className="form-select text-muted border-0 theme-inner" style={{ width: "fit-content", height: "50px" }}
+                <label htmlFor="post-visibility" style={{ width: "150px" }} className="pt-3 text-muted text-center">Visibility</label>
+                <select id="post-visibility" className="form-select me-2 text-muted border-0 theme-inner" style={{ width: "fit-content" }}
                     value={post.private} onChange={(e) => updateField('private', e.target.value)}>
                     <option value="public">Anyone on Freeflow</option>
                     <option value="private">Friends Only</option>
                 </select>
-            </div>
-            <div className="form-floating mt-3 theme-inner rounded rounded-3">
-                <input id="post-title" type="text" className="form-control border-0" placeholder="Post Title (optional)"
-                    value={post.title} onChange={(e) => updateField('title', e.target.value)}/>
-                <label htmlFor="post-title" className="text-muted">Wave Title <small> - optional</small></label>
+                <div className="form-floating ms-2 theme-inner rounded rounded-3" style={{ width: "100%" }}>
+                    <input id="post-title" type="text" className="form-control border-0" placeholder="Wave Title (optional)"
+                        value={post.title} onChange={(e) => updateField('title', e.target.value)}/>
+                    <label htmlFor="post-title" className="text-muted">Wave Title <small> - optional</small></label>
+                </div>
             </div>
             <div className="form-floating mt-3 theme-inner rounded rounded-3">
                 <textarea id="post-content" maxLength="1000" className="form-control border-0" placeholder="Write down your thoughts" style={{ minHeight: "100px", maxHeight: "200px" }}

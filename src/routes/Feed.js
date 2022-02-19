@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react'
-import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { firebaseAllPosts } from '../firebase/firebaseStore'
 import CreatePost from '../components/feed/CreatePost'
 import Trending from '../components/feed/Trending'
@@ -61,7 +61,7 @@ const Feed = () => {
         <div className="container-fluid feed row gx-0 gx-md-4 m-auto justify-content-center theme-outer">
             
             {   auth.data && ((!feed.restrict && feed.state === 0) || (feed.restrict && feed.state === 1)) &&
-                <div className="col-md-3 mb-md-2 mt-3">
+                <div className="col-md-3 mt-md-3">
                     
                     <div className="feed-chat">
                         <Chat user={{
@@ -73,23 +73,25 @@ const Feed = () => {
                     </div>
                     
                     {   !feed.restrict &&
-                        <div className="feed-actions mt-3">
-                            <span className="feed-title ps-3 text-muted fw-bold">Actions</span>
-                            <div className="action-set theme-middle">
-                                <div className="action theme-inner" style={{ borderTopLeftRadius: "10px", borderTopRightRadius: "10px" }}>
-                                    <Link to={`/profile/${auth.data.uid}`}><i className="fas fa-user mx-3"></i> Profile</Link>
+                        <div className="feed-stats mt-3">
+                            <div className="stat-set mb-3">
+                                <div className="stat theme-inner py-2 me-2" style={{ borderRadius: "10px" }}>
+                                    <h1>23</h1>
+                                    <span className="feed-title ps-3 text-muted fw-bold">Users</span>
                                 </div>
-                                <div className="action theme-inner">
-                                    <Link to={`/profile/${auth.data.uid}?type=posts`}><i className="fas fa-paper-plane mx-3"></i> Posts</Link>
+                                <div className="stat theme-inner py-2 ms-2" style={{ borderRadius: "10px" }}>
+                                    <h1>34</h1>
+                                    <span className="feed-title ps-3 text-muted fw-bold">Ripples</span>
                                 </div>
-                                <div className="action theme-inner">
-                                    <Link to={`/profile/${auth.data.uid}?type=friends`}><i className="fas fa-heart mx-3"></i> Friends</Link>
+                            </div>
+                            <div className="stat-set mt-3">
+                                <div className="stat theme-inner py-2 me-2" style={{ borderRadius: "10px" }}>
+                                    <h1>23</h1>
+                                    <span className="feed-title ps-3 text-muted fw-bold">Waves</span>
                                 </div>
-                                <div className="action theme-inner">
-                                    <Link to={`/profile/${auth.data.uid}?type=saved`}><i className="fas fa-bookmark mx-3"></i> Saved</Link>
-                                </div>
-                                <div className="action theme-inner" style={{ borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
-                                    <Link to="/contact"><i className="fas fa-lightbulb mx-3"></i> Feedback</Link>
+                                <div className="stat theme-inner py-2 ms-2" style={{ borderRadius: "10px" }}>
+                                    <h1>34</h1>
+                                    <span className="feed-title ps-3 text-muted fw-bold">Wavelets</span>
                                 </div>
                             </div>
                         </div>
@@ -98,7 +100,7 @@ const Feed = () => {
             }
 
             {   auth.data && (!feed.restrict || (feed.restrict && feed.state === 0)) &&
-                <div className="col-md-6 mb-md-2 mt-3">
+                <div className="col-md-6 mt-md-3">
 
                     <div className="feed-create">
                         <CreatePost width={width} user={{
@@ -110,7 +112,6 @@ const Feed = () => {
                     </div>
 
                     <div className="feed-post mt-3">
-                        <span className="feed-title ps-3 text-muted fw-bold">Posts</span>
                         <div className="posts-set">
                         {   posts && posts.sort((x, y) => parseInt(y.createdAt) - parseInt(x.createdAt)).map(post => (
                                 <Post user={{
@@ -128,15 +129,13 @@ const Feed = () => {
             }
 
             {   auth.data && ((!feed.restrict && feed.state === 0) || (feed.restrict && feed.state === 2)) &&
-                <div className="col-md-3 mt-3">
+                <div className="col-md-3 mt-md-3">
 
                     <div className="feed-updates">
-                        <span className="feed-title ps-3 text-muted fw-bold">Updates</span>
                         <Updates />
                     </div>
 
                     <div className="feed-trending mt-3">
-                        <span className="feed-title ps-3 text-muted fw-bold">Trending</span>
                         <Trending />
                     </div>
                     

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { Link } from 'react-router-dom'
-import { Avatar } from "../Extras"
+import { Avatar, parseTime } from "../Extras"
 import TypeWriter from 'typewriter-effect'
 import { firebaseTrendingPost } from '../../firebase/firebaseStore'
 
@@ -21,7 +21,7 @@ const Trending = () => {
                     <Avatar image={trend.dp} name={trend.name} scale="md" theme={trend.theme}/>
                 </Link>
                 <div className="trend-setter ps-3">
-                    <div className="fs-5 fw-bold">
+                    <div className="fs-5">
                         <Link to={`/profile/${trend.creator}`}>
                             {trend.name}
                         </Link>
@@ -36,13 +36,13 @@ const Trending = () => {
                                 loop: true
                             }}
                             onInit={(type) => {
-                                type.pasteString('<strong class="text-danger">Trending </strong>')
+                                type.pasteString('<strong class="text-danger fw-light">Trending Since  </strong>')
                                     .pauseFor(500)
-                                    .typeString(trend.createdAt)
+                                    .typeString(parseTime(trend.createdAt).date)
                                     .pauseFor(3000)
-                                    .deleteChars(trend.createdAt.length)
+                                    .deleteChars(parseTime(trend.createdAt).date.length)
                                     .pauseFor(1000)
-                                    .typeString(trend.createdAt)
+                                    .typeString(parseTime(trend.createdAt).date)
                                     .pauseFor(5000)
                                     .deleteAll()
                                     .start();
