@@ -33,7 +33,7 @@ const SearchUser = ({ data, request, handleRequest }) => {
     );
 }
 
-const Search = ({ search, uid, visible }) => {
+const Search = ({ search, uid, visible, setUserCount }) => {
 
     const [ users, setUsers ] = useState(null);
     
@@ -46,9 +46,12 @@ const Search = ({ search, uid, visible }) => {
     useEffect(() => {
         console.log("Search")
         firebaseSearchUsers(uid).then(res => {
-            if(!res.error)  setUsers(res.data)
+            if(!res.error)  {
+                setUsers(res.data)
+                setUserCount(res.data.length + 1)
+            }
         })
-    }, [uid])
+    }, [uid, setUserCount])
 
     const stringMatch = (n, s) => {
         const Us = s.toUpperCase(), Ls = s.toLowerCase(), Fs = s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
@@ -80,7 +83,7 @@ const Search = ({ search, uid, visible }) => {
     );
 }
 
-const Header = () => {
+const Header = ({ setUserCount }) => {
 
     const { auth, setAuth } = useContext(AuthContext);
     const { user } = useContext(UserContext);
@@ -130,7 +133,7 @@ const Header = () => {
                     <input id="search" type="search" className={`form-control ${ search.open && 'search-focus' } rounded-pill theme-inner`} placeholder="Search Freeflow"
                         onFocusCapture={() => { search.open = true; setSearch({...search}) }} autoComplete="off"
                         value={search.input} onChange={(e) => { search.input = e.target.value; setSearch({...search}) }}/>
-                    <Search search={search.input} uid={auth.data && auth.data.uid} visible={search.open ? true : false}/>
+                    <Search search={search.input} uid={auth.data && auth.data.uid} visible={search.open ? true : false} setUserCount={setUserCount}/>
                 </div>
 
                 <div className="brand system me-auto">

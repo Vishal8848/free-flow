@@ -22,11 +22,23 @@ const Feed = () => {
     const { user } = useContext(UserContext);
     const [ posts, setPosts ] = useState(null);
 
+    // Stats Values
+    const [ chatCount, setChatCount ] = useState('~');
+    const [ postCount, setPostCount ] = useState('~');
+    const [ userCount, setUserCount ] = useState('~');
+    const [ commentCount, setCommentCount ] = useState('~');
+
     // Fetch Posts
     useEffect(() => {
         console.log("Feed")
         firebaseAllPosts(user && user.friends).then(res => {
-            if(!res.error)  setPosts(res.data)
+            if(!res.error)  {
+                setPosts(res.data)
+                setPostCount(res.data.length)
+                let count = 0;
+                for(const post of res.data) count += post.comments.length
+                setCommentCount(count)
+            }
         })
     }, [user])
 
@@ -56,7 +68,7 @@ const Feed = () => {
     }, [params, feed.restrict]);
     
     return ( user && <>
-        <Header />
+        <Header setUserCount={setUserCount}/>
         <div className="container-fluid feed row gx-0 gx-md-4 m-auto justify-content-center theme-outer">
             
             {   auth.data && ((!feed.restrict && feed.state === 0) || (feed.restrict && feed.state === 1)) &&
@@ -68,28 +80,28 @@ const Feed = () => {
                             uid: auth.data.uid,
                             theme: user.theme,
                             dp: user.dp
-                        }}/>
+                        }} setChatCount={setChatCount}/>
                     </div>
                     
                     {   !feed.restrict &&
                         <div className="feed-stats mt-3">
                             <div className="stat-set mb-3">
-                                <div className="stat theme-inner py-2 me-2" style={{ borderRadius: "10px" }}>
-                                    <h1>23</h1>
+                                <div className="stat theme-inner py-2 me-2 shadow" style={{ borderRadius: "10px" }}>
+                                    <h1>{ userCount }</h1>
                                     <span className="feed-title ps-3 text-muted fw-bold">Users</span>
                                 </div>
-                                <div className="stat theme-inner py-2 ms-2" style={{ borderRadius: "10px" }}>
-                                    <h1>34</h1>
+                                <div className="stat theme-inner py-2 ms-2 shadow" style={{ borderRadius: "10px" }}>
+                                    <h1>{ chatCount }</h1>
                                     <span className="feed-title ps-3 text-muted fw-bold">Ripples</span>
                                 </div>
                             </div>
                             <div className="stat-set mt-3">
-                                <div className="stat theme-inner py-2 me-2" style={{ borderRadius: "10px" }}>
-                                    <h1>23</h1>
+                                <div className="stat theme-inner py-2 me-2 shadow" style={{ borderRadius: "10px" }}>
+                                    <h1>{ postCount }</h1>
                                     <span className="feed-title ps-3 text-muted fw-bold">Waves</span>
                                 </div>
-                                <div className="stat theme-inner py-2 ms-2" style={{ borderRadius: "10px" }}>
-                                    <h1>34</h1>
+                                <div className="stat theme-inner py-2 ms-2 shadow" style={{ borderRadius: "10px" }}>
+                                    <h1>{ commentCount }</h1>
                                     <span className="feed-title ps-3 text-muted fw-bold">Wavelets</span>
                                 </div>
                             </div>

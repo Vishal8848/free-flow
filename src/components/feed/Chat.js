@@ -36,7 +36,7 @@ const Message = ({ data, self }) => {
     );
 }
 
-const Chat = ({user}) => {
+const Chat = ({user, setChatCount}) => {
 
     let [ chat, setChat ] = useState([])
     const messageInitial = { content: "", uid: user.uid, name: user.name, theme: user.theme, dp: user.dp };
@@ -69,6 +69,7 @@ const Chat = ({user}) => {
 
             result = result.sort((x, y) => { return parseInt(x.createdAt) - parseInt(y.createdAt) })
 
+            setChatCount(result.length)
             setChat([...result])
 
             const chatBox = document.getElementById('chat-box');
@@ -79,7 +80,7 @@ const Chat = ({user}) => {
             unSubChat()
             Abort.abort()
         }
-    }, [])
+    }, [setChatCount])
 
     useEffect(() => {
         const msgInput = document.getElementById('new-msg')
@@ -93,7 +94,7 @@ const Chat = ({user}) => {
     })
 
     return ( chat && <>
-        <div className="chat shadow-sm theme-middle">
+        <div className="chat shadow theme-middle">
             <div id="chat-box" className="chat-content theme-inner">
                 {   (chat && chat.length > 0) ?
                     chat.map(msg => (

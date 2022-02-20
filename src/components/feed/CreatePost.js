@@ -47,7 +47,7 @@ const CreatePost = ({ width, user }) => {
     }, [image])
 
     return (<>
-        <div className="post-trigger p-2 theme-middle" style={{ borderBottomLeftRadius: `${ form ? "0" : "10px" }`, borderBottomRightRadius: `${ form ? "0" : "10px" }` }}>
+        <div className="post-trigger p-2 theme-middle shadow" style={{ borderBottomLeftRadius: `${ form ? "0" : "10px" }`, borderBottomRightRadius: `${ form ? "0" : "10px" }` }}>
             { width > 768 && 
                 <Link to={`/profile/${user.uid}`}>
                     <Avatar image={user.dp} name={user.name} scale="md" theme={user.theme}/>
@@ -57,7 +57,7 @@ const CreatePost = ({ width, user }) => {
             <div className="vr mx-3"></div>
             <i className="fas fa-paper-plane text-primary fa-lg me-3" onClick={() => submitPost()}></i>
         </div>
-        <form className="create-form theme-middle p-3" style={{ display: `${ form ? 'block' : 'none' }` }}>
+        <form className="create-form theme-middle p-3 shadow" style={{ display: `${ form ? 'block' : 'none' }` }}>
             <div className="d-flex align-middle justify-content-start">
                 <label htmlFor="post-visibility" style={{ width: "150px" }} className="pt-3 text-muted text-center">Visibility</label>
                 <select id="post-visibility" className="form-select me-2 text-muted border-0 theme-inner" style={{ width: "fit-content" }}
