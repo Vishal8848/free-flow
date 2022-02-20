@@ -132,7 +132,13 @@ const Feed = () => {
                 <div className="col-md-3 mt-md-3">
 
                     <div className="feed-updates">
-                        <Updates />
+                        <Updates user={{
+                            name: user.fname + ' ' + user.lname,
+                            friends: user.friends,
+                            uid: auth.data.uid,
+                            theme: user.theme,
+                            dp: user.dp
+                        }}/>
                     </div>
 
                     <div className="feed-trending mt-3">

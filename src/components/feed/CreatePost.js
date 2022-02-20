@@ -2,7 +2,7 @@ import { Avatar } from "../Extras";
 import { useEffect, useState } from "react";
 import { Link } from 'react-router-dom'
 import { firebaseUploadImage } from '../../firebase/firebaseBulk'
-import { firebaseCreatePost } from "../../firebase/firebaseStore"
+import { firebaseCreatePost, firebaseUpdate } from "../../firebase/firebaseStore"
 
 const CreatePost = ({ width, user }) => {
 
@@ -18,6 +18,7 @@ const CreatePost = ({ width, user }) => {
                     firebaseUploadImage(res.data, image.blob, 'posts').then(() => {
                         console.log("Post Image Uploaded")
                     })
+                firebaseUpdate(user.uid, 'post')
                 console.log("Post Created Successfully")
                 setPost(initial)
                 openForm(false)

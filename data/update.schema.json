@@ -1,7 +1,6 @@
 {
     "_id" : "xAFunYAqXTezBgmLopns6fU4sIA9",
     "user_id" : "kbFtnYMqXTezTgmL0wns6fU4sIqP",
-    "for" : "like | comment",
-    "message" : "false | comment-jist",
+    "_type" : "like | comment",
     "createdAt" : "1642920340798"
 }

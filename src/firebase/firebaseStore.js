@@ -1,4 +1,4 @@
-import { getFirestore, doc, addDoc, getDoc, updateDoc, getDocs, collection, query, where, arrayUnion, arrayRemove } from "firebase/firestore/lite"
+import { getFirestore, doc, addDoc, getDoc, updateDoc, getDocs, collection, query, where, arrayUnion, arrayRemove } from "firebase/firestore"
 import { firebaseDownloadImage } from "./firebaseBulk"
 import firebase from './firebase'
 
@@ -459,4 +459,23 @@ export const firebaseSearchUsers = async (uid) => {
         return { error: false, data: users }
 
     }   catch(err) { return { error: true, data: cast(err.message) } }
+}
+
+export const firebaseUpdate = async (uid, type) => {
+
+    try {
+        await addDoc(collection(store, 'updates'), {
+            uid: uid,
+            type: type,
+            createdAt: Date.now().toString()
+        })
+
+    }   catch(err)  { return { error: true, data: cast(err.message) } }
+
+}
+
+export const firebaseUpdateQuery = (friends) => {
+
+    return query(collection(store, 'updates'), where('uid', 'in', friends))
+
 }

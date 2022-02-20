@@ -51,12 +51,14 @@ const Chat = ({user}) => {
     }
 
     useEffect(() => {
+        const Abort = new AbortController();
         firebaseChat().then(res => {
             if(!res.error)  setChat(res.data)
             const chatBox = document.getElementById('chat-box');
             chatBox.scrollTop = chatBox.scrollHeight;
         })
-    }, [])
+        return () => Abort.abort()
+    }, [chat])
 
     useEffect(() => {
         const msgInput = document.getElementById('new-msg')

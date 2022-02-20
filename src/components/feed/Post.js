@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Avatar, parseTime } from '../Extras'
-import { firebasePostReaction, firebaseAddComment } from '../../firebase/firebaseStore'
+import { firebasePostReaction, firebaseAddComment, firebaseUpdate } from '../../firebase/firebaseStore'
 
 const Comment = ({ data }) => {
 
@@ -55,6 +55,7 @@ const Post = ({ user, data }) => {
         if(newComment.comment.length > 0)  {
             newComment.commentedAt = Date.now().toString();
             firebaseAddComment(data.pid, newComment)
+            firebaseUpdate(user.uid, 'comment')
             setComments([...comments, newComment])
             setNewComment(commentInitial);
         }
