@@ -9,6 +9,7 @@ const Trending = () => {
     const [ trend, setTrend ] = useState(null)
     
     useEffect(() => {
+        console.log("Trend")
         firebaseTrendingPost().then(res => {
             if(!res.error) setTrend(res.data)
         })

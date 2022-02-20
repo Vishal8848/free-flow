@@ -51,6 +51,7 @@ const Chat = ({user}) => {
     }
 
     useEffect(() => {
+        console.log("Chat")
         const Abort = new AbortController();
         firebaseChat().then(res => {
             if(!res.error)  setChat(res.data)
@@ -58,7 +59,7 @@ const Chat = ({user}) => {
             chatBox.scrollTop = chatBox.scrollHeight;
         })
         return () => Abort.abort()
-    }, [chat])
+    }, [])
 
     useEffect(() => {
         const msgInput = document.getElementById('new-msg')

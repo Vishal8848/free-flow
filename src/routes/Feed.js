@@ -24,11 +24,10 @@ const Feed = () => {
 
     // Fetch Posts
     useEffect(() => {
-        if(user) {
-            firebaseAllPosts(user.friends).then(res => {
-                if(!res.error)  setPosts(res.data)
-            })
-        }
+        console.log("Feed")
+        firebaseAllPosts(user && user.friends).then(res => {
+            if(!res.error)  setPosts(res.data)
+        })
     }, [user])
 
     // Adapt to Window Size

@@ -43,26 +43,29 @@ const Updates = ({user}) => {
     const [ updates, setUpdates ] = useState(null);
 
     useEffect(() => {
+        console.log("Updates")
+        const Abort = new AbortController();
         onSnapshot(firebaseUpdateQuery(user.friends), async (data) => {
             let result = [];
             data.forEach(update => result.push({ ...update.data() }));
-            console.log(data.size, result)
+            
             result = result.filter(update => update.uid !== user.uid)
             for(const update of result) {
                 const res = await firebaseUser(update.uid, true);
-                const index = getIndexByValue(result, 'uid', update.uid);
+                const index = getIndexByValue(result, 'createdAt', update.createdAt);
                 if(!res.error) 
                     result[index] = { ...result[index], ...res.data }
             }
             setUpdates([...result])
         })
+        return () => Abort.abort()
     }, [user])
 
     return ( 
         <div className="updates">
             {   (updates && updates.length > 0) ?
                 updates.map(update => (
-                    <Update data={update} key={update.uid}/>
+                    <Update data={update} key={update.createdAt}/>
                 )) : 
                 <div className="update-notice text-muted px-5">
                     <strong>Wave Notifications</strong><br/>

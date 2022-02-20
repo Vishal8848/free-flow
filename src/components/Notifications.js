@@ -42,6 +42,7 @@ const Notifications = ({ uid, bottom, notify }) => {
     let [ notes, setNotes ] = useState(null);
 
     useEffect(() => {
+        console.log("Notify")
         firebaseFriendRequests(uid, false).then(res => {
             if(!res.error)  setNotes(res.data)
         })
