@@ -183,9 +183,6 @@ h1 {
     overflow-y: auto;
     border-bottom-right-radius: 16px;
 }
-#search:focus ~ .search {
-    margin-top: 18.5px;
-}
 .search-user {
     display: flex;
     align-items: center;
@@ -199,6 +196,9 @@ h1 {
     .search {
         width: 100%;
         border-bottom-left-radius: 16px;
+    }
+    #search:focus ~ .search {
+        margin-top: 18.5px;
     }
     .search-user {
         justify-content: space-between;

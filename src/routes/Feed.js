@@ -87,21 +87,21 @@ const Feed = () => {
                         <div className="feed-stats mt-3">
                             <div className="stat-set mb-3">
                                 <div className="stat theme-inner py-2 me-2 shadow" style={{ borderRadius: "10px" }}>
-                                    <h1>{ userCount }</h1>
+                                    <h1 id='user-count'>{ userCount }</h1>
                                     <span className="feed-title ps-3 text-muted fw-bold">Users</span>
                                 </div>
                                 <div className="stat theme-inner py-2 ms-2 shadow" style={{ borderRadius: "10px" }}>
-                                    <h1>{ chatCount }</h1>
+                                    <h1 id='chat-count'>{ chatCount }</h1>
                                     <span className="feed-title ps-3 text-muted fw-bold">Ripples</span>
                                 </div>
                             </div>
                             <div className="stat-set mt-3">
                                 <div className="stat theme-inner py-2 me-2 shadow" style={{ borderRadius: "10px" }}>
-                                    <h1>{ postCount }</h1>
+                                    <h1 id='post-count'>{ postCount }</h1>
                                     <span className="feed-title ps-3 text-muted fw-bold">Waves</span>
                                 </div>
                                 <div className="stat theme-inner py-2 ms-2 shadow" style={{ borderRadius: "10px" }}>
-                                    <h1>{ commentCount }</h1>
+                                    <h1 id='comment-count'>{ commentCount }</h1>
                                     <span className="feed-title ps-3 text-muted fw-bold">Wavelets</span>
                                 </div>
                             </div>

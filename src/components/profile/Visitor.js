@@ -94,7 +94,7 @@ const Visitor = ({ data }) => {
                     <div className="v-body">
                         {   data.latest ?
                             ["My latest connection", <br/>,
-                            <strong>Abishek Prasannaa</strong>] :
+                            <strong>{ data.latest.name }</strong>] :
                             "No connections recently"
                         }
                     </div>

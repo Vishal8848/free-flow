@@ -119,7 +119,7 @@ const Profile = () => {
                         <Content data={{ 
                             name: user.fname + ' ' + user.lname,
                             description: user.description,
-                            friends: user.friends.length,
+                            friends: user.friends.length - 1,
                             posts: user.posts.length, 
                             likes: user.likes.length 
                         }}/>
@@ -199,7 +199,7 @@ const Profile = () => {
                                 education: user.education,
                                 dob: user.dob,
                                 hobbies: user.hobbies,
-                                latest: (friends && friends.length > 0) ? friends[friends.length - 1] : null
+                                latest: (friends && friends.length > 1) ? friends[friends.length - 1] : null
                             }}/>) :
                             active[1] ? <Posts user={{
                                 name: user.fname + ' ' + user.lname,

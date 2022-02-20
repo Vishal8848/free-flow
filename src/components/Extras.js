@@ -23,6 +23,19 @@ export const Avatar = ({ image, name, scale = 'md', theme = 'primary' }) => {
     );
 }
 
+// export const Counter = (type) => {
+
+//     useEffect(() => {
+//         const element = document.getElementById(type + '-count');
+//         let start = 0, count = parseInt(element.innerText);
+//         const counter = setInterval(() => {
+//             element.innerText = start++ + 1;
+//             if(start - 1 === count) clearInterval(counter)
+//         }, 200)
+//     // eslint-disable-next-line react-hooks/exhaustive-deps
+//     }, [])
+// }
+
 export const Loader = ({ show }) => {
     return ( 
         <div className={`loader ${show ? 'd-block' : 'd-none'}`}>
