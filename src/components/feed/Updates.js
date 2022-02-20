@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { getIndexByValue, firebaseUser, firebaseUpdateQuery } from '../../firebase/firebaseStore';
+import { cast, getIndexByValue, firebaseUser, firebaseUpdateQuery } from '../../firebase/firebaseStore';
 import { onSnapshot } from 'firebase/firestore'
 
 import { Avatar, parseTime } from "../Extras";
@@ -45,7 +45,7 @@ const Updates = ({user}) => {
     useEffect(() => {
         console.log("Updates")
         const Abort = new AbortController();
-        onSnapshot(firebaseUpdateQuery(user.friends), async (data) => {
+        const unSubUpdates = onSnapshot(firebaseUpdateQuery(user.friends), async (data) => {
             let result = [];
             data.forEach(update => result.push({ ...update.data() }));
             
@@ -57,8 +57,11 @@ const Updates = ({user}) => {
                     result[index] = { ...result[index], ...res.data }
             }
             setUpdates([...result])
-        })
-        return () => Abort.abort()
+        }, err => console.log(cast(err.message)))
+        return () => {
+            unSubUpdates()
+            Abort.abort()
+        }
     }, [user])
 
     return ( 

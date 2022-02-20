@@ -3,7 +3,7 @@ import { firebaseDownloadImage } from "./firebaseBulk"
 import firebase from './firebase'
 
 let store = getFirestore(firebase);
-const cast = (data) => { return data.substring(data.lastIndexOf('(') + 1, data.lastIndexOf(')')) }
+export const cast = (data) => { return data.substring(data.lastIndexOf('(') + 1, data.lastIndexOf(')')) }
 
 export const getIndexByValue = (array, key, value) => {
     for(let i = 0; i < array.length; i++)
@@ -307,36 +307,6 @@ export const firebaseTrendingPost = async () => {
 
 }
 
-export const firebaseChat = async () => {
-
-    try {
-        let chat = [];
-
-        const chatQuery = await query(collection(store, 'chat'));
-
-        const chatSnapshot = await getDocs(chatQuery);
-
-        chatSnapshot.forEach(message => chat.push({ mid: message.id, ...message.data() }))
-
-        for(const message of chat)  {
-            const res = await firebaseUser(message.uid, true);
-            const index = getIndexByValue(chat, 'mid', message.mid)
-
-            if(!res.error)  {
-                chat[index].name = res.data.name;
-                chat[index].theme = res.data.theme;
-                chat[index].dp = res.data.dp;
-            }
-        }
-
-        chat = chat.sort((x, y) => { return parseInt(x.createdAt) - parseInt(y.createdAt) })
-
-        return { error: false, data: chat }
-
-    }   catch(err) { return { error: false, data: cast(err.message) } }
-
-}
-
 export const firebaseCreateMessage = async (msg) => {
 
     try {
@@ -474,8 +444,6 @@ export const firebaseUpdate = async (uid, type) => {
 
 }
 
-export const firebaseUpdateQuery = (friends) => {
+export const firebaseChatQuery = () => query(collection(store, 'chat'))
 
-    return query(collection(store, 'updates'), where('uid', 'in', friends))
-
-}
+export const firebaseUpdateQuery = (friends) => query(collection(store, 'updates'), where('uid', 'in', friends))

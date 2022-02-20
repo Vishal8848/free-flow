@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import { firebaseChat, firebaseCreateMessage } from '../../firebase/firebaseStore';
+import { cast, firebaseChatQuery, firebaseUser, getIndexByValue, firebaseCreateMessage } from '../../firebase/firebaseStore';
 import { Avatar, parseTime } from "../Extras";
 import { Link } from 'react-router-dom'
+import { onSnapshot } from 'firebase/firestore';
 
 const Message = ({ data, self }) => {
 
@@ -53,12 +54,31 @@ const Chat = ({user}) => {
     useEffect(() => {
         console.log("Chat")
         const Abort = new AbortController();
-        firebaseChat().then(res => {
-            if(!res.error)  setChat(res.data)
+        const unSubChat = onSnapshot(firebaseChatQuery(), async (data) => {
+            let result = [];
+
+            data.forEach(message => result.push({ mid: message.id, ...message.data() }))
+
+            for(const message of result)  {
+                const res = await firebaseUser(message.uid, true);
+                const index = getIndexByValue(result, 'mid', message.mid)
+
+                if(!res.error) 
+                    result[index] = { ...result[index], ...res.data }
+            }
+
+            result = result.sort((x, y) => { return parseInt(x.createdAt) - parseInt(y.createdAt) })
+
+            setChat([...result])
+
             const chatBox = document.getElementById('chat-box');
             chatBox.scrollTop = chatBox.scrollHeight;
-        })
-        return () => Abort.abort()
+
+        }, err => console.log(cast(err.message)))
+        return () => {
+            unSubChat()
+            Abort.abort()
+        }
     }, [])
 
     useEffect(() => {
