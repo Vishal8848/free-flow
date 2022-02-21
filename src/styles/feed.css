@@ -247,6 +247,9 @@
         border-radius: 5px;
         height: 100%;
     }
+    .chat-content {
+        height: 78.5vh;
+    }
     .chat-header {
         border-top-left-radius: 0;
         border-top-right-radius: 0;
