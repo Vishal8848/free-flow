@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react'
-import { cast, firebaseChatQuery, firebaseUser, getIndexByValue, firebaseCreateMessage } from '../../firebase/firebaseStore';
+import { firebaseChatQuery, firebaseUser, firebaseCreateMessage } from '../../firebase/firebaseStore';
 import { Avatar, parseTime } from "../Extras";
 import { Link } from 'react-router-dom'
 import { onSnapshot } from 'firebase/firestore';
 
 const Message = ({ data, self }) => {
 
-    const { date, time, status } = parseTime(data.createdAt);
-
-    if(self) data.name = "You"
+    const { date, time, status } = parseTime(data.createdAt), name = self ? 'You' : data.name;
 
     return ( data &&
         <div className="message">
@@ -19,12 +17,12 @@ const Message = ({ data, self }) => {
                 <div className="m-head">
                     <div className="m-creator ps-2">
                         <Link to={`/profile/${data.uid}`}>
-                            { data.name.length > 15 ? data.name.split(' ')[0].length > 15 ? data.name.substring(0, 10) + ' ...' : data.name.split(' ')[0] : data.name}
+                            { name.length > 15 ? name.split(' ')[0].length > 15 ? name.substring(0, 10) + ' ...' : name.split(' ')[0] : name}
                         </Link>
                     </div>
                     <div className="m-time text-muted">
-                        { data.name.length < 10 && time }
-                        { data.name.length < 10 && <i className="fas fa-circle px-1 align-middle" style={{ fontSize: "5px" }}></i> }
+                        { name.length < 10 && time }
+                        { name.length < 10 && <i className="fas fa-circle px-1 align-middle" style={{ fontSize: "5px" }}></i> }
                         { status !== "" ? status : date }
                     </div>
                 </div>
@@ -55,16 +53,16 @@ const Chat = ({user, setChatCount}) => {
         console.log("Chat")
         const Abort = new AbortController();
         const unSubChat = onSnapshot(firebaseChatQuery(), async (data) => {
-            let result = [];
+            let result = [], unique = [];
 
             data.forEach(message => result.push({ mid: message.id, ...message.data() }))
 
-            for(const message of result)  {
-                const res = await firebaseUser(message.uid, true);
-                const index = getIndexByValue(result, 'mid', message.mid)
+            unique = result.map(msg => msg.uid).filter((v, i, a) => a.indexOf(v) === i)
 
-                if(!res.error) 
-                    result[index] = { ...result[index], ...res.data }
+            for(const uid of unique) {
+                const res = await firebaseUser(uid, true, true);
+                if(!res.error)
+                    result = result.map(msg => msg.uid === uid ? { ...msg, ...res.data } : { ...msg })
             }
 
             result = result.sort((x, y) => { return parseInt(x.createdAt) - parseInt(y.createdAt) })
@@ -75,7 +73,7 @@ const Chat = ({user, setChatCount}) => {
             const chatBox = document.getElementById('chat-box');
             chatBox.scrollTop = chatBox.scrollHeight;
 
-        }, err => console.log(cast(err.message)))
+        }, err => console.log(err.message))
         return () => {
             unSubChat()
             Abort.abort()

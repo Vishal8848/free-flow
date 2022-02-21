@@ -50,12 +50,11 @@ const Trending = () => {
                             }}/>
                     </div>
                 </div>
-                <div className="trend-redirect text-primary">
-                    <i className="fas fa-share fa-lg"></i>
-                </div>
             </div>
             <div className="trend-body theme-inner">
-                <div className="image bg-dark" style={{ background: `url(${trend.URL}) center center / cover no-repeat` }}></div>
+                <div className="image bg-dark" style={{ background: `url(${trend.URL}) center center / cover no-repeat` }}>
+                    {   !trend.URL && "This wave has no image" }
+                </div>
                 <div className="content text-muted">
                     { trend.content.substring(0, 50) + ' ...' }
                 </div>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { cast, getIndexByValue, firebaseUser, firebaseUpdateQuery } from '../../firebase/firebaseStore';
+import { firebaseUser, firebaseUpdateQuery } from '../../firebase/firebaseStore';
 import { onSnapshot } from 'firebase/firestore'
 
 import { Avatar, parseTime } from "../Extras";
@@ -45,19 +45,21 @@ const Updates = ({user}) => {
     useEffect(() => {
         console.log("Updates")
         const Abort = new AbortController();
-        const unSubUpdates = onSnapshot(firebaseUpdateQuery(user.friends), async (data) => {
-            let result = [];
+        const unSubUpdates = onSnapshot(firebaseUpdateQuery(user.friends.filter(friend => friend !== user.uid)), async (data) => {
+            let result = [], unique = [];
             data.forEach(update => result.push({ ...update.data() }));
             
-            result = result.filter(update => update.uid !== user.uid)
-            for(const update of result) {
-                const res = await firebaseUser(update.uid, true);
-                const index = getIndexByValue(result, 'createdAt', update.createdAt);
-                if(!res.error) 
-                    result[index] = { ...result[index], ...res.data }
+            unique = result.map(update => update.uid).filter((v, i, a) => a.indexOf(v) === i)
+
+            for(const uid of unique)    {
+                const res = await firebaseUser(uid, true);
+
+                if(!res.error)
+                    result = result.map(update => update.uid === uid ? { ...update, ...res.data } : { ...update })
             }
+
             setUpdates([...result])
-        }, err => console.log(cast(err.message)))
+        }, err => console.log(err.message))
         return () => {
             unSubUpdates()
             Abort.abort()

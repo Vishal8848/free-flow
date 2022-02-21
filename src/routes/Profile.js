@@ -98,7 +98,7 @@ const Profile = () => {
     }
 
     return ( <>
-        <Header />
+        <Header setUserCount={null}/>
             <div className="container-fluid profile theme-outer">
             {   (user && posts && saved && friends) ? 
                 <><div className="profile-header m-auto mt-3 shadow theme-middle">

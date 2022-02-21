@@ -12,7 +12,7 @@ export const getIndexByValue = (array, key, value) => {
     return null
 }
 
-export const firebaseUser = async (uid, restrict = false) => {
+export const firebaseUser = async (uid, restrict = false, noimage = false) => {
 
     try {
         const userDoc = await getDoc(doc(store, 'users', uid));
@@ -21,8 +21,10 @@ export const firebaseUser = async (uid, restrict = false) => {
 
             let user = userDoc.data(), DP = null, BG = null;
 
-            if(user.hasDP) DP = await firebaseDownloadImage('dps', uid);
-            if(DP && !DP.error)   user.dp = DP.data
+            if(!noimage)  {
+                if(user.hasDP) DP = await firebaseDownloadImage('dps', uid);
+                if(DP && !DP.error)   user.dp = DP.data
+            }
             
             if(!restrict)   {
                 if(user.hasBG) BG = await firebaseDownloadImage('bgs', uid);
@@ -78,11 +80,7 @@ export const firebaseFriends = async (uids) => {
             const res = await firebaseUser(friend.fid, true);
             const index = getIndexByValue(friends, 'fid', friend.fid);
 
-            if(!res.error)  {
-                friends[index].name = res.data.name;
-                friends[index].theme = res.data.theme;
-                friends[index].dp = res.data.dp;
-            }
+            if(!res.error)  friends[index] = { ...friends[index], ...res.data }
 
         }
 
@@ -120,7 +118,7 @@ export const firebaseCreatePost = async (data) => {
 export const firebasePostCards = async (pids, type = null) => {
 
     try {
-        let posts = []
+        let posts = [], unique = []
 
         const postsQuery = query(collection(store, 'posts'));
 
@@ -141,15 +139,12 @@ export const firebasePostCards = async (pids, type = null) => {
         })
 
         if(type === 'saved')    {
-            for(const post of posts)    {
-                const res = await firebaseUser(post.creator, true);
+            unique = posts.map(post => post.creator).filter((v, i, a) => a.indexOf(v) === i)
+            for(const uid of unique)    {
+                const res = await firebaseUser(uid, true);
     
-                if(!res.error)  {
-                    const index = getIndexByValue(posts, 'creator', post.creator)
-                    posts[index].name = res.data.name
-                    posts[index].theme = res.data.theme
-                    posts[index].dp = res.data.dp
-                }
+                if(!res.error)
+                    posts = posts.map(post => post.creator === uid ? { ...post, ...res.data } : { ...post })
             }
         }
 
@@ -174,11 +169,11 @@ export const firebasePostCards = async (pids, type = null) => {
 export const firebaseAllPosts = async (friends) => {
 
     try {
-        let posts = [], friendsPostsQuery = null;
+        let posts = [], unique = [], friendsPostsQuery = null;
 
-        const postsQuery = await query(collection(store, 'posts'), where('private', '==', false))
+        const postsQuery = query(collection(store, 'posts'), where('private', '==', false))
 
-        friendsPostsQuery = await query(collection(store, 'posts'), where('private', '==', true), where('creator', 'in', friends))            
+        friendsPostsQuery = query(collection(store, 'posts'), where('private', '==', true), where('creator', 'in', friends))            
         
         const postsSnapshot = await getDocs(postsQuery);
         const friendsPosts = await getDocs(friendsPostsQuery);
@@ -187,26 +182,25 @@ export const firebaseAllPosts = async (friends) => {
 
         friendsPosts.forEach(doc => posts.push({ pid: doc.id, ...doc.data() }) )
 
-        for(const post of posts)    {
-            const res = await firebaseUser(post.creator, true);
-            const pIndex = getIndexByValue(posts, 'creator', post.creator)
+        unique = posts.map(post => post.creator).filter((v, i, a) => a.indexOf(v) === i)
 
-            if(!res.error)  {
-                posts[pIndex].name = res.data.name
-                posts[pIndex].theme = res.data.theme
-                posts[pIndex].dp = res.data.dp
+        for(const uid of unique)    {
+            const res = await firebaseUser(uid, true);
+            if(!res.error)
+                posts = posts.map(post => post.creator === uid ? { ...post, ...res.data } : { ...post })
+        }
+
+        for(const post of posts)   {
+
+            const index = getIndexByValue(posts, 'pid', post.pid)
+            const uniqueComments = post.comments.map(comment => comment.commenter).filter((v, i, a) => a.indexOf(v) === i);
+            
+            for(const uid of uniqueComments)    {
+                const res = await firebaseUser(uid, true, true);
+                if(!res.error)
+                    posts[index].comments = posts[index].comments.map(comment => comment.commenter === uid ? { ...comment, ...res.data } : { ...comment })
             }
 
-            for(const comment of post.comments) {
-                const res = await firebaseUser(comment.commenter, true);
-                const cIndex = getIndexByValue(post.comments, 'commentedAt', comment.commentedAt)
-
-                if(!res.error)  {
-                    posts[pIndex].comments[cIndex].name = res.data.name
-                    posts[pIndex].comments[cIndex].theme = res.data.theme
-                    posts[pIndex].comments[cIndex].dp = res.data.dp
-                }
-            }
         }
 
         if(posts.length > 0)    {
@@ -215,8 +209,9 @@ export const firebaseAllPosts = async (friends) => {
 
             for(const post of postsWithImage)   {
                 const res = await firebaseDownloadImage('posts', post.pid)
+                const index = getIndexByValue(posts, 'pid', post.pid)
 
-                if(!res.error)  posts[getIndexByValue(posts, 'pid', post.pid)].URL = res.data;
+                if(!res.error)  posts[index].URL = res.data;
             }
 
         }
@@ -275,7 +270,7 @@ export const firebaseTrendingPost = async () => {
     try {
         let posts = [], res = null;
 
-        const trendQuery = await query(collection(store, 'posts'))
+        const trendQuery = query(collection(store, 'posts'), where('private', '==', false))
 
         const trendSnapshot = await getDocs(trendQuery);
 
@@ -295,11 +290,7 @@ export const firebaseTrendingPost = async () => {
 
         res = await firebaseUser(posts[0].creator, true);
 
-        if(!res.error)  {
-            posts[0].name = res.data.name
-            posts[0].theme = res.data.theme
-            posts[0].dp = res.data.dp
-        }
+        if(!res.error) posts[0] = { ...posts[0], ...res.data }
 
         return { error: false, data: posts[0] }
         
@@ -346,20 +337,16 @@ export const firebaseFriendRequests = async (uid, restrict = true) => {
         requestsSnapshot.forEach(request => requests.push({ ...request.data() }))
 
         if(!restrict)   {
-            const otherRequestsQuery = query(collection(store, 'friend-requests'), where('fid', '==', uid))
-            const otherRequestsSnapshot = await getDocs(otherRequestsQuery);
-            otherRequestsSnapshot.forEach(request => requests.push({ ...request.data() }))
+            const othersQuery = query(collection(store, 'friend-requests'), where('fid', '==', uid))
+            const othersSnapshot = await getDocs(othersQuery);
+            othersSnapshot.forEach(request => requests.push({ ...request.data() }))
 
             for(const req of requests)  {
                 const id = req.uid === uid ? req.fid : req.uid, me = req.uid === uid;
-                const index = getIndexByValue(requests, me ? 'fid' : 'uid', id)
                 const res = await firebaseUser(id, true);
+                const index = getIndexByValue(requests, me ? 'fid' : 'uid', id)
 
-                if(!res.error)  {
-                    requests[index].name = res.data.name;
-                    requests[index].theme = res.data.theme;
-                    requests[index].dp = res.data.dp;
-                }
+                if(!res.error)  requests[index] = { ...requests[index], ...res.data }
             }
 
         }
@@ -418,11 +405,7 @@ export const firebaseSearchUsers = async (uid) => {
             const res = await firebaseUser(user.uid, true);
             const index = getIndexByValue(users, 'uid', user.uid)
 
-            if(!res.error)  {
-                users[index].name = res.data.name;
-                users[index].theme = res.data.theme;
-                users[index].dp = res.data.dp;
-            }
+            if(!res.error)  users[index] = { ...users[index], ...res.data }
 
         }
 

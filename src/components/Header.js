@@ -48,7 +48,8 @@ const Search = ({ search, uid, visible, setUserCount }) => {
         firebaseSearchUsers(uid).then(res => {
             if(!res.error)  {
                 setUsers(res.data)
-                setUserCount(res.data.length + 1)
+                if(setUserCount !== null) 
+                    setUserCount(res.data.length + 1)
             }
         })
     }, [uid, setUserCount])
