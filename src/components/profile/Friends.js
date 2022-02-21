@@ -45,10 +45,10 @@ const Friends = ({ user, data }) => {
         <div className="friends m-auto w-100 row">
             {   (data && data.length > 0) ?
                 <><div className="col-md-6">
-                    { data.slice(0, data.length / 2).map(friend => (<Friend side='s' data={friend} key={friend.fid}/>)) }
+                    { data.slice(data.length / 2).map(friend => (<Friend side='s' data={friend} key={friend.fid}/>)) }
                 </div>
                 <div className="col-md-6">
-                    { data.slice(data.length / 2).map(friend => (<Friend side='e' data={friend} key={friend.fid}/>)) }
+                    { data.slice(0, data.length / 2).map(friend => (<Friend side='e' data={friend} key={friend.fid}/>)) }
                 </div></> : "You have not made any friends yet"
             }
         </div>

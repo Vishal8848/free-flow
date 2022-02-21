@@ -30,7 +30,7 @@ const useProfile = (uid = null) => {
         return () => Abort.abort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [uid])
-    return { user, posts, saved, friends }
+    return { user, setUser, posts, saved, friends }
 }
  
 export default useProfile;

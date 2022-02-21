@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { firebaseUser, firebaseUpdateUser } from "../../firebase/firebaseStore";
 
-const User = ({ auth, data, updateProfile }) => {
+const User = ({ auth, data, setProfile, setStatus, setEditor }) => {
 
     const [ user, setUser ] = useState(data);
 
@@ -16,8 +16,11 @@ const User = ({ auth, data, updateProfile }) => {
         delete cred.uid;
         firebaseUpdateUser(data.uid, cred).then(res => {
             firebaseUser(auth.uid).then(res => {
-                if(res.error)   console.log(res.data);
-                else updateProfile(res.data)
+                if(!res.error)  {
+                    setEditor(false)
+                    setProfile(res.data)
+                    setStatus({ theme: "success", icon: "check", message: "Hmm.. Your profile's ready!" })
+                }   else setStatus({ theme: "danger", icon: "times", message: "Ouch.. Something's not right. Try again later" })
             })
         })
     }

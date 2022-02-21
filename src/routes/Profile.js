@@ -51,8 +51,9 @@ const Profile = () => {
     useEffect(() => { if(!auth.status) setRoute('/') }, [auth, setRoute]);
 
     // Profile Data
-    const { user, posts, friends, saved } = useProfile(uid);
+    const { user, setUser, posts, friends, saved } = useProfile(uid);
     const [ editor, setEditor ] = useState(false);
+    const [ status, setStatus ] = useState(null);
     const [ dp, setDp ] = useState(user && user.dp)
     const [ bg, setBg ] = useState(user && user.bg)
 
@@ -82,8 +83,9 @@ const Profile = () => {
         if(parseFloat(fileSize.split(' ')[0]) < 500)  {
             firebaseUploadImage(auth.data.uid, e.target.files[0], 'bgs').then(() => {
                 setBg(URL.createObjectURL(e.target.files[0]))
+                setStatus({ theme: 'success', icon: 'check', message: 'Nice.. A classic background' })
             })
-        }   else console.log("File Size Exceeded", fileSize)
+        }   else setStatus({ theme: 'danger', icon: 'times', message: ['Oops! Try something less than ', <strong>500KB</strong>, '. Current: ', <strong>{ fileSize }</strong>] })
     }
 
     // Update Profile Picture
@@ -93,8 +95,9 @@ const Profile = () => {
         if(parseFloat(fileSize.split(' ')[0]) < 500)  {
             firebaseUploadImage(auth.data.uid, e.target.files[0], 'dps').then(() => {
                 setDp(URL.createObjectURL(e.target.files[0]))
+                setStatus({ theme: 'success', icon: 'check', message: 'Yep.. That\'s admirable' })
             })
-        }   else console.log("File Size Exceeded", fileSize)
+        }   else setStatus({ theme: 'danger', icon: 'times', message: ['Oops! Try something less than ', <strong>500KB</strong>, '. Current: ', <strong>{ fileSize }</strong>] })
     }
 
     return ( <>
@@ -118,11 +121,11 @@ const Profile = () => {
                     <div className="profile-info pt-4 pb-5 theme-middle">
                         <Content data={{ 
                             name: user.fname + ' ' + user.lname,
-                            description: user.description,
                             friends: user.friends.length - 1,
+                            description: user.description,
                             posts: user.posts.length, 
-                            likes: user.likes.length 
-                        }}/>
+                            likes: user.likes.length
+                        }} status={status}/>
                     </div>
 
                     <div className={`profile-pic bg-${user.theme} border border-secondary`} style={{ background: `url(${dp ? dp : user.dp}) center center / cover no-repeat` }}>
@@ -192,7 +195,7 @@ const Profile = () => {
                                 education: user.education,
                                 dob: user.dob,
                                 hobbies: user.hobbies
-                            }}/> :
+                            }} setStatus={setStatus} setProfile={setUser} setEditor={setEditor}/> :
                             <Visitor data={{
                                 occupation: user.occupation,
                                 location: user.location,

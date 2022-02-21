@@ -1,11 +1,7 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Avatar, parseTime } from '../Extras'
 
 const PostCard = ({ user, data, save = false }) => {
-
-    // Usage: for saved posts of other users
-    const [ saved, setSaved ] = useState(save);
 
     const { date } = parseTime(data.createdAt)
 
@@ -30,19 +26,6 @@ const PostCard = ({ user, data, save = false }) => {
                     <div className="postcard-time text-muted">
                         { date }
                     </div>
-                </div>
-                <div className={`postcard-actions ${ save ? "" : "dropdown" }`}>
-                    {   save ?
-                        <i className={`fas fa-bookmark text-success fa-lg ${ saved ? "fw-bold" : "fw-normal" }`} onClick={() => setSaved(!saved)}></i> : <>
-                        <button className="btn theme-inner border-0 rounded-circle py-2 px-3" data-bs-toggle="dropdown">
-                            <i className="fas fa-ellipsis-v fa-lg"></i>
-                        </button>
-                        <ul className="dropdown-menu dropdown-menu-end theme-inner shadow" style={{ color: "inherit" }}>
-                            <li className="dropdown-item theme-inner">
-                                <i className="fas fa-trash-alt fa-lg me-2 text-danger"></i>Delete
-                            </li>
-                        </ul></>
-                    }
                 </div>
             </div>
             <div className="postcard-body theme-inner">

@@ -161,34 +161,34 @@ const Header = ({ setUserCount }) => {
                         </div>
 
                         {   auth.status &&
-                            <div className="dropdown-menu dropdown-menu-end theme-inner" aria-labelledby="user-drop">
-                                <div className="tint tint-tr theme-inner"></div>
-                                <div className="actions-partition text-start theme-inner">
-                                    <Link to={`/profile/${auth.data.uid}`} className="dropdown-item pb-2">
-                                        <i className="fas fa-user me-2"></i>Profile
-                                    </Link>
-                                    <Link to={`/profile/${auth.data.uid}?type=posts`} className="dropdown-item pb-2">
-                                        <i className="fas fa-paper-plane me-2"></i>Posts
-                                    </Link>
-                                    <Link to={`/profile/${auth.data.uid}?type=friends`} className="dropdown-item pb-2">
-                                        <i className="fas fa-heart me-2"></i>Friends
-                                    </Link>
-                                    <Link to={`/profile/${auth.data.uid}?type=saved`} className="dropdown-item pb-2">
-                                        <i className="fas fa-bookmark me-2"></i>Saved
-                                    </Link>
-                                    <Link to="/contact" className="dropdown-item pb-2">
-                                        <i className="fas fa-pen-alt fa-rotate-270 me-2"></i>Feedback
-                                    </Link>
-                                    <div className="form-check theme-switch form-switch pb-2">
-                                        <label className="form-check-label" htmlFor="themeColor"><i className={`fas fa-${ theme ? 'moon' : 'sun' } me-2`}></i>Dark Mode</label>
-                                        <input className="form-check-input" role="switch" type="checkbox" id="themeColor"
-                                            checked={theme} onChange={(e) => setTheme(e.target.checked)}/>
-                                    </div>
-                                    <div className="dropdown-item pt-2 theme-inner" style={{ cursor: "pointer" }} onClick={() => userLogout()}>
-                                        <i className="fas fa-sign-out-alt me-2"></i>Logout
-                                    </div>
+                        <div className="dropdown-menu dropdown-menu-end theme-inner" aria-labelledby="user-drop">
+                            <div className="tint tint-tr theme-inner"></div>
+                            <div className="actions-partition text-start theme-inner">
+                                <Link to={`/profile/${auth.data.uid}`} className="dropdown-item pb-2">
+                                    <i className="fas fa-user me-2"></i>Profile
+                                </Link>
+                                <Link to={`/profile/${auth.data.uid}?type=posts`} className="dropdown-item pb-2">
+                                    <i className="fas fa-paper-plane me-2"></i>Posts
+                                </Link>
+                                <Link to={`/profile/${auth.data.uid}?type=friends`} className="dropdown-item pb-2">
+                                    <i className="fas fa-heart me-2"></i>Friends
+                                </Link>
+                                <Link to={`/profile/${auth.data.uid}?type=saved`} className="dropdown-item pb-2">
+                                    <i className="fas fa-bookmark me-2"></i>Saved
+                                </Link>
+                                <Link to="/contact" className="dropdown-item pb-2">
+                                    <i className="fas fa-pen-alt fa-rotate-270 me-2"></i>Feedback
+                                </Link>
+                                <div className="form-check theme-switch form-switch pb-2">
+                                    <label className="form-check-label" htmlFor="themeColor"><i className={`fas fa-${ theme ? 'moon' : 'sun' } me-2`}></i>Dark Mode</label>
+                                    <input className="form-check-input" role="switch" type="checkbox" id="themeColor"
+                                        checked={theme} onChange={(e) => setTheme(e.target.checked)}/>
+                                </div>
+                                <div className="dropdown-item pt-2 theme-inner" style={{ cursor: "pointer" }} onClick={() => userLogout()}>
+                                    <i className="fas fa-sign-out-alt me-2"></i>Logout
                                 </div>
                             </div>
+                        </div>
                         }
                     </div>
                 </div>

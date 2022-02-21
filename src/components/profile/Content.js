@@ -1,4 +1,4 @@
-const Content = ({ data }) => {
+const Content = ({ data, status }) => {
 
     return (<>
         <div className="profile-stats fw-bold">
@@ -25,6 +25,13 @@ const Content = ({ data }) => {
             <div className="profile-desc text-muted pe-2">
                 { (data.description && data.description.length > 0) ? data.description : "Your description lives here" }
             </div>
+
+            {   status &&
+                <div className={`profile-status text-${status.theme}`}>
+                    <i className={`fas fa-${status.icon} fa-lg me-2`}></i>
+                    <span className="fs-5">{ status.message }</span>
+                </div>
+            }
             
         </div>
     </>);
