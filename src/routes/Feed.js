@@ -7,8 +7,8 @@ import Updates from '../components/feed/Updates'
 import Chat from '../components/feed/Chat'
 import Post from '../components/feed/Post'
 import useWindow from '../hooks/useWindow'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import Header from '../components/layout/Header'
+import Footer from '../components/layout/Footer'
 import { AuthContext, UserContext } from '../App'
 
 const Feed = () => {

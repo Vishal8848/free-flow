@@ -1,10 +1,11 @@
 import { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { Avatar, Tooltip, readStoredTheme } from './Extras'
+import { Avatar, Tooltip, readStoredTheme } from '../Extras'
 import Notifications from './Notifications'
-import { AuthContext, UserContext } from '../App'
-import { firebaseLogout } from '../firebase/firebaseAuth'
+import { AuthContext, UserContext } from '../../App'
+import { firebaseLogout } from '../../firebase/firebaseAuth'
 import Search from './Search'
+import Feedback from '../Feedback'
 
 import Cookies from 'universal-cookie';
 
@@ -22,6 +23,8 @@ const Header = ({ setUserCount }) => {
     }
 
     const mode = readStoredTheme();
+
+    const [ view, setView ]  = useState(false);
 
     const [ search, setSearch ] = useState({ open: false, input: "" });
     const [ theme, setTheme ] = useState(mode);
@@ -43,7 +46,7 @@ const Header = ({ setUserCount }) => {
         }
     }, [theme]);
 
-    return ( 
+    return ( <>
         <nav className="navbar header navbar-expand-lg navbar-light mb-md-3 shadow-sm fixed-top theme-middle">
             {   user ?
             <div className="container-fluid theme-middle px-3">
@@ -101,7 +104,7 @@ const Header = ({ setUserCount }) => {
                                 <Link to={`/profile/${auth.data.uid.split("").reverse().join("")}?type=saved`} className="dropdown-item pb-2">
                                     <i className="fas fa-bookmark me-2"></i>Saved
                                 </Link>
-                                <div className="dropdown-item pb-2 theme-inner">
+                                <div className="dropdown-item pb-2 theme-inner" onClick={() => setView(true)} style={{ cursor: "pointer" }}>
                                     <i className="fas fa-pen-alt fa-rotate-270 me-2"></i>Feedback
                                 </div>
                                 <div className="dropdown-item form-check theme-switch form-switch pb-2 theme-inner">
@@ -120,6 +123,8 @@ const Header = ({ setUserCount }) => {
 
             </div> : "Loading" }
         </nav>
+        { view && <Feedback setView={setView}/> } 
+        </>
     );
 }
  

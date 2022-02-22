@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Avatar, parseTime } from './Extras'
-import { firebaseFriendRequests, firebaseUpdateRequest } from '../firebase/firebaseStore'
+import { Avatar, parseTime } from '../Extras'
+import { firebaseFriendRequests, firebaseUpdateRequest } from '../../firebase/firebaseStore'
 
 const Notification = ({ you, data, acceptRequest }) => {
  

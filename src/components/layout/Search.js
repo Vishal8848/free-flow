@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Avatar } from './Extras'
-import { firebaseSearchUsers, firebaseMakeRequest, getIndexByValue } from '../firebase/firebaseStore'
+import { Avatar } from '../Extras'
+import { firebaseSearchUsers, firebaseMakeRequest, getIndexByValue } from '../../firebase/firebaseStore'
 
 const SearchUser = ({ data, request, handleRequest }) => {
 

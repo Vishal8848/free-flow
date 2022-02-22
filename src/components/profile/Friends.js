@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 const Friend = ({ data, mutual, side }) => {
 
+    const common = data.list.filter(friend => mutual.includes(friend)).length - 1
+
     return ( 
         <div className={`friend p-2 rounded shadow-sm m${side}-md-auto mt-4 theme-inner`}>
 
@@ -17,13 +19,13 @@ const Friend = ({ data, mutual, side }) => {
                     <span className="fs-5 fw-bold">{ data.name }</span>
                 </Link><br/>
                 <span className="fs-6 text-muted">
-                { data.list.filter(friend => mutual.includes(friend)).length } mutual friends
+                { `${common > 0 ? common : 'no' } mutual friend${common > 1 || common === 0 ? 's' : ''}` }
                 </span>
             </div>
         </div>
     );
 }
- 
+
 const Friends = ({ user, data }) => {
 
     data = data.filter(friend => friend.fid !== user.uid);

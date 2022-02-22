@@ -3,6 +3,7 @@
 }
 body {
     background-color: rgba(25, 25, 25, 0.0125);
+    overflow-x: hidden;
 }
 .container-fluid {
     margin: 0;
@@ -456,7 +457,7 @@ div:hover > .tool-tip {
     }   
 }
 
-.feed input, .header input, .profile input, .feed textarea, .profile textarea {
+.feed input, .header input, .profile input, .feed textarea, .profile textarea, .feedback textarea {
     background-color: inherit !important;
     color: inherit !important;
 }

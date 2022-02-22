@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
 import { firebaseUser, firebaseFriends, firebasePostCards } from '../firebase/firebaseStore'
 
-const useProfile = (uid = null) => {
+const useProfile = (id, uid) => {
     const Abort = new AbortController();
-    const [ valid, setValid ] = useState(uid && uid.length >= 10)
     const [ user, setUser ] = useState(null);
     const [ posts, setPosts ] = useState(null);
     const [ saved, setSaved ] = useState(null);
@@ -11,8 +10,8 @@ const useProfile = (uid = null) => {
 
     useEffect( () => {
         console.log("Profile")
-        const firebaseFetch = async () => {
-            let res = await firebaseUser(uid), result = null;
+        const firebaseFetch = async (id) => {
+            let res = await firebaseUser(id), result = null;
             
             if(!res.error)  {
                 setUser(result = res.data)
@@ -25,18 +24,16 @@ const useProfile = (uid = null) => {
 
                 res = await firebasePostCards(result.saved, 'saved')
                 if(!res.error) setSaved(res.data)
-            
-            }   else setValid(false)
+
+                return result;
+            }   return null;
         }
-        const start = window.performance.now();
-        firebaseFetch();
-        const end = window.performance.now();
-        console.log(`Profile: ${end - start} ms`)
+        firebaseFetch(id).then((result) => !result && firebaseFetch(uid))
         return () => Abort.abort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [uid])
+    }, [id])
     
-    return valid ? { user, setUser, posts, saved, friends } : null
+    return { user, setUser, posts, saved, friends }
 }
  
 export default useProfile;

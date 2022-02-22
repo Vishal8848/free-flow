@@ -6,7 +6,7 @@
     text-transform: uppercase;
 }
 .feed .col-md-3, .feed .col-md-6 {
-    height: 90vh;
+    height: 85vh;
 }
 @media screen and ( max-width: 768px )  {
     .feed {
@@ -130,7 +130,7 @@
 /* Trending */
 .feed-trending {
     border-radius: 10px;
-    height: 55%;
+    height: 60%;
 }
 .trend {
     width: 100%;
@@ -146,7 +146,7 @@
 }
 .trend-body > .image {
     width: 100%;
-    height: 200px;
+    height: 175px;
 }
 .trend-body > .content {
     font-style: italic;
@@ -173,7 +173,7 @@
 
 /* Feed Stats */
 .feed-stats {
-    height: 32%;
+    height: 35%;
 }
 .stat-set {
     display: flex;
@@ -207,7 +207,7 @@
 .chat-content {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    height: 50vh;
+    height: 46vh;
     overflow-y: auto;
 }
 .chat-create > .avatar {
@@ -240,7 +240,7 @@
         height: 100%;
     }
     .chat-content {
-        height: 78.5vh;
+        height: 70vh;
     }
     .chat-header {
         border-top-left-radius: 0;
@@ -357,4 +357,50 @@
 }
 .feed-create-trigger > div, .feed-create > div {
     user-select: none;
+}
+
+/* Feedback */
+.feedback-modal {
+    width: 60vw;
+    height: fit-content;
+    padding: 20px;
+    border-radius: 10px;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    margin-left: -30vw;
+}
+.feedback-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.feedback-close {
+    cursor: pointer;
+}
+.feedback-reaction {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 10px;
+    border-radius: 10px;
+}
+.feedback-reaction div {
+    cursor: pointer;
+}
+.feedback-reaction i {
+    border-radius: 50%;
+    padding: 15px;
+}
+@media screen and ( max-width: 768px )  {
+    .feedback-modal {
+        width: 80vw;
+        margin-left: -40vw;
+    }
+    .feedback-reaction {
+        justify-content: space-between;
+    }
+    .feedback-reaction i {
+        padding: 0;
+    }
 }
