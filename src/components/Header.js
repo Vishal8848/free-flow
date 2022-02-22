@@ -1,90 +1,12 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { Avatar, Tooltip } from './Extras'
+import { Avatar, Tooltip, readStoredTheme } from './Extras'
 import Notifications from './Notifications'
 import { AuthContext, UserContext } from '../App'
-import { firebaseLogout } from '../firebase/firebaseAuth';
-import { firebaseSearchUsers, firebaseMakeRequest, getIndexByValue } from '../firebase/firebaseStore'
+import { firebaseLogout } from '../firebase/firebaseAuth'
+import Search from './Search'
 
 import Cookies from 'universal-cookie';
-
-const readStoredTheme = () => {
-
-    const theme = JSON.parse(window.localStorage.getItem('theme'));
-
-    if(theme != null) return theme.dark;
-
-    return false;
-}
-
-const SearchUser = ({ data, request, handleRequest }) => {
-
-    return (
-        <div className={`search-user p-2 theme-middle`}>
-            <Link to={`/profile/${data.uid.split("").reverse().join("")}`}>
-                <Avatar image={data.dp} name={data.name} scale="square-sm" theme={data.theme}/>
-            </Link>
-            <div className="fs-6 mx-3 w-100">{ data.name }</div>
-            {   data.isFriend !== 2 &&
-                <button className={`btn btn-${ request === 0 ? 'primary' : 'secondary' } btn-sm`} onClick={() => handleRequest(data.uid)} disabled={ request ? "disabled" : "" }>
-                    { request === 0 && <i className="fas fa-plus me-2"></i> }
-                    { request === 0 ? "Friend" : "Requested" }
-                </button>
-            }
-        </div>
-    );
-}
-
-const Search = ({ search, uid, visible, setUserCount }) => {
-
-    const [ users, setUsers ] = useState(null);
-    
-    const [ SS, setSS ] = useState("");
-
-    useEffect(() => {
-        setSS(search)
-    }, [search])
-
-    useEffect(() => {
-        console.log("Search")
-        firebaseSearchUsers(uid).then(res => {
-            if(!res.error)  {
-                setUsers(res.data)
-                if(setUserCount !== null) 
-                    setUserCount(res.data.length + 1)
-            }
-        })
-    }, [uid, setUserCount])
-
-    const stringMatch = (n, s) => {
-        const Us = s.toUpperCase(), Ls = s.toLowerCase(), Fs = s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
-        return n.includes(s) || n.includes(Us) || n.includes(Ls) || n.includes(Fs)
-    }
-
-    const handleRequest = (fid) => {
-        console.log(fid);
-        firebaseMakeRequest(uid, fid).then(() => {
-            const index = getIndexByValue(users, 'uid', fid), updatedUsers = users;
-            updatedUsers[index].isFriend = 1;
-            setUsers([...updatedUsers])
-        })
-    }
-
-    return ( users &&
-        <div className="search p-2 theme-middle shadow" style={{ visibility: visible ? "visible" : "hidden" }}>
-            <span className="feed-title ps-3 text-muted fw-bold">Search Results</span>
-            {   (users.length > 0) &&
-                SS.length > 0 ?
-                users.filter(user => stringMatch(user.name, SS)).map(user => (
-                    <SearchUser data={user} request={user.isFriend} key={user.uid} handleRequest={handleRequest}/>
-                )) : 
-                <div className="p-3 text-center">
-                    Type something to see whose there ...
-                </div>
-            }
-        </div>
-    );
-}
 
 const Header = ({ setUserCount }) => {
 
@@ -179,10 +101,10 @@ const Header = ({ setUserCount }) => {
                                 <Link to={`/profile/${auth.data.uid.split("").reverse().join("")}?type=saved`} className="dropdown-item pb-2">
                                     <i className="fas fa-bookmark me-2"></i>Saved
                                 </Link>
-                                <Link to="/contact" className="dropdown-item pb-2">
+                                <div className="dropdown-item pb-2 theme-inner">
                                     <i className="fas fa-pen-alt fa-rotate-270 me-2"></i>Feedback
-                                </Link>
-                                <div className="form-check theme-switch form-switch pb-2">
+                                </div>
+                                <div className="dropdown-item form-check theme-switch form-switch pb-2 theme-inner">
                                     <label className="form-check-label" htmlFor="themeColor"><i className={`fas fa-${ theme ? 'moon' : 'sun' } me-2`}></i>Dark Mode</label>
                                     <input className="form-check-input" role="switch" type="checkbox" id="themeColor"
                                         checked={theme} onChange={(e) => setTheme(e.target.checked)}/>

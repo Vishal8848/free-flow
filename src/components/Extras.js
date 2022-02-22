@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react'
-
 export const getInitial = (name) => { return name.split(' ').filter((name) => name.length > 1).slice(0, 2).map((each) => each.charAt(0)).join('') }
 
 export const parseDOB = (dob) => { 
@@ -8,6 +6,15 @@ export const parseDOB = (dob) => {
     const day = dob.split('-')[2], month = parseInt(dob.split('-')[1]) - 1;
     
     return day + ' ' + months[month];
+}
+
+export const readStoredTheme = () => {
+
+    const theme = JSON.parse(window.localStorage.getItem('theme'));
+
+    if(theme != null) return theme.dark;
+
+    return false;
 }
 
 export const Avatar = ({ image, name, scale = 'md', theme = 'primary' }) => {
@@ -41,53 +48,6 @@ export const Tooltip = ({ body }) => {
             <div className="tooltip-content px-2">{ body }</div>
         </div>
     );
-}
-
-export const Toast = ({ show, code, value = null }) => {
-
-    const [ toast, setToast ] = useState(show);
-
-    useEffect(() => {
-        const instance = document.getElementsByClassName('toast')[0].style;
-        instance.display = toast ? 'block' : 'none';
-    }, [toast]);
-    
-    const info = [
-        {
-            title: "Action Not Completed",
-            body: "Please upload image less than 500KB",
-            theme: 'danger',
-            icon: 'upload',
-            data: value,
-            code: 0
-        },
-        {
-            title: "Action Completed",
-            body: value,
-            theme: 'success',
-            icon: 'upload',
-            data: null,
-            code: 0
-        }
-    ]
-
-    return (
-        <div className="toast position-absolute top-0 end-0 m-4" role="alert" aria-live="assertive" aria-atomic="true" style={{ borderRadius: "10px" }}>
-            <div className="toast-header theme-inner border-0" style={{ borderTopLeftRadius: "10px", borderTopRightRadius: "10px" }}>
-                <strong className="me-auto">
-                    <i className={`fas fa-${info[code].icon} fa-lg me-2 text-${info[code].theme}`}></i>
-                    { info[code].title }
-                </strong>
-                <i className="fas fa-times fa-lg" onClick={() => setToast(!toast)} style={{ cursor: "pointer" }}></i>
-            </div>
-            <div className="toast-body theme-middle" style={{ borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
-                { info[code].body } <br/>
-                {   info[code].data &&
-                    <>CURRENT SIZE<code className='fs-6'>&nbsp; { info[code].data }</code></>
-                }
-            </div>
-        </div>
-    )
 }
 
 export const parseTime = (timestring) => {
