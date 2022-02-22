@@ -29,7 +29,7 @@ const Footer = () => {
 
             {   auth.data &&
                 <div className="item theme-middle">
-                    <Link to={`/profile/${auth.data.uid}`} className="theme-middle">
+                    <Link to={`/profile/${auth.data.uid.split("").reverse().join("")}`} className="theme-middle">
                         <i className={`fas fa-user fa-lg`}></i>
                         You
                     </Link>

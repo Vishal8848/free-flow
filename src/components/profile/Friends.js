@@ -7,13 +7,13 @@ const Friend = ({ data, side }) => {
         <div className={`friend p-2 rounded shadow-sm m${side}-md-auto mt-4 theme-inner`}>
 
             <div className="friend-img">
-                <Link to={`/profile/${data.fid}`}>
+                <Link to={`/profile/${data.fid.split("").reverse().join("")}`}>
                     <Avatar image={data.dp} name={data.name} scale="square" theme={data.theme}/>
                 </Link>
             </div>
 
             <div className="friend-desc ps-3">
-                <Link to={`/profile/${data.fid}`}>
+                <Link to={`/profile/${data.fid.split("").reverse().join("")}`}>
                     <span className="fs-5 fw-bold">{ data.name }</span>
                 </Link><br/>
                 <span className="fs-6 fst-italic text-muted">2 mutual friends</span>

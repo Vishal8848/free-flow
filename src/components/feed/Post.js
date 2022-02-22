@@ -13,7 +13,7 @@ const Comment = ({ data }) => {
             
             <div className="comment-header px-2 py-1">
             
-                <Link to={`/profile/${data.commenter}`}>
+                <Link to={`/profile/${data.commenter.split("").reverse().join("")}`}>
                     <div className="comment-creator">
                         <Avatar image={data.dp} name={data.name} scale='sm' theme={data.theme}/>
                         <div className="creator ps-2">
@@ -88,7 +88,7 @@ const Post = ({ user, data }) => {
             
             <div className="post-header px-3 px-md-4 py-2 py-md-3 theme-middle">
             
-                <Link to={`/profile/${data.creator}`}>
+                <Link to={`/profile/${data.creator.split("").reverse().join("")}`}>
                     <div className="post-creator">
                         <Avatar image={data.dp} name={data.name} scale='md' theme={data.theme}/>
                         <div className="creator fs-5 ps-3">
@@ -136,7 +136,7 @@ const Post = ({ user, data }) => {
             </div>  }
             
             <div className="post-create-comment theme-middle px-2 px-md-4 py-3">
-                <Link to={`/profile/${user.uid}`}>
+                <Link to={`/profile/${user.uid.split("").reverse().join("")}`}>
                     <Avatar image={user.dp} name={user.name} scale='md' theme={user.theme}/>
                 </Link>
                 <input id={`new-comment-${data.pid}`} className="w-75 theme-middle" placeholder="Add your comment"

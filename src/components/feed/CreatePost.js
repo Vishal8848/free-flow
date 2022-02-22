@@ -49,7 +49,7 @@ const CreatePost = ({ width, user }) => {
     return (<>
         <div className="post-trigger p-2 theme-middle shadow" style={{ borderBottomLeftRadius: `${ form ? "0" : "10px" }`, borderBottomRightRadius: `${ form ? "0" : "10px" }` }}>
             { width > 768 && 
-                <Link to={`/profile/${user.uid}`}>
+                <Link to={`/profile/${user.uid.split("").reverse().join("")}`}>
                     <Avatar image={user.dp} name={user.name} scale="md" theme={user.theme}/>
                 </Link>
             }

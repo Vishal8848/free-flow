@@ -42,7 +42,8 @@ const Saved = ({ data }) => {
 const Profile = () => {
 
     // Requested Profile UID
-    const { uid } = useParams();
+    const { uid: routeId } = useParams();
+    const uid = routeId.split("").reverse().join("");
 
     // Auth Handler
     const setRoute = useNavigate();

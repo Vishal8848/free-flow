@@ -18,12 +18,12 @@ const Trending = () => {
     return ( trend &&
         (<div className="trend theme-middle shadow">
             <div className="trend-header px-3 py-2 theme-middle">
-                <Link to={`/profile/${trend.creator}`}>
+                <Link to={`/profile/${trend.creator.split("").reverse().join("")}`}>
                     <Avatar image={trend.dp} name={trend.name} scale="md" theme={trend.theme}/>
                 </Link>
                 <div className="trend-setter ps-3">
                     <div className="fs-5">
-                        <Link to={`/profile/${trend.creator}`}>
+                        <Link to={`/profile/${trend.creator.split("").reverse().join("")}`}>
                             {trend.name}
                         </Link>
                     </div>

@@ -10,13 +10,13 @@ const Message = ({ data, self }) => {
 
     return ( data &&
         <div className="message">
-            <Link to={`/profile/${data.uid}`}>
+            <Link to={`/profile/${data.uid.split("").reverse().join("")}`}>
                 <Avatar image={data.dp} name={data.name} scale="sm" theme={data.theme}/>
             </Link>
             <div className={`m-content p${ self ? 'e' : 's' }-1`}>
                 <div className="m-head">
                     <div className="m-creator ps-2">
-                        <Link to={`/profile/${data.uid}`}>
+                        <Link to={`/profile/${data.uid.split("").reverse().join("")}`}>
                             { name.length > 15 ? name.split(' ')[0].length > 15 ? name.substring(0, 10) + ' ...' : name.split(' ')[0] : name}
                         </Link>
                     </div>

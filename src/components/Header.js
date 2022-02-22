@@ -19,7 +19,7 @@ const SearchUser = ({ data, request, handleRequest }) => {
 
     return (
         <div className={`search-user p-2 theme-middle`}>
-            <Link to={`/profile/${data.uid}`}>
+            <Link to={`/profile/${data.uid.split("").reverse().join("")}`}>
                 <Avatar image={data.dp} name={data.name} scale="square-sm" theme={data.theme}/>
             </Link>
             <div className="fs-6 mx-3 w-100">{ data.name }</div>
@@ -90,7 +90,7 @@ const Header = ({ setUserCount }) => {
     const { user } = useContext(UserContext);
 
     const userLogout = () => {
-        window.localStorage.setItem('signout', Date.now().toString())
+        window.localStorage.setItem('lastActive', Date.now().toString())
         window.sessionStorage.removeItem('access')
         window.localStorage.removeItem('access')
         firebaseLogout().then(() => setAuth({ status: false, data: null }))
@@ -164,16 +164,16 @@ const Header = ({ setUserCount }) => {
                         <div className="dropdown-menu dropdown-menu-end theme-inner" aria-labelledby="user-drop">
                             <div className="tint tint-tr theme-inner"></div>
                             <div className="actions-partition text-start theme-inner">
-                                <Link to={`/profile/${auth.data.uid}`} className="dropdown-item pb-2">
+                                <Link to={`/profile/${auth.data.uid.split("").reverse().join("")}`} className="dropdown-item pb-2">
                                     <i className="fas fa-user me-2"></i>Profile
                                 </Link>
-                                <Link to={`/profile/${auth.data.uid}?type=posts`} className="dropdown-item pb-2">
+                                <Link to={`/profile/${auth.data.uid.split("").reverse().join("")}?type=posts`} className="dropdown-item pb-2">
                                     <i className="fas fa-paper-plane me-2"></i>Posts
                                 </Link>
-                                <Link to={`/profile/${auth.data.uid}?type=friends`} className="dropdown-item pb-2">
+                                <Link to={`/profile/${auth.data.uid.split("").reverse().join("")}?type=friends`} className="dropdown-item pb-2">
                                     <i className="fas fa-heart me-2"></i>Friends
                                 </Link>
-                                <Link to={`/profile/${auth.data.uid}?type=saved`} className="dropdown-item pb-2">
+                                <Link to={`/profile/${auth.data.uid.split("").reverse().join("")}?type=saved`} className="dropdown-item pb-2">
                                     <i className="fas fa-bookmark me-2"></i>Saved
                                 </Link>
                                 <Link to="/contact" className="dropdown-item pb-2">

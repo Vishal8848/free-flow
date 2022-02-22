@@ -9,7 +9,7 @@ const PostCard = ({ user, data, save = false }) => {
         <div className="postcard m-md-3 mt-3 theme-outer">
             <div className="postcard-header px-3 py-2 theme-inner">
                 {   save ?
-                    <Link to={`/profile/${data.creator}`}>
+                    <Link to={`/profile/${data.creator.split("").reverse().join("")}`}>
                         <Avatar image={user ? user.dp : data.dp} name={user ? user.name : data.name} scale="md" theme={user ? user.theme : data.theme}/>
                     </Link> :
                     <Avatar image={user ? user.dp : data.dp} name={user ? user.name : data.name} scale="md" theme={user ? user.theme : data.theme}/>
@@ -17,7 +17,7 @@ const PostCard = ({ user, data, save = false }) => {
                 <div className="postcard-setter ps-3">
                     <div className="fs-5 fw-bold">
                         {   save ?
-                            <Link to={`/profile/${data.creator}`}>
+                            <Link to={`/profile/${data.creator.split("").reverse().join("")}`}>
                                 { user ? user.name : data.name }
                             </Link> :
                             user ? user.name : data.name

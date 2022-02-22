@@ -11,11 +11,11 @@ const Notification = ({ you, data, acceptRequest }) => {
 
     return (
         <div className={`search-user p-2 theme-inner`}>
-            <Link to={`/profile/${data.uid}`}>
+            <Link to={`/profile/${data.uid.split("").reverse().join("")}`}>
                 <Avatar image={data.dp} name={data.name} scale="square-sm" theme={data.theme}/>
             </Link>
             <div className="fs-6 mx-3 w-100">
-                <Link to={`/profile/${data.uid}`}>
+                <Link to={`/profile/${data.uid.split("").reverse().join("")}`}>
                     <div>{ data.name }</div>
                 </Link>
                 <div className="text-muted" style={{ fontSize: "12.5px" }}>

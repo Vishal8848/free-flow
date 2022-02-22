@@ -2,6 +2,11 @@ import { getAuth, signOut, signInWithEmailAndPassword, createUserWithEmailAndPas
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore/lite'
 import firebase from './firebase'
 
+import Hash from 'object-hash'
+import Cookies from 'universal-cookie'
+
+const cookies = new Cookies()
+
 const auth = getAuth(firebase);
 const store = getFirestore(firebase);
 const themes = [ 'danger', 'success', 'primary', 'dark' ];
