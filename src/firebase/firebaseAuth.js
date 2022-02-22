@@ -77,14 +77,15 @@ export const firebaseLogin = async (cred) => {
 
         if(!response.user.emailVerified)  return { error: true, data: "auth/user-not-verified" }
         
-        let access = { uid: response.user.uid, lastActive: JSON.parse(window.localStorage.getItem('signout')) };
+        const flipped = response.user.uid.split("").reverse().join(""), maxAge = 2 * 24 * 60 * 60
+        
+        cookies.set('commit', flipped, { path: '/', maxAge: maxAge })
 
-        // Cookie Access
-        if(cred.save)   window.localStorage.setItem('access', JSON.stringify(access))
+        cred.save ?
+            cookies.set('access', Hash(response.user.uid + process.env.REACT_APP_HASH_KEY), { path: '/', maxAge: maxAge }) :
+            cookies.set('access', Hash(response.user.uid + process.env.REACT_APP_HASH_KEY), { path: '/'})
 
-        window.sessionStorage.setItem('access', JSON.stringify(access))
-
-        return { error: false, data: access };
+        return { error: false, data: { uid: response.user.uid, last: cookies.get('last') ?? null } };
 
     }   catch(err)  { return { error: true, data: cast(err.message) } }
 
@@ -113,14 +114,13 @@ export const firebaseGoogleLogin = async () => {
 
         }
         
-        let access = { uid: response.user.uid, lastActive: JSON.parse(window.localStorage.getItem('signout')) };
+        const flipped = response.user.uid.split("").reverse().join(""), maxAge = 2 * 24 * 60 * 60
+        
+        cookies.set('commit', flipped, { path: '/', maxAge: maxAge })
 
-        // Cookie Access
-        window.localStorage.setItem('access', JSON.stringify(access))
+        cookies.set('access', Hash(response.user.uid + process.env.REACT_APP_HASH_KEY), { path: '/'})
 
-        window.sessionStorage.setItem('access', JSON.stringify(access))
-
-        return { error: false, data: access };
+        return { error: false, data: { uid: response.user.uid, last: cookies.get('last') ?? null } };
 
     }   catch(err) { return { error: true, data: cast(err.message) } }
 }

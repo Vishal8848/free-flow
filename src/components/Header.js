@@ -6,6 +6,8 @@ import { AuthContext, UserContext } from '../App'
 import { firebaseLogout } from '../firebase/firebaseAuth';
 import { firebaseSearchUsers, firebaseMakeRequest, getIndexByValue } from '../firebase/firebaseStore'
 
+import Cookies from 'universal-cookie';
+
 const readStoredTheme = () => {
 
     const theme = JSON.parse(window.localStorage.getItem('theme'));
@@ -90,9 +92,10 @@ const Header = ({ setUserCount }) => {
     const { user } = useContext(UserContext);
 
     const userLogout = () => {
-        window.localStorage.setItem('lastActive', Date.now().toString())
-        window.sessionStorage.removeItem('access')
-        window.localStorage.removeItem('access')
+        const cookies = new Cookies();
+        cookies.remove('access')
+        cookies.remove('commit')
+        cookies.set('last', Date.now().toString())
         firebaseLogout().then(() => setAuth({ status: false, data: null }))
     }
 

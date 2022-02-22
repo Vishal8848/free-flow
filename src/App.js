@@ -4,18 +4,29 @@ import useProfile from './hooks/useProfile'
 import Profile from './routes/Profile'
 import Home from './routes/Home'
 import Feed from './routes/Feed'
-import Error from './routes/Error'
+
+import Hash from 'object-hash'
+import Cookies from 'universal-cookie'
+
+const cookies  = new Cookies()
 
 export const AuthContext = createContext(null);
 export const UserContext = createContext(null);
 
 function App() {
 
-  let access = JSON.parse(window.sessionStorage.getItem('access'));
+  let access = null
 
-  if(access == null)  access = JSON.parse(window.localStorage.getItem('access'))
+  // Reading Cookies
+  const commit = cookies.get('commit'), accessKey = cookies.get('access');
 
-  const [ auth, setAuth ] = useState(access == null ? { status: false, data: null } : { status: true, data: access });
+  if(commit && accessKey) {
+    const privateKey = Hash(commit.split("").reverse().join("") + process.env.REACT_APP_HASH_KEY);
+
+    access = (accessKey === privateKey) ? { uid: commit.split("").reverse().join(""), last: cookies.get('last') ?? null } : null
+  }
+
+  const [ auth, setAuth ] = useState(access ? { status: true, data: access } : { status: false, data: null });
 
   const Auth = useMemo(() => ({ auth, setAuth }), [ auth, setAuth ]);
   
@@ -29,7 +40,6 @@ function App() {
             <Route exact path="/" element={<Home/>}/>
             <Route path="/feed" element={<Feed/>} />
             <Route path="/profile/:uid" element={<Profile />}/>
-            <Route path="/error" element={<Error />}/>
           </Routes>
         </UserContext.Provider>
       </AuthContext.Provider>

@@ -30,8 +30,8 @@ const Home = () => {
     const [ inform, setInform ] = useState({ state: false, code: 0 });
 
     useEffect(() => { 
-        if(auth.status) 
-            auth.data.lastActive ? setRoute('/feed') : setRoute('/profile/' + auth.data.uid)
+        if(auth.status)
+            auth.data.last ? setRoute('/feed') : setRoute('/profile/' + auth.data.uid.split("").reverse().join(""))
     }, [auth, setRoute])
 
     return (<>

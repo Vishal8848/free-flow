@@ -3,6 +3,7 @@ import { firebaseUser, firebaseFriends, firebasePostCards } from '../firebase/fi
 
 const useProfile = (uid = null) => {
     const Abort = new AbortController();
+    const [ valid, setValid ] = useState(uid && uid.length >= 10)
     const [ user, setUser ] = useState(null);
     const [ posts, setPosts ] = useState(null);
     const [ saved, setSaved ] = useState(null);
@@ -24,13 +25,18 @@ const useProfile = (uid = null) => {
 
                 res = await firebasePostCards(result.saved, 'saved')
                 if(!res.error) setSaved(res.data)
-            }
+            
+            }   else setValid(false)
         }
-        if(uid) firebaseFetch();
+        const start = window.performance.now();
+        firebaseFetch();
+        const end = window.performance.now();
+        console.log(`Profile: ${end - start} ms`)
         return () => Abort.abort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [uid])
-    return { user, setUser, posts, saved, friends }
+    
+    return valid ? { user, setUser, posts, saved, friends } : null
 }
  
 export default useProfile;

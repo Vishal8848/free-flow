@@ -10,7 +10,7 @@ import User from '../components/profile/User'
 import useProfile from '../hooks/useProfile'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import { AuthContext } from '../App'
+import { AuthContext, UserContext } from '../App'
 
 // Created Posts 
 const Posts = ({ user, data }) => {
@@ -49,10 +49,13 @@ const Profile = () => {
     const setRoute = useNavigate();
     const { auth } = useContext(AuthContext);
 
+    const initial = useContext(UserContext);
+
     useEffect(() => { if(!auth.status) setRoute('/') }, [auth, setRoute]);
 
     // Profile Data
-    const { user, setUser, posts, friends, saved } = useProfile(uid);
+    const profile = useProfile(uid === auth.data.uid ? null : uid);
+    const { user, setUser, posts, friends, saved } = profile ?? initial
     const [ editor, setEditor ] = useState(false);
     const [ status, setStatus ] = useState(null);
     const [ dp, setDp ] = useState(user && user.dp)
@@ -210,7 +213,10 @@ const Profile = () => {
                                 theme: user.theme,
                                 dp: user.dp
                             }} data={posts}/> :
-                            active[2] ? <Friends user={auth.data.uid} data={friends}/> :
+                            active[2] ? <Friends user={{
+                                uid: auth.data.uid,
+                                friends: user.friends
+                            }} data={friends}/> :
                             active[3] && <Saved data={saved}/>
                         }
 
