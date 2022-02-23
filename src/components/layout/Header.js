@@ -51,25 +51,25 @@ const Header = ({ setUserCount }) => {
             {   user ?
             <div className="container-fluid theme-middle px-3">
 
-                <div className="brand me-2">
+                <div className="brand me-2 animate__animated animate__fadeIn">
                     {   search.open ?
                         <i className="fas fa-chevron-left fa-lg text-primary pt-2 mx-2" onClick={() => { search.open = false; setSearch({...search}) }} style={{ cursor:"pointer" }}></i> :
                         <Link to="/feed"> <i className="fab fa-facebook fa-2x text-primary"></i> </Link> 
                     }
                 </div>
 
-                <div className="search-form me-md-auto ms-md-2 theme-middle">
+                <div className="search-form me-md-auto ms-md-2 theme-middle animate__animated animate__fadeIn">
                     <input id="search" type="search" className={`form-control ${ search.open && 'search-focus' } rounded-pill theme-inner`} placeholder="Search Freeflow"
                         onFocusCapture={() => { search.open = true; setSearch({...search}) }} autoComplete="off"
                         value={search.input} onChange={(e) => { search.input = e.target.value; setSearch({...search}) }}/>
                     <Search search={search.input} uid={auth.data && auth.data.uid} visible={search.open ? true : false} setUserCount={setUserCount}/>
                 </div>
 
-                <div className="brand system me-auto">
+                <div className="brand system me-auto animate__animated animate__fadeInDown">
                     <Link to="/feed" className="navbar-brand theme-middle"> Freeflow </Link>
                 </div>
 
-                <div className="user-menu">
+                <div className="user-menu animate__animated animate__fadeIn">
 
                     <div className="item me-3 system theme-middle shadow">
                         <Link to="/feed" className="nav-link"><i className="fas fa-home fa-lg theme-middle"></i></Link>

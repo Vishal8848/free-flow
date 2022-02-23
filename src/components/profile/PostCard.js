@@ -31,7 +31,7 @@ const PostCard = ({ user, data, save = false }) => {
             <div className="postcard-body theme-inner">
                 {  data.URL ? 
                     <div className="image bg-dark" style={{ background: `url(${data.URL}) center center / cover no-repeat` }}></div> :
-                    <div className="text-center pt-5">
+                    <div className="image text-center pt-5">
                         <i className="fas fa-camera fa-2x text-muted"></i><br/>
                         <span className="fs-6 text-muted">No image for this post</span>
                     </div>

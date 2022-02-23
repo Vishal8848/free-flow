@@ -12,7 +12,7 @@ const Footer = () => {
     let [ notify, setNotify ] = useState(false);
 
     return ( <>
-        <div className="user-menu footer-mob w-100 text-center py-2 mt-md-3 fixed-bottom theme-middle">
+        <div className="user-menu footer-mob w-100 text-center py-2 mt-md-3 fixed-bottom theme-middle animate__animated animate__slideInUp">
             <div className="item theme-middle d-block">
                 <Link to="/feed" className="theme-middle">
                     <i className={`fas fa-home fa-lg`}></i>

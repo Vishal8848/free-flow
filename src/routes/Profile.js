@@ -117,7 +117,7 @@ const Profile = () => {
         <Header setUserCount={null}/>
         <div className="container-fluid profile theme-outer">
         
-            <><div className="profile-header m-auto mt-3 shadow theme-middle">
+            <><div className="profile-header m-auto mt-3 shadow theme-middle animate__animated animate__slideInDown">
                 { user &&
                 <div className="profile-bg" style={{ background: `url(${bg ? bg : user.bg}) center center / cover no-repeat` }}>
                     {   auth.data && (uid === auth.data.uid) &&

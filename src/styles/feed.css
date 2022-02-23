@@ -280,6 +280,7 @@
 .feed-updates {
     height: 42.5%;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 .updates {
     width: 100%;

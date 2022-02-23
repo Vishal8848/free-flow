@@ -70,7 +70,7 @@ const Register = ({ shiftAuth, Inform }) => {
     }
 
     return ( 
-        <div className="register-form text-center rounded bg-light p-3 shadow">
+        <div className="register-form text-center rounded bg-light p-3 shadow animate__animated animate__fadeInRight">
 
             <div className={`alert alert-danger p-2 fw-bold ${ !error.status && 'd-none' }`}>
                 { error.message }

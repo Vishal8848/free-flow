@@ -59,7 +59,7 @@ const Notifications = ({ uid, bottom, notify }) => {
     }
 
     return ( 
-        <div className={`notifications p-2 mt-md-2 me-md-5 ${ bottom ? 'mobile' : 'shadow-lg' } theme-middle`}>
+        <div className={`notifications p-2 mt-md-2 me-md-5 ${ bottom ? 'mobile' : 'shadow-lg' } theme-middle animate__animated animate__slideIn${ bottom ? "Up" : "Down" }`}>
             { !bottom && <div className="tint tint-tr"></div> }
             {   bottom ?
                 <div className="d-flex align-items-center justify-content-between text-muted">

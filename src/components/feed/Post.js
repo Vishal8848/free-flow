@@ -121,10 +121,6 @@ const Post = ({ user, data }) => {
                     <strong>{ saved ? (!save ? data.saved.length - 1 : data.saved.length > 0 && data.saved.length) : (save ? data.saved.length + 1 : data.saved.length > 0 && data.saved.length) }</strong>
                     &nbsp; Save{ save ? 'd' : data.saved.length > 1 ? 's' : '' }
                 </div>
-                <div className="py-3 px-2 text-center theme-middle text-primary">
-                    <i className="fas fa-share-square fa-lg me-2"></i> 
-                    &nbsp; Share
-                </div>
             </div>
             
             { comments &&

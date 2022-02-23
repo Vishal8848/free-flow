@@ -10,14 +10,13 @@ const Trending = () => {
     const [ trend, setTrend ] = useState(null)
     
     useEffect(() => {
-        console.log("Trend")
         firebaseTrendingPost().then(res => {
             if(!res.error) setTrend(res.data)
         })
     }, [])
 
     return (
-        <div className="trend theme-middle shadow">
+        <div className="trend theme-middle shadow animate__animated animate__slideInRight">
         {   trend ? <>
             <div className="trend-header px-3 py-2 theme-middle">
             <Link to={`/profile/${trend.creator.split("").reverse().join("")}`}>

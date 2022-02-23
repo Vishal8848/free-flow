@@ -51,7 +51,6 @@ const Chat = ({user, setChatCount}) => {
     }
 
     useEffect(() => {
-        console.log("Chat")
         const Abort = new AbortController();
         const unSubChat = onSnapshot(firebaseChatQuery(), async (data) => {
             let result = [], unique = [];
@@ -93,7 +92,7 @@ const Chat = ({user, setChatCount}) => {
     })
 
     return ( chat && <>
-        <div className="chat shadow theme-middle">
+        <div className="chat shadow theme-middle animate__animated animate__slideInLeft">
             <div id="chat-box" className="chat-content theme-inner">
             {   (chat && chat.length > 0) ?
                 chat.map(msg => (

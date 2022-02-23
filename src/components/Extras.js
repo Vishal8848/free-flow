@@ -90,7 +90,7 @@ export const formatBytes = (bytes, decimals = 2) => {
 
 export const Freeflow = () => {
     return ( 
-        <div className="h-100 d-flex align-items-center justify-content-center bg-light">
+        <div className="h-100 d-flex align-items-center justify-content-center bg-light animate__animated animate__fadeInLeft">
             <div id="phrase">
                 
                 <div className="d-flex">

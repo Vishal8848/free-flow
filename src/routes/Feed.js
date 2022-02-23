@@ -85,7 +85,7 @@ const Feed = () => {
                     </div>
                     
                     {   !feed.restrict &&
-                        <div className="feed-stats mt-3">
+                        <div className="feed-stats mt-3 animate__animated animate__slideInLeft">
                             <div className="stat-set mb-3">
                                 <div className="stat theme-middle py-2 me-2 shadow" style={{ borderRadius: "10px" }}>
                                     <h1 id='user-count'>{ userCount }</h1>
@@ -124,7 +124,7 @@ const Feed = () => {
                     </div>
 
                     <div className="feed-post mt-3">
-                        <div className="posts-set">
+                        <div className="posts-set animate__animated animate__slideInUp">
                         {   posts ? posts.sort((x, y) => parseInt(y.createdAt) - parseInt(x.createdAt)).map(post => (
                                 <Post user={{
                                     name: user.fname + ' ' + user.lname,

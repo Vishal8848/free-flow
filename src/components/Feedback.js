@@ -17,7 +17,7 @@ const Feedback = ({ uid, setView }) => {
 
     return ( 
         <div className="feedback modal-container shadow-lg">
-            <div className="feedback-modal theme-outer">
+            <div className="feedback-modal theme-outer animate__animated animate__fadeInDown">
                 <div className="feedback-header text-danger">
                     <div className="feedback-title fs-1" style={{ fontFamily: "Montserrat" }}>
                         <i className="fas fa-heart fs-2 me-2"></i>Feedback

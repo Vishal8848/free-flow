@@ -43,7 +43,6 @@ const Updates = ({user}) => {
     const [ updates, setUpdates ] = useState(null);
 
     useEffect(() => {
-        console.log("Updates")
         const Abort = new AbortController();
         const unSubUpdates = onSnapshot(firebaseUpdateQuery(user.friends.filter(friend => friend !== user.uid)), async (data) => {
             let result = [], unique = [];
@@ -67,7 +66,7 @@ const Updates = ({user}) => {
     }, [user])
 
     return ( 
-        <div className={`updates ${!updates && "pt-3"}`}>
+        <div className={`updates ${!updates && "pt-3"} animate__animated animate__slideInRight`}>
             {   (updates && updates.length > 0) ?
                 updates.map(update => (
                     <Update data={update} key={update.createdAt}/>
