@@ -1,4 +1,5 @@
-import { Avatar } from "../Extras";
+import { Avatar, formatBytes } from "../Extras";
+import Banner from '../Banner'
 import { useEffect, useState } from "react";
 import { Link } from 'react-router-dom'
 import { firebaseUploadImage } from '../../firebase/firebaseBulk'
@@ -10,20 +11,27 @@ const CreatePost = ({ width, user }) => {
     const [ post, setPost ] = useState(initial);
     const [ image, setImg ] = useState({ URL: '', blob: null, status: false });
     const [ form, openForm ] = useState(false);
+    const [ inform, setInform ] = useState({ state: false, code: 2 });
+    const [ error, setError ] = useState([ null, null ])
+
+    const Validate = () => {
+        const fileSize = image.status ? formatBytes(image.blob.size) : false;
+        error[0] = fileSize && parseFloat(fileSize.split(' ')[0]) > 500;
+        error[1] = post.content.length <= 0;
+        setError([...error])
+        return error.every(e => !e)
+    }
 
     const submitPost = () => {
-        if(post.content.length > 0) {
+        if(Validate())
             firebaseCreatePost(post).then(res => {
                 if(!res.error && post.hasImage)   
-                    firebaseUploadImage(res.data, image.blob, 'posts').then(() => {
-                        console.log("Post Image Uploaded")
-                    })
+                    firebaseUploadImage(res.data, image.blob, 'posts');
+                setInform({ state: true, code: 2 })
                 firebaseUpdate(user.uid, 'post')
-                console.log("Post Created Successfully")
                 setPost(initial)
                 openForm(false)
             })
-        }   else console.log("Post Content is Required")
     }
 
     const updateField = (key, value) => {
@@ -37,7 +45,7 @@ const CreatePost = ({ width, user }) => {
             URL: URL.createObjectURL(e.target.files[0]),
             blob: e.target.files[0],
             status: true
-        };   
+        };
         setImg({...data})
     }
 
@@ -55,7 +63,7 @@ const CreatePost = ({ width, user }) => {
             }
             <div className="w-100 fs-6 px-3 py-2 ms-md-3 rounded-pill border-dark theme-inner text-muted" onClick={() => form ? openForm(false) : openForm(true)}>Create New Wave</div>
             <div className="vr mx-3"></div>
-            <i className="fas fa-paper-plane text-primary fa-lg me-3" onClick={() => submitPost()}></i>
+            <i className="fas fa-paper-plane text-primary fa-lg me-3" title="Create Wave" onClick={() => submitPost()}></i>
         </div>
         <form className="create-form theme-middle p-3 shadow" style={{ display: `${ form ? 'block' : 'none' }` }}>
             <div className="d-flex align-middle justify-content-start">
@@ -68,27 +76,35 @@ const CreatePost = ({ width, user }) => {
                 <div className="form-floating ms-2 theme-inner rounded rounded-3" style={{ width: "100%" }}>
                     <input id="post-title" type="text" className="form-control border-0" placeholder="Wave Title (optional)"
                         value={post.title} onChange={(e) => updateField('title', e.target.value)}/>
-                    <label htmlFor="post-title" className="text-muted">Wave Title <small> - optional</small></label>
+                    <label htmlFor="post-title" className="text-muted">Title</label>
                 </div>
             </div>
             <div className="form-floating mt-3 theme-inner rounded rounded-3">
-                <textarea id="post-content" maxLength="1000" className="form-control border-0" placeholder="Write down your thoughts" style={{ minHeight: "100px", maxHeight: "200px" }}
+                <textarea id="post-content" maxLength="1000" className={`form-control ${ error[1] && "is-invalid" } border-0`} placeholder="Write down your thoughts" style={{ minHeight: "100px", maxHeight: "200px" }}
                     value={post.content} onChange={(e) => updateField('content', e.target.value)}></textarea>
                 <label htmlFor="post-content" className="text-muted">Describe your wave</label>
+                <div className="text-start theme-middle text-danger pt-1">
+                    { error[1] && "Nope. A wave should have some content" }
+                </div>
             </div>
             {   image.status &&
                 <div className="image-preview mt-3 text-muted">
-                    &nbsp;&nbsp;Preview Picture
-                    <img src={image.URL} style={{ width: "100%", height: "300px", borderRadius: "10px" }} className="mt-2" alt="" />
+                    &nbsp;&nbsp;Preview Picture &nbsp;&nbsp;&nbsp;&nbsp; <i className="fas fa-times" title="discard image" style={{ cursor: "pointer" }} onClick={() => setImg({ URL: '', blob: null, status: false })}></i>
+                    <img src={image.URL} style={{ margin: "auto", width: "100%", height: "250px", borderRadius: "10px" }} className="mt-2" alt="" />
                 </div>
             }
             <div className="mt-3">
-                <label htmlFor="post-image" className="text-muted mb-2">&nbsp;&nbsp;{ image.status ? "Picture Uploaded" : "Upload Picture" }</label>
-                <div className="theme-inner rounded rounded-3">
-                    <input id="post-image" className="form-control border-0" onChange={(e) => previewImg(e)} type="file" accept="image/*"/>
+                <label htmlFor="post-image" className="text-muted mb-2" style={{ cursor: "pointer" }}>
+                    &nbsp;&nbsp;<i className="fas fa-camera fa-lg me-2"></i>
+                    { image.status ? `Picture Uploaded - ${image.blob.name}` : "Upload Picture" }
+                </label>
+                <div className="text-start theme-middle text-danger pt-1">
+                    { error[0] && "Oops. File size should be less than 500KB" }
                 </div>
+                <input id="post-image" style={{ height: "0", visibility: "hidden" }} onChange={(e) => previewImg(e)} type="file" accept="image/*"/>
             </div>
         </form>
+        { inform.state && <Banner status={inform.code}/> }
     </>);
 }
  

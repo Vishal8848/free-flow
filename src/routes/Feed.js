@@ -134,7 +134,7 @@ const Feed = () => {
                                 }} data={post} key={post.pid}/>
                             )) :
                             <div className="notice text-muted px-5" style={{ borderRadius: "10px", height: "75vh" }}>
-                                { feedImage && <img src={feedImage} alt="Feed" width="100px" height="100px" style={{ marginBottom: "25px" }}/> }
+                                { feedImage && <img src={feedImage} alt="Feed" width="150px" height="150px" style={{ marginBottom: "50px" }}/> }
                                 <br/><strong>The Shore</strong><br/>
                                 Chronologically ordered collection of waves
                             </div>

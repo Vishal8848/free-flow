@@ -37,7 +37,6 @@ const Footer = () => {
             }
 
             <div className="item theme-middle position-relative">
-                <div className="docker me-2 bg-danger"></div>
                 <span>  <i className={`fas fa-bell fa-lg`} onClick={() => setNotify(!notify) }></i> News  </span>
             </div>
 

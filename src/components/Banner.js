@@ -3,7 +3,7 @@ import { useState } from 'react'
 /**
  * 0 - Registration Successful
  * 1 - Reset Password Initiated
- * 2 - Welcome to Freeflow
+ * 2 - Acknowledge new Post
 */
 
 const Banner = ({ status }) => {
@@ -16,7 +16,6 @@ const Banner = ({ status }) => {
             body: "Thank you for joining Freeflow. Follow the link sent to your inbox to verify email and login to start using Freeflow",
             skin: "success",
             icon: "check",
-            exit: true,
             code: 0
         },
         {
@@ -24,17 +23,23 @@ const Banner = ({ status }) => {
             body: "Attempt to update credentials has been recognised. Follow the link sent to your inbox to reset your password",
             skin: "primary",
             icon: "key",
-            exit: true,
             code: 1
+        },
+        {
+            title: "New Post Created",
+            body: "Awesome, that's a lead. Go ahead and reload to see your post or leave it aside and keep scrolling.",
+            skin: "success",
+            icon: "images",
+            code: 2
         }
     ]
     
     return ( 
-        <div id="Banner-modal" className={`${info[status].code !== 2 && 'modal-container'}`} style={ view ? { display: "block" } : { display: "none" } } >
+        <div id="banner-modal" className={`${info[status].code !== 2 && 'modal-container'}`} style={ view ? { display: "block" } : { display: "none" } } >
             <div className="i-modal shadow animate__animated animate__fadeInDown">
                 <div className={`i-modal-header text-light px-4 py-3 d-flex align-items-center justify-content-between bg-${info[status].skin}`}>
                     <div>{ info[status].title }</div>
-                    { info[status].exit && <div onClick={() => setView(false)} style={{ cursor: "pointer" }}><i className="fas fa-times"></i></div> }
+                    <div onClick={() => setView(false)} style={{ cursor: "pointer" }}><i className="fas fa-times"></i></div>
                 </div>
                 <div className="i-modal-main d-flex align-items-center py-2">
                     <div style={{ flex: "30%" }}>
@@ -48,7 +53,7 @@ const Banner = ({ status }) => {
                         <p className={`fw-bold text-muted text-justify ${ (status === 0 || status === 2) && 'pt-3' }`}>
                             { info[status].body }
                         </p>
-                        { info[status].exit && <button onClick={() => setView(false)} className={`btn btn-${info[status].skin} btn-sm shadow`}>Continue</button> }
+                        <button onClick={() => setView(false)} className={`btn btn-${info[status].skin} btn-sm shadow`}>Continue</button>
                     </div>
                 </div>
             </div>
