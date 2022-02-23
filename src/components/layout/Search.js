@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Avatar } from '../Extras'
 import { firebaseSearchUsers, firebaseMakeRequest, getIndexByValue } from '../../firebase/firebaseStore'
+import searchImg from '../../assets/community.png'
 
 const SearchUser = ({ data, request, handleRequest }) => {
 
@@ -56,16 +57,23 @@ const Search = ({ search, uid, visible, setUserCount }) => {
         })
     }
 
-    return ( users &&
+    return (
         <div className="search p-2 theme-middle shadow" style={{ visibility: visible ? "visible" : "hidden" }}>
             <span className="feed-title ps-3 text-muted fw-bold">Search Results</span>
-            {   (users.length > 0) &&
+            {   (users && users.length > 0) ?
                 SS.length > 0 ?
                 users.filter(user => stringMatch(user.name, SS)).map(user => (
                     <SearchUser data={user} request={user.isFriend} key={user.uid} handleRequest={handleRequest}/>
                 )) : 
-                <div className="p-3 text-center">
-                    Type something to see whose there ...
+                <div className="notice text-muted px-5" style={{ borderRadius: "10px", paddingTop: "25px", paddingBottom: "25px" }}>
+                    { searchImg && <img src={searchImg} alt="Search" width="100px" height="100px" style={{ marginBottom: "25px" }}/> }
+                    <br/><strong>Search Freeflow</strong><br/>
+                    Type something to move mountains
+                </div> :
+                <div className="notice text-muted px-5" style={{ borderRadius: "10px", paddingTop: "25px", paddingBottom: "25px" }}>
+                    { searchImg && <img src={searchImg} alt="Search" width="100px" height="100px" style={{ marginBottom: "25px" }}/> }
+                    <br/><strong>Search Freeflow</strong><br/>
+                    Connect with your dearest ones
                 </div>
             }
         </div>

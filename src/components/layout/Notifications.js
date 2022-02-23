@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Avatar, parseTime } from '../Extras'
 import { firebaseFriendRequests, firebaseUpdateRequest } from '../../firebase/firebaseStore'
+import notifyImg from '../../assets/mail.png'
 
 const Notification = ({ you, data, acceptRequest }) => {
  
@@ -10,7 +11,7 @@ const Notification = ({ you, data, acceptRequest }) => {
     const { date, time }  = parseTime(data.createdAt)
 
     return (
-        <div className={`search-user p-2 theme-inner`} style={{ borderRadius: "10px" }}>
+        <div className={`search-user p-2 mt-2`} style={{ borderRadius: "10px" }}>
             <Link to={`/profile/${data.uid.split("").reverse().join("")}`}>
                 <Avatar image={data.dp} name={data.name} scale="square-sm" theme={data.theme}/>
             </Link>
@@ -58,7 +59,7 @@ const Notifications = ({ uid, bottom, notify }) => {
     }
 
     return ( 
-        <div className={`notifications p-2 mt-md-2 ${ bottom ? 'mobile' : 'shadow' } theme-middle`}>
+        <div className={`notifications p-2 mt-md-2 me-md-5 ${ bottom ? 'mobile' : 'shadow-lg' } theme-middle`}>
             { !bottom && <div className="tint tint-tr"></div> }
             {   bottom ?
                 <div className="d-flex align-items-center justify-content-between text-muted">
@@ -70,7 +71,12 @@ const Notifications = ({ uid, bottom, notify }) => {
             {   notes && notes.length > 0 ?
                 notes.map(note => (
                     <Notification you={note.uid === uid} data={note} acceptRequest={acceptRequest} key={note.createdAt}/>
-                )) : "No Upcoming Notifications ..."
+                )) :
+                <div className="notice text-muted px-5" style={{ borderRadius: "10px", paddingTop: "25px", paddingBottom: "25px" }}>
+                    { notifyImg && <img src={notifyImg} alt="Notifications" width="100px" height="100px" style={{ marginBottom: "25px" }}/> }
+                    <br/><strong>Notifications</strong><br/>
+                    Acknowledge friend requests here
+                </div>
             }
         </div>
     );

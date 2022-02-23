@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { firebaseUser, firebaseUpdateQuery } from '../../firebase/firebaseStore';
 import { onSnapshot } from 'firebase/firestore'
-
+import updatesImg from '../../assets/updates.png'
 import { Avatar, parseTime } from "../Extras";
 
 const Update = ({ data }) => {
@@ -67,14 +67,15 @@ const Updates = ({user}) => {
     }, [user])
 
     return ( 
-        <div className="updates">
+        <div className={`updates ${!updates && "pt-3"}`}>
             {   (updates && updates.length > 0) ?
                 updates.map(update => (
                     <Update data={update} key={update.createdAt}/>
                 )) : 
-                <div className="update-notice text-muted px-5">
-                    <strong>Wave Notifications</strong><br/>
-                    All actions made on your waves live here
+                <div className="notice text-muted px-5" style={{ borderRadius: "10px", paddingTop: "25px", paddingBottom: "25px" }}>
+                    { updatesImg && <img src={updatesImg} alt="Updates" width="100px" height="100px" style={{ marginBottom: "25px" }}/> }
+                    <br/><strong>Wave Updates</strong><br/>
+                    Actions made on waves live here
                 </div>
             }
         </div>

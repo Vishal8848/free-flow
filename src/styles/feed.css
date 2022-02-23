@@ -229,7 +229,7 @@
 .chat-create input:focus ~ div i {
     animation: volley 1.5s infinite;
 }
-.chat-notice {
+.notice {
     padding: 30%;
     text-align: center;
     height: 100%;
@@ -289,11 +289,6 @@
     border-radius: 10px;
     transform: scale(0);
     animation: zoom-in 0.25s linear forwards;
-}
-.update-notice {
-    padding-top: 25%;
-    text-align: center;
-    height: 100%;
 }
 .update-by {
     padding: 10px;

@@ -10,6 +10,7 @@ import useWindow from '../hooks/useWindow'
 import Header from '../components/layout/Header'
 import Footer from '../components/layout/Footer'
 import { AuthContext, UserContext } from '../App'
+import feedImage from '../assets/posts.png'
 
 const Feed = () => {
 
@@ -23,10 +24,10 @@ const Feed = () => {
     const [ posts, setPosts ] = useState(null);
 
     // Stats Values
-    const [ chatCount, setChatCount ] = useState('~');
-    const [ postCount, setPostCount ] = useState('~');
-    const [ userCount, setUserCount ] = useState('~');
-    const [ commentCount, setCommentCount ] = useState('~');
+    const [ chatCount, setChatCount ] = useState(<i className="fas fa-wifi fs-4"></i> );
+    const [ postCount, setPostCount ] = useState(<i className="fas fa-wifi fs-4"></i> );
+    const [ userCount, setUserCount ] = useState(<i className="fas fa-wifi fs-4"></i> );
+    const [ commentCount, setCommentCount ] = useState(<i className="fas fa-wifi fs-4"></i> );
 
     // Fetch Posts
     useEffect(() => {
@@ -124,14 +125,19 @@ const Feed = () => {
 
                     <div className="feed-post mt-3">
                         <div className="posts-set">
-                        {   posts && posts.sort((x, y) => parseInt(y.createdAt) - parseInt(x.createdAt)).map(post => (
+                        {   posts ? posts.sort((x, y) => parseInt(y.createdAt) - parseInt(x.createdAt)).map(post => (
                                 <Post user={{
                                     name: user.fname + ' ' + user.lname,
                                     uid: auth.data.uid,
                                     theme: user.theme,
                                     dp: user.dp
                                 }} data={post} key={post.pid}/>
-                            ))
+                            )) :
+                            <div className="notice text-muted px-5" style={{ borderRadius: "10px", height: "75vh" }}>
+                                { feedImage && <img src={feedImage} alt="Feed" width="100px" height="100px" style={{ marginBottom: "25px" }}/> }
+                                <br/><strong>The Shore</strong><br/>
+                                Chronologically ordered collection of waves
+                            </div>
                         }
                         </div>
                     </div>

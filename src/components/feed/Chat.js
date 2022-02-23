@@ -3,6 +3,7 @@ import { firebaseChatQuery, firebaseUser, firebaseCreateMessage } from '../../fi
 import { Avatar, parseTime } from "../Extras";
 import { Link } from 'react-router-dom'
 import { onSnapshot } from 'firebase/firestore';
+import chatImage from '../../assets/chat.png'
 
 const Message = ({ data, self }) => {
 
@@ -94,15 +95,16 @@ const Chat = ({user, setChatCount}) => {
     return ( chat && <>
         <div className="chat shadow theme-middle">
             <div id="chat-box" className="chat-content theme-inner">
-                {   (chat && chat.length > 0) ?
-                    chat.map(msg => (
-                        <Message data={msg} self={msg.uid === user.uid} key={msg.createdAt}/>
-                    )) :
-                    <div className="chat-notice text-muted theme-inner px-5">
-                        <strong>Pond Messenger</strong><br/>
-                        Your ripples are visible to everyone online
-                    </div>
-                }
+            {   (chat && chat.length > 0) ?
+                chat.map(msg => (
+                    <Message data={msg} self={msg.uid === user.uid} key={msg.createdAt}/>
+                )) :
+                <div className="notice text-muted theme-inner px-5">
+                    { chatImage && <img src={chatImage} alt="Chat" width="100px" height="100px" style={{ marginBottom: "25px" }}/> }
+                    <br/><strong>Pond Messenger</strong><br/>
+                    Your ripples are visible to everyone online now
+                </div>
+            }
             </div>
             <div className="chat-create ps-2 py-3 theme-middle">
                 <Link to={`/profile/${user.uid}`}>
@@ -111,12 +113,11 @@ const Chat = ({user, setChatCount}) => {
                 <input id="new-msg" className="w-75 theme-middle" placeholder="Send a ripple"
                     value={message.content} onChange={(e) => { message.content = e.target.value; setMessage({...message}) }}/>
                 <div className="submit-msg" onClick={() => sendMessage()}>
-                    <i className="fas fa-chevron-right fa-lg" style={{ WebkitTextStroke: "1.5px" }}></i>
+                    <i className="fas fa-chevron-right fa-lg text-muted" style={{ WebkitTextStroke: "1.5px" }}></i>
                 </div>
             </div>
         </div>
-         </>
-    );
+    </>);
 }
  
 export default Chat;
