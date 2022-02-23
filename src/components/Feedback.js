@@ -1,13 +1,19 @@
 import { useState } from 'react'
 import useWindow from '../hooks/useWindow'
 import TypeWriter from 'typewriter-effect'
+import { Link } from 'react-router-dom'
 
-const Feedback = ({ setView }) => {
+const Feedback = ({ uid, setView }) => {
 
     const [ message, setMessage ] = useState("");
     const [ reaction, setReaction ] = useState(null);
 
     const { width } = useWindow()
+
+    const sendFeedback = (e) => {
+        e.preventDefault();
+        window.location = `mailto:vishalpranav156@gmail.com?subject=Freeflow%20Feedback&body=I%20am%20a%20Freeflow%20user%20and%20I'd%20rate%20your%20app%20${ reaction ?? 5 }%2F5%20and%20wished%20to%20say%20${ message.length > 0 ? "\"" + message + "\"" : "nothing" }`
+    }
 
     return ( 
         <div className="feedback modal-container shadow-lg">
@@ -71,10 +77,10 @@ const Feedback = ({ setView }) => {
                             <label htmlFor="feedback" className="text-muted">Just spill the beans</label>
                         </div>
                     </div>
-                    <div className="user-save mt-3">
-                        <button className="btn btn-success fw-bold btn-lg">
+                    <div className={`user-save mt-3 ${ !reaction && "d-none" }`}>
+                        <Link to="#" className="btn btn-success fw-bold btn-lg" onClick={(e) => sendFeedback(e)}>
                             Done
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </div>

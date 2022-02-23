@@ -15,7 +15,7 @@ const Update = ({ data }) => {
     }
 
     return (
-        <div className="update mb-2 theme-inner shadow-sm">
+        <div className="update mb-2 theme-middle shadow-sm">
             <div className="update-by">
                 <Avatar image={data.dp} name={data.name} scale="md" theme={data.theme}/>
                 <div className="u-content px-3">

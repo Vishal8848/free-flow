@@ -39,9 +39,9 @@ const Header = ({ setUserCount }) => {
             document.styleSheets[3].cssRules[64].style.color = "rgb(238, 238, 238)"
         }   else {
             window.localStorage.setItem('theme', JSON.stringify({ dark: false, at: Date.now() }))
-            document.styleSheets[3].cssRules[61].style.backgroundColor = "rgb(244, 247, 248)"
+            document.styleSheets[3].cssRules[61].style.backgroundColor = "rgb(225, 225, 225)"
             document.styleSheets[3].cssRules[62].style.backgroundColor = "rgb(255, 255, 255)"
-            document.styleSheets[3].cssRules[63].style.backgroundColor = "rgb(248, 255, 255)"
+            document.styleSheets[3].cssRules[63].style.backgroundColor = "rgb(240, 240, 240)"
             document.styleSheets[3].cssRules[64].style.color = "rgb(25, 25, 25)"
         }
     }, [theme]);
@@ -72,26 +72,26 @@ const Header = ({ setUserCount }) => {
                 <div className="user-menu">
 
                     <div className="item me-3 system theme-middle shadow">
-                        <Link to="/feed" className="nav-link"><i className="fas fa-home fa-lg theme-inner"></i></Link>
+                        <Link to="/feed" className="nav-link"><i className="fas fa-home fa-lg theme-middle"></i></Link>
                         <Tooltip body="Home"/>
                     </div>
 
                     <div className="item me-3 system position-relative theme-middle shadow">
                         <div className="docker bg-danger"></div>
-                        <i className="fas fa-bell fa-lg theme-inner" onClick={() => setNotify(!notify)}></i>
+                        <i className="fas fa-bell fa-lg theme-middle" onClick={() => setNotify(!notify)}></i>
                         { notify ? <Notifications uid={auth.data && auth.data.uid} top/> : <Tooltip body="Notifications"/> }
                     </div>
 
                     <div className="dropdown">
 
-                        <div id="user-drop" data-bs-toggle="dropdown" style={{ cursor: "pointer", userSelect: "none" }}>
+                        <div id="user-drop" data-bs-toggle="dropdown" style={{ cursor: "pointer", userSelect: "none", transform: "scale(1.15)" }}>
                             <Avatar image={user.dp} name={user.fname + ' ' + user.lname} scale="sm" theme={user.theme}/>
                         </div>
 
                         {   auth.status &&
-                        <div className="dropdown-menu dropdown-menu-end theme-inner" aria-labelledby="user-drop">
-                            <div className="tint tint-tr theme-inner"></div>
-                            <div className="actions-partition text-start theme-inner">
+                        <div className="dropdown-menu dropdown-menu-end theme-middle" aria-labelledby="user-drop">
+                            <div className="tint tint-tr theme-middle"></div>
+                            <div className="actions-partition text-start theme-middle">
                                 <Link to={`/profile/${auth.data.uid.split("").reverse().join("")}`} className="dropdown-item pb-2">
                                     <i className="fas fa-user me-2"></i>Profile
                                 </Link>
@@ -104,15 +104,15 @@ const Header = ({ setUserCount }) => {
                                 <Link to={`/profile/${auth.data.uid.split("").reverse().join("")}?type=saved`} className="dropdown-item pb-2">
                                     <i className="fas fa-bookmark me-2"></i>Saved
                                 </Link>
-                                <div className="dropdown-item pb-2 theme-inner" onClick={() => setView(true)} style={{ cursor: "pointer" }}>
+                                <div className="dropdown-item pb-2 theme-middle" onClick={() => setView(true)} style={{ cursor: "pointer" }}>
                                     <i className="fas fa-pen-alt fa-rotate-270 me-2"></i>Feedback
                                 </div>
-                                <div className="dropdown-item form-check theme-switch form-switch pb-2 theme-inner">
+                                <div className="dropdown-item form-check theme-switch form-switch pb-2 theme-middle">
                                     <label className="form-check-label" htmlFor="themeColor"><i className={`fas fa-${ theme ? 'moon' : 'sun' } me-2`}></i>Dark Mode</label>
                                     <input className="form-check-input" role="switch" type="checkbox" id="themeColor"
                                         checked={theme} onChange={(e) => setTheme(e.target.checked)}/>
                                 </div>
-                                <div className="dropdown-item pt-2 theme-inner" style={{ cursor: "pointer" }} onClick={() => userLogout()}>
+                                <div className="dropdown-item pt-2 theme-middle" style={{ cursor: "pointer" }} onClick={() => userLogout()}>
                                     <i className="fas fa-sign-out-alt me-2"></i>Logout
                                 </div>
                             </div>
@@ -123,7 +123,7 @@ const Header = ({ setUserCount }) => {
 
             </div> : "Loading" }
         </nav>
-        { view && <Feedback setView={setView}/> } 
+        { view && <Feedback uid={auth.data && auth.data.uid} setView={setView}/> } 
         </>
     );
 }

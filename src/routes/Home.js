@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { Freeflow } from "../components/Extras"
 import RequestReset from '../auth/RequestReset'
 // import ResetPasswd from '../auth/ResetPasswd'
-import Inform from '../components/Inform'
+import Banner from '../components/Banner'
 import Register from '../auth/Register'
 import Login from '../auth/Login'
 import { AuthContext } from "../App"
@@ -44,7 +44,7 @@ const Home = () => {
                     <Authentication Inform={setInform} setRoute={setRoute}/>
                 </div>
             </div>
-            { inform.state && <Inform status={inform.code}/>  }
+            { inform.state && <Banner status={inform.code}/>  }
         </div>
     </>);
 }

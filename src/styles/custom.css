@@ -407,13 +407,13 @@ div:hover > .tool-tip {
 
 /* Theme */
 .theme-outer  {
-    background-color: rgb(244, 247, 248);
+    background-color: rgb(225, 225, 225);
 }
 .theme-middle  {
     background-color: rgb(255, 255, 255);
 }
 .theme-inner  {
-    background-color: rgb(248, 255, 255);
+    background-color: rgb(240, 240, 240);
 }
 .theme-outer, .theme-middle, .theme-inner {
     color: rgb(25, 25, 25);

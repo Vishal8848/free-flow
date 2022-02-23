@@ -10,7 +10,7 @@ const Notification = ({ you, data, acceptRequest }) => {
     const { date, time }  = parseTime(data.createdAt)
 
     return (
-        <div className={`search-user p-2 theme-inner`}>
+        <div className={`search-user p-2 theme-inner`} style={{ borderRadius: "10px" }}>
             <Link to={`/profile/${data.uid.split("").reverse().join("")}`}>
                 <Avatar image={data.dp} name={data.name} scale="square-sm" theme={data.theme}/>
             </Link>
@@ -58,7 +58,7 @@ const Notifications = ({ uid, bottom, notify }) => {
     }
 
     return ( 
-        <div className={`notifications p-2 mt-md-2 ${ bottom ? 'mobile' : 'shadow' } theme-inner`}>
+        <div className={`notifications p-2 mt-md-2 ${ bottom ? 'mobile' : 'shadow' } theme-middle`}>
             { !bottom && <div className="tint tint-tr"></div> }
             {   bottom ?
                 <div className="d-flex align-items-center justify-content-between text-muted">

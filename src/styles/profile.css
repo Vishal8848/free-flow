@@ -3,7 +3,7 @@
     width: 100%;
     height: auto;
     user-select: none;
-    margin-top: 60px !important;
+    margin-top: 7.5vh !important;
     padding-top: 20px;
     padding-bottom: 25px;
 }
@@ -39,7 +39,7 @@
 }
 @media screen and ( max-width: 768px ) {
     .profile {
-        margin-bottom: 60px !important;
+        margin-bottom: 7.5vh !important;
     }
     .profile-header {
         width: 100%;
