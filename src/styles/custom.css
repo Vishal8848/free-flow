@@ -500,3 +500,8 @@ div:hover > .tool-tip {
     50% {   transform: rotate(90deg);   }
     100% {  transform: rotate(0deg);    }
 }
+@keyframes flyup {
+    0% { transform: translateY(-10%) }
+    50% { transform: translateY(20%) }
+    100% { transform: translateY(-10%) }
+}

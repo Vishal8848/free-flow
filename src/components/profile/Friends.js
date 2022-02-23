@@ -1,5 +1,6 @@
 import { Avatar } from '../Extras'
 import { Link } from 'react-router-dom';
+import friendsImg from '../../assets/friends.png'
 
 const Friend = ({ data, mutual, side }) => {
 
@@ -32,13 +33,18 @@ const Friends = ({ user, data }) => {
 
     return(
         <div className="friends m-auto w-100 row">
-            {   (data && data.length > 0) ?
+            {   (!data && data.length > 0) ?
                 <><div className="col-md-6">
                     { data.slice(data.length / 2).map(friend => (<Friend side='s' data={friend} mutual={user.friends.filter(friend => friend !== user.uid)} key={friend.fid}/>)) }
                 </div>
                 <div className="col-md-6">
                     { data.slice(0, data.length / 2).map(friend => (<Friend side='e' data={friend} mutual={user.friends.filter(friend => friend !== user.uid)} key={friend.fid}/>)) }
-                </div></> : "You have not made any friends yet"
+                </div></> :
+                <div className="notice text-muted theme-inner px-5" style={{ width: "100%" }}>
+                    { friendsImg && <img src={friendsImg} alt="Friends" width="100px" height="100px" style={{ marginBottom: "25px" }}/> }
+                    <br/><strong>Your Friends</strong><br/>
+                    Make friends and see them here
+                </div>
             }
         </div>
     );

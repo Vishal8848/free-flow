@@ -16,17 +16,17 @@ const Visitor = ({ data }) => {
         <div className="visitor my-3 row">
             <div className="col-md-6">
                 <div className="v-set">
-                    <div className="v-head theme-inner shadow">
+                    <div className="v-head theme-middle">
                         <i className="fas fa-gift fa-3x"></i>
                     </div>
-                    <div className="v-body theme-inner shadow">
+                    <div className="v-body">
                         {   data.dob.length > 0 ?
                             ["Wish me on ", <strong>{ parseDOB(data.dob) }</strong>] :
                             "Will reveal my birthday soon"
                         }
                     </div>
                 </div>
-                <div className="v-detail theme-inner shadow mt-4">
+                <div className="v-detail mt-4">
                     <div className="v-icon"><i className="fas fa-skiing-nordic fa-3x me-2"></i></div>
                     <div className="v-body text-nowrap">
                         {   data.hobbies.length > 0 ?
@@ -36,7 +36,7 @@ const Visitor = ({ data }) => {
                         }
                     </div>
                 </div>
-                <div className="v-detail theme-inner shadow mt-4">
+                <div className="v-detail mt-4">
                     { !position && <div className="v-icon"><i className="fas fa-globe-asia fa-3x"></i></div> }
                     <div className="v-body">
                         {   (data.location.country || data.location.state || data.location.city) ?
@@ -56,7 +56,7 @@ const Visitor = ({ data }) => {
             </div>
             <div className="col-md-6">
                 {   position ?
-                    <div className="v-detail theme-inner shadow mt-4">
+                    <div className="v-detail mt-4">
                         <div className="v-icon"><i className="fas fa-trophy fa-3x"></i></div>
                         <div className="v-body">
                             {   data.occupation ?
@@ -67,10 +67,10 @@ const Visitor = ({ data }) => {
                         </div>
                     </div> :
                     <div className="v-set">
-                        <div className="v-head theme-inner shadow">
+                        <div className="v-head">
                             <i className="fas fa-trophy fa-3x"></i>
                         </div>
-                        <div className="v-body theme-inner shadow">
+                        <div className="v-body">
                             {   data.occupation ?
                                 [`I'm best being a${ (/^[aeiouAEIOU].*/).test(data.occupation) ? 'n ' : ' ' }`, <strong>{ data.occupation }</strong>] :
                                 "Working on my passion"
@@ -78,7 +78,7 @@ const Visitor = ({ data }) => {
                         </div>
                     </div>
                 }
-                <div className="v-detail theme-inner shadow mt-4">
+                <div className="v-detail mt-4">
                     { !position && <div className="v-icon"><i className="fas fa-school fa-3x"></i></div>}
                     <div className="v-body">
                         {   data.education ?
@@ -89,7 +89,7 @@ const Visitor = ({ data }) => {
                     </div>
                     { position && <div className="v-icon"><i className="fas fa-school fa-3x"></i></div>}
                 </div>
-                <div className="v-detail theme-inner shadow mt-4">
+                <div className="v-detail mt-4">
                     <div className="v-icon"><i className="fas fa-users fa-3x"></i></div>
                     <div className="v-body">
                         {   data.latest ?

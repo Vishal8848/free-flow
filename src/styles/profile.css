@@ -403,6 +403,9 @@
     flex: 25%;
     text-align: center;
 }
+.v-head .fa-gift, .v-head .fa-trophy {
+    animation: 2s flyup infinite;
+}
 @media screen and ( max-width: 768px )  {
     .visitor {
         width: 100%;

@@ -12,6 +12,8 @@ import Header from '../components/layout/Header'
 import Footer from '../components/layout/Footer'
 import { AuthContext } from '../App'
 import profileImg from '../assets/profile.png'
+import creationImg from '../assets/creation.png'
+import savedImg from '../assets/saved.png'
 
 // Created Posts 
 const Posts = ({ user, data }) => {
@@ -20,7 +22,12 @@ const Posts = ({ user, data }) => {
             {   (data && data.length > 0) ?
                 data.sort((x, y) => parseInt(y.createdAt) - parseInt(x.createdAt)).map(post => (
                     <PostCard user={user} data={post} key={post.createdAt}/>
-                )) : "You have not created any posts"
+                )) :
+                <div className="notice text-muted theme-inner px-5" style={{ width: "100%" }}>
+                    { creationImg && <img src={creationImg} alt="Creation" width="100px" height="100px" style={{ marginBottom: "25px" }}/> }
+                    <br/><strong>Your Waves</strong><br/>
+                    The waves you created live here
+                </div>
             }
         </div>
     );
@@ -33,8 +40,12 @@ const Saved = ({ data }) => {
             {   (data && data.length > 0) ?
                 data.map(post => (
                     <PostCard data={post} save={true} key={post.creator}/>
-                ))  : "You have not saved any posts"
-
+                ))  :
+                <div className="notice text-muted theme-inner px-5" style={{ width: "100%" }}>
+                    { savedImg && <img src={savedImg} alt="Saved" width="100px" height="100px" style={{ marginBottom: "25px" }}/> }
+                    <br/><strong>Saved Waves</strong><br/>
+                    The waves you saved live here
+                </div>
             }
         </div>
     );
