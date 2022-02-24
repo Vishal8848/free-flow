@@ -31,7 +31,6 @@ const Feed = () => {
 
     // Fetch Posts
     useEffect(() => {
-        console.log("Feed")
         firebaseAllPosts(user && user.friends).then(res => {
             if(!res.error)  {
                 setPosts(res.data)

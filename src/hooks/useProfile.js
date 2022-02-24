@@ -9,7 +9,6 @@ const useProfile = (id, uid) => {
     const [ friends, setFriends ] = useState(null);
 
     useEffect( () => {
-        console.log("Profile")
         const firebaseFetch = async (id) => {
             let res = await firebaseUser(id), result = null;
             

@@ -33,7 +33,6 @@ const Search = ({ search, uid, visible, setUserCount }) => {
     }, [search])
 
     useEffect(() => {
-        console.log("Search")
         firebaseSearchUsers(uid).then(res => {
             if(!res.error)  {
                 setUsers(res.data)
