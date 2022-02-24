@@ -3,7 +3,6 @@
 }
 body {
     background-color: rgba(25, 25, 25, 0.0125);
-    overflow-x: hidden;
 }
 .container-fluid {
     margin: 0;
@@ -18,9 +17,9 @@ h1 {
     font-size: 50px;
 }
 #home {
-    height: 100vh;
     margin: 0;
     padding: 0;
+    height: 100vh;
     color: rgb(25, 25, 25);
 }
 #home .row {
@@ -36,23 +35,31 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
-#gender-drop {
-    width: 200px;
-    height: 55px;
-}
-.login-form, .register-form, .request-form, .reset-form {
-    width: min-content;
+.login-form, .register-form, .request-form {
+    width: 50%;
     height: min-content;
-    position: relative;
 }
 @media screen and ( max-width: 768px ) {
+    h1 {
+        font-size: 35px;
+    }
     #phrase {
         text-align: center;
     }
     #color-balls {
         align-items: center;
         justify-content: center;
+    }
+    .login-form, .register-form, .request-form {
+        width: 90%;
+    }
+    #form-set .col-md-6 {
+        width: 50%;
+    }
+    .login-form .options {
+        font-size: small;
     }
 }
 

@@ -64,10 +64,10 @@ const Login = ({ shiftAuth }) => {
                 { error.message }
             </div>
 
-            <form className="form-floating" onSubmit={handleLogin}>
+            <form onSubmit={handleLogin}>
             
                 <div className="row mb-3">
-                    <div className="form-floating" style={{ width: "400px" }}>
+                    <div className="form-floating">
                         <input type="email" id="email" name="email" className={`form-control ${ (check[0] != null && cred.email.length >= 0)  && (check[0] ? 'is-valid' : 'is-invalid')}`}
                             value={cred.email} onChange={(e) => setField('email', e.target.value)}/>
                         <label htmlFor="email">&nbsp;&nbsp;&nbsp;Email Address</label>
@@ -80,7 +80,7 @@ const Login = ({ shiftAuth }) => {
                 </div>
 
                 <div className="row mb-3">
-                    <div className="form-floating" style={{ width: "400px" }}>
+                    <div className="form-floating">
                         <input type="password" id="passwd" name="passwd" className={`form-control ${ (check[1] != null && cred.passwd.length === 0)  && (check[1] ? 'is-valid' : 'is-invalid')}`}
                             value={cred.passwd} onChange={(e) => setField('passwd', e.target.value)}/>
                         <label htmlFor="passwd">&nbsp;&nbsp;&nbsp;Password</label>
@@ -103,7 +103,7 @@ const Login = ({ shiftAuth }) => {
                 <input type="submit" className="btn btn-primary mt-2 px-3 py-2 w-100 fs-5" value="Sign In"/>
             </form>
 
-            <div className="d-flex my-2 align-items-center justify-content-between">
+            <div className="options d-flex my-2 align-items-center justify-content-between">
             
                 <div className="text-primary fw-bold" style={{ cursor: "pointer" }}
                     onClick={() => shiftAuth(2)}> Forgot Password ? </div>

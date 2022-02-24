@@ -33,16 +33,16 @@ const Header = ({ setUserCount }) => {
     useEffect(() => {
         if(theme)  {
             window.localStorage.setItem('theme', JSON.stringify({ dark: true, at: Date.now() }))
-            document.styleSheets[3].cssRules[60].style.backgroundColor = "rgb(24, 25, 26)"
-            document.styleSheets[3].cssRules[61].style.backgroundColor = "rgb(28, 30, 33)"
-            document.styleSheets[3].cssRules[62].style.backgroundColor = "rgb(32, 35, 40)"
-            document.styleSheets[3].cssRules[63].style.color = "rgb(238, 238, 238)"
+            document.styleSheets[3].cssRules[59].style.backgroundColor = "rgb(24, 25, 26)"
+            document.styleSheets[3].cssRules[60].style.backgroundColor = "rgb(28, 30, 33)"
+            document.styleSheets[3].cssRules[61].style.backgroundColor = "rgb(32, 35, 40)"
+            document.styleSheets[3].cssRules[62].style.color = "rgb(238, 238, 238)"
         }   else {
             window.localStorage.setItem('theme', JSON.stringify({ dark: false, at: Date.now() }))
-            document.styleSheets[3].cssRules[60].style.backgroundColor = "rgb(225, 225, 225)"
-            document.styleSheets[3].cssRules[61].style.backgroundColor = "rgb(255, 255, 255)"
-            document.styleSheets[3].cssRules[62].style.backgroundColor = "rgb(240, 240, 240)"
-            document.styleSheets[3].cssRules[63].style.color = "rgb(25, 25, 25)"
+            document.styleSheets[3].cssRules[59].style.backgroundColor = "rgb(225, 225, 225)"
+            document.styleSheets[3].cssRules[60].style.backgroundColor = "rgb(255, 255, 255)"
+            document.styleSheets[3].cssRules[61].style.backgroundColor = "rgb(240, 240, 240)"
+            document.styleSheets[3].cssRules[62].style.color = "rgb(25, 25, 25)"
         }
     }, [theme]);
 

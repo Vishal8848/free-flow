@@ -34,11 +34,11 @@ const Home = () => {
 
     return (<>
         <div id="home" className="container-fluid bg-light">
-            <div className="row border">
+            <div className="row gx-0">
                 <div id="free-flow" className="col-md-6">
                     <Freeflow />
                 </div>
-                <div id="form-set" className="col-md-6">
+                <div id="form-set" className="col-md-6 p-0">
                     <Authentication Inform={setInform} setRoute={setRoute}/>
                 </div>
             </div>

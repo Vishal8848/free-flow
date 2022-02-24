@@ -76,11 +76,11 @@ const Register = ({ shiftAuth, Inform }) => {
                 { error.message }
             </div>
 
-            <form className="form-floating" onSubmit={handleRegister}>
+            <form onSubmit={handleRegister}>
                 
                 <div className="row mb-3">
                     
-                    <div className="col-md-6 form-floating" style={{ width: "200px" }}>
+                    <div className="col-md-6 form-floating">
                         <input type="text" id="fname" name="fname" placeholder="Roberto" className={`form-control ${ check[0] != null && (check[0] === 2 ? 'is-valid' : 'is-invalid') }`}
                             value={cred.fname} onChange={(e) => setField('fname', e.target.value)}/>
                         <label htmlFor="fname">&nbsp;&nbsp;&nbsp;First Name</label>
@@ -91,7 +91,7 @@ const Register = ({ shiftAuth, Inform }) => {
                         </div>
                     </div>
                     
-                    <div className="col-md-6 form-floating" style={{ width: "200px" }}>
+                    <div className="col-md-6 form-floating">
                         <input type="text" id="lname" name="lname" placeholder="Carlos" className={`form-control ${ check[1] != null && (check[1] === 2 ? 'is-valid' : 'is-invalid') }`}
                             value={cred.lname} onChange={(e) => setField('lname', e.target.value)}/>
                         <label htmlFor="lname">&nbsp;&nbsp;&nbsp;Last Name</label>
@@ -106,7 +106,7 @@ const Register = ({ shiftAuth, Inform }) => {
 
                 <div className="row mb-3">
                     
-                    <div className="col-md-6 form-floating" style={{ width: "200px" }}>
+                    <div className="col-md-6 form-floating">
                         <input type="text" id="dob" name="dob" className={`form-control ${ check[2] != null && (check[2] === 2 ? 'is-valid' : 'is-invalid') }`}
                             onFocus={ (e) => e.target.type = "date" } placeholder="00-00-0000" max="2021-12-31"
                             value={cred.dob} onChange={(e) => setField('dob', e.target.value)}/>
@@ -118,8 +118,8 @@ const Register = ({ shiftAuth, Inform }) => {
                         </div>
                     </div>
 
-                    <div id="gender-drop" className="col-md-6 mb-3">
-                        <select id="gender" style={{ height: "55px" }} className={`form-select ${ check[3] != null && (check[3] === 2 ? 'is-valid' : 'is-invalid') }`}
+                    <div className="col-md-6">
+                        <select id="gender" style={{ height: "100%" }} className={`form-select ${ check[3] != null && (check[3] === 2 ? 'is-valid' : 'is-invalid') }`}
                             value={cred.gender} onChange={(e) => setField('gender', e.target.value)}>
                             <option value="" disabled>Gender</option>
                             <option value="male">Male</option>
@@ -137,7 +137,7 @@ const Register = ({ shiftAuth, Inform }) => {
                 
                 <div className="row mb-3">
                 
-                    <div className="form-floating" style={{ width: "400px" }}>
+                    <div className="form-floating l-one">
                         <input type="email" id="email" name="email" className={`form-control ${ check[4] != null && (check[4] === 2 ? 'is-valid' : 'is-invalid') }`}
                             value={cred.email} onChange={(e) => setField('email', e.target.value)}/>
                         <label htmlFor="email">&nbsp;&nbsp;&nbsp;Email Address</label>
@@ -152,7 +152,7 @@ const Register = ({ shiftAuth, Inform }) => {
 
                 <div className="row mb-3">
                 
-                    <div className="col-md-6 form-floating" style={{ width: "200px" }}>
+                    <div className="col-md-6 form-floating">
                         <input type="password" id="passwd" name="passwd" className={`form-control ${ check[5] != null && (check[5] === 2 ? 'is-valid' : 'is-invalid') }`}
                             value={cred.passwd} onChange={(e) => setField('passwd', e.target.value)}/>
                         <label htmlFor="passwd">&nbsp;&nbsp;&nbsp;Password</label>
@@ -163,7 +163,7 @@ const Register = ({ shiftAuth, Inform }) => {
                         </div>
                     </div>
                 
-                    <div className="col-md-6 form-floating" style={{ width: "200px" }}>
+                    <div className="col-md-6 form-floating">
                         <input type="password" id="cpasswd" name="cpasswd" className={`form-control ${ (check[6] != null && check[7] != null) && ((check[6] === 2 && check[7] === 2) ? 'is-valid' : 'is-invalid') }`}
                             value={cred.cpasswd} onChange={(e) => setField('cpasswd', e.target.value)}/>
                         <label htmlFor="cpasswd">&nbsp;&nbsp;&nbsp;Confirm</label>
@@ -177,7 +177,7 @@ const Register = ({ shiftAuth, Inform }) => {
                 
                 </div>
                 
-                <div className="text-muted text-start" style={{ fontSize: "12.5px", width: "375px" }}>
+                <div className="text-muted text-start" style={{ fontSize: "12.5px" }}>
                     Password must be minimum 8 characters with atleast one lowercase, uppercase, number and special character.
                 </div>
 

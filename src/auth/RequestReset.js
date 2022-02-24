@@ -66,11 +66,11 @@ const RequestReset = ({ shiftAuth, Inform }) => {
                 { error.message }
             </div>
 
-            <form className="form-floating" onSubmit={handleRequest}>
+            <form onSubmit={handleRequest}>
 
                 <div className="row mb-3">
                     
-                    <div className="form-floating" style={{ width: "400px" }}>
+                    <div className="form-floating l-one">
                         <input type="email" id="email" name="email" className={`form-control ${ check[0] != null && (check[0] ? 'is-valid' : 'is-invalid') }`}
                             value={cred.email} onChange={(e) => setField('email', e.target.value)}/>
                         <label htmlFor="email">&nbsp;&nbsp;&nbsp;Email Address</label>
@@ -83,11 +83,11 @@ const RequestReset = ({ shiftAuth, Inform }) => {
 
                 <div className="row mb-3">
                         
-                    <div className="col-md-6 form-floating" style={{ width: "200px" }}>
+                    <div className="col-md-6 form-floating">
                         <input type="text" className="form-control text-center pb-3" id="captcha-img" name="captcha-img" disabled value={captcha}/>
                     </div>
                     
-                    <div className="col-md-6 form-floating" style={{ width: "200px" }}>
+                    <div className="col-md-6 form-floating">
                         <input type="text" placeholder="Enter Captcha" id="captcha" name="captcha" className={`form-control ${ check[1] != null && (check[1] ? 'is-valid' : 'is-invalid') }`}
                             value={cred.captcha} onChange={(e) => setField('captcha', e.target.value)}/>
                         <label htmlFor="captcha">&nbsp;&nbsp;&nbsp;Captcha</label>
