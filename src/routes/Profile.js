@@ -55,11 +55,12 @@ const Profile = () => {
 
     // Requested Profile UID
     const { uid: routeId } = useParams();
-    const uid = routeId.split("").reverse().join("");
 
     // Auth Handler
     const setRoute = useNavigate();
     const { auth } = useContext(AuthContext);
+
+    let uid = routeId === 'default' ? auth.data && auth.data.uid : routeId.split("").reverse().join("")
 
     useEffect(() => { if(!auth.status) setRoute('/') }, [auth, setRoute]);
 
@@ -193,7 +194,7 @@ const Profile = () => {
 
                     {   auth.data && (uid === auth.data.uid) &&
                         <div className="editor-check form-check theme-switch form-switch pb-2">
-                            <label className="form-check-label me-5 pt-1 pe-2" htmlFor="editorMode">Editor</label>
+                            <label className="form-check-label me-5 pt-1 pe-2" htmlFor="editorMode">Edit</label>
                             <input className="form-check-input" role="switch" type="checkbox" id="editorMode"
                                 checked={editor} onChange={(e) => { setEditor(e.target.checked); if(active !== 0) setActiveState(0) } }/>
                         </div>

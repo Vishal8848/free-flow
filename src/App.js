@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { useState, useMemo, createContext } from 'react'
 import useProfile from './hooks/useProfile'
 import Profile from './routes/Profile'
@@ -40,6 +40,7 @@ function App() {
             <Route exact path="/" element={<Home/>}/>
             <Route path="/feed" element={<Feed/>} />
             <Route path="/profile/:uid" element={<Profile />}/>
+            <Route path="/profile" element={<Navigate to="/profile/default"/>}/>
           </Routes>
         </UserContext.Provider>
       </AuthContext.Provider>

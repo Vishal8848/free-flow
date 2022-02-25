@@ -6,6 +6,7 @@ import Banner from '../components/Banner'
 import Register from '../auth/Register'
 import Login from '../auth/Login'
 import { AuthContext } from "../App"
+import { firebaseEnablePersistence } from "../firebase/firebaseStore"
 
 const Authentication = ({ Inform }) => {
 
@@ -26,6 +27,8 @@ const Home = () => {
     const { auth } = useContext(AuthContext);
     
     const [ inform, setInform ] = useState({ state: false, code: 0 });
+
+    firebaseEnablePersistence();
 
     useEffect(() => { 
         if(auth.status)

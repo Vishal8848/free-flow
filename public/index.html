@@ -5,9 +5,11 @@
     <head>
       
         <meta charset="utf-8" />
-        <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+        <meta name="theme-color" content="#000000"/>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="Freeflow - Social Media Platform - VP">
         
+        <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
         <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
         <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
         
@@ -31,15 +33,13 @@
         <!-- Freeflow -->
         <div id="my-app"></div>
 
-        <!-- <script>
+        <script>
             if('serviceWorker' in navigator) {
                 window.addEventListener('load', () => {
                     navigator.serviceWorker.register("%PUBLIC_URL%/service-worker.js")
-                        .then(reg => console.log("Service Worker Started: ", reg))
-                        .catch(err => console.log("Service Worker Failed: ", err))
                 })
             }
-        </script> -->
+        </script>
     
     </body>
 

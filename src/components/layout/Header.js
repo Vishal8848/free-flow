@@ -120,7 +120,16 @@ const Header = ({ setUserCount }) => {
                     </div>
                 </div>
 
-            </div> : "Loading" }
+            </div> : 
+            <div className="text-center m-auto">
+                <div id="color-balls">
+                    <div id="red-ball"><i className="fas fa-circle text-danger me-2"></i></div>
+                    <div id="green-ball"><i className="fas fa-circle text-success me-2"></i></div>
+                    <div id="blue-ball"><i className="fas fa-circle text-primary me-2"></i></div>
+                    <div id="yellow-ball"><i className="fas fa-circle text-warning"></i></div>
+                </div>
+            </div>
+        }
         </nav>
         { view && <Feedback uid={auth.data && auth.data.uid} setView={setView}/> } 
         </>

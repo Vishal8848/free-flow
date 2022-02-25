@@ -41,11 +41,15 @@ const Update = ({ data }) => {
 const Updates = ({user}) => {
 
     const [ updates, setUpdates ] = useState(null);
+    const [ net, setNet ] = useState(true);
 
     useEffect(() => {
         const Abort = new AbortController();
         const unSubUpdates = onSnapshot(firebaseUpdateQuery(user.friends.filter(friend => friend !== user.uid)), async (data) => {
+            
+            setNet(true)
             let result = [], unique = [];
+
             data.forEach(update => result.push({ ...update.data() }));
             
             unique = result.map(update => update.uid).filter((v, i, a) => a.indexOf(v) === i)
@@ -58,7 +62,7 @@ const Updates = ({user}) => {
             }
 
             setUpdates([...result])
-        }, err => console.log(err.message))
+        }, err => setNet(false))
         return () => {
             unSubUpdates()
             Abort.abort()
@@ -67,7 +71,8 @@ const Updates = ({user}) => {
 
     return ( 
         <div className={`updates ${!updates && "pt-3"} animate__animated animate__slideInRight`}>
-            {   (updates && updates.length > 0) ?
+            {   net ?
+                (updates && updates.length > 0) ?
                 updates.map(update => (
                     <Update data={update} key={update.createdAt}/>
                 )) : 
@@ -75,6 +80,11 @@ const Updates = ({user}) => {
                     { updatesImg && <img src={updatesImg} alt="Updates" width="100px" height="100px" style={{ marginBottom: "25px" }}/> }
                     <br/><strong>Wave Updates</strong><br/>
                     Actions made on waves live here
+                </div> :
+                <div className="notice text-muted px-5" style={{ borderRadius: "10px", paddingTop: "25px", paddingBottom: "25px" }}>
+                    { updatesImg && <img src={updatesImg} alt="Updates" width="100px" height="100px" style={{ marginBottom: "25px" }}/> }
+                    <br/><strong>Wave Updates</strong><br/>
+                    Check your internet connection and try again
                 </div>
             }
         </div>

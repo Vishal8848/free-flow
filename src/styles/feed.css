@@ -240,7 +240,8 @@
         height: 100%;
     }
     .chat-content {
-        height: 70vh;
+        height: 75vh;
+        margin-top: 7.5px;
     }
     .chat-header {
         border-top-left-radius: 0;

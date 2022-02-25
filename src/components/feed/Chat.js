@@ -40,6 +40,7 @@ const Chat = ({user, setChatCount}) => {
     let [ chat, setChat ] = useState([])
     const messageInitial = { content: "", uid: user.uid, name: user.name, theme: user.theme, dp: user.dp };
     let [ message, setMessage ] = useState(messageInitial)
+    const [ net, setNet ] = useState(true)
 
     const sendMessage = () => {
         if(message.content.length > 0)  {
@@ -53,6 +54,8 @@ const Chat = ({user, setChatCount}) => {
     useEffect(() => {
         const Abort = new AbortController();
         const unSubChat = onSnapshot(firebaseChatQuery(), async (data) => {
+
+            setNet(true)
             let result = [], unique = [];
 
             data.forEach(message => result.push({ mid: message.id, ...message.data() }))
@@ -73,7 +76,7 @@ const Chat = ({user, setChatCount}) => {
             const chatBox = document.getElementById('chat-box');
             chatBox.scrollTop = chatBox.scrollHeight;
 
-        }, err => console.log(err.message))
+        }, err => setNet(false))
         return () => {
             unSubChat()
             Abort.abort()
@@ -94,7 +97,8 @@ const Chat = ({user, setChatCount}) => {
     return ( chat && <>
         <div className="chat shadow theme-middle animate__animated animate__slideInLeft">
             <div id="chat-box" className="chat-content theme-inner">
-            {   (chat && chat.length > 0) ?
+            {   net ?
+                (chat && chat.length > 0) ?
                 chat.map(msg => (
                     <Message data={msg} self={msg.uid === user.uid} key={msg.createdAt}/>
                 )) :
@@ -102,6 +106,11 @@ const Chat = ({user, setChatCount}) => {
                     { chatImage && <img src={chatImage} alt="Chat" width="100px" height="100px" style={{ marginBottom: "25px" }}/> }
                     <br/><strong>Pond Messenger</strong><br/>
                     Your ripples are visible to everyone online now
+                </div> :
+                <div className="notice text-muted theme-inner px-5">
+                    { chatImage && <img src={chatImage} alt="Chat" width="100px" height="100px" style={{ marginBottom: "25px" }}/> }
+                    <br/><strong>Pond Messenger</strong><br/>
+                    Check your internet connection and try again
                 </div>
             }
             </div>

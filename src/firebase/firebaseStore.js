@@ -1,8 +1,9 @@
-import { getFirestore, doc, addDoc, getDoc, updateDoc, getDocs, collection, query, where, arrayUnion, arrayRemove } from "firebase/firestore"
+import { getFirestore, enableMultiTabIndexedDbPersistence, doc, addDoc, getDoc, updateDoc, getDocs, collection, query, where, arrayUnion, arrayRemove } from "firebase/firestore"
 import { firebaseDownloadImage } from "./firebaseBulk"
 import firebase from './firebase'
 
 let store = getFirestore(firebase);
+
 export const cast = (data) => { return data.substring(data.lastIndexOf('(') + 1, data.lastIndexOf(')')) }
 
 export const getIndexByValue = (array, key, value) => {
@@ -10,6 +11,22 @@ export const getIndexByValue = (array, key, value) => {
         if(array[i][key] === value) 
             return i
     return null
+}
+
+export const firebaseEnablePersistence = async () => {
+
+    try {
+        await enableMultiTabIndexedDbPersistence(store);
+
+        console.log("Persistence Successful")
+
+    }   catch(err) {
+        if(err.code === 'failed-precondition')
+            console.log("Persistence Failed: (multiple-instances)")
+        else if(err.code === 'unimplemented')
+            console.log("Persistence Failed: (browser-incompatible)")
+    }
+
 }
 
 export const firebaseUser = async (uid, restrict = false, noimage = false) => {
