@@ -1,6 +1,9 @@
+// Default
 import { useState, useEffect } from 'react'
-import { parseDOB } from '../Extras';
+
+// Imports
 import useWindow from '../../hooks/useWindow'
+import { parseDOB } from '../Extras'
 
 const Visitor = ({ data }) => {
 

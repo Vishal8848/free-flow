@@ -1,11 +1,16 @@
+// Default
 import { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { Avatar, Tooltip, readStoredTheme } from '../Extras'
-import Notifications from './Notifications'
-import { AuthContext, UserContext } from '../../App'
+
+// Firebase
 import { firebaseLogout } from '../../firebase/firebaseAuth'
-import Search from './Search'
+
+// Imports
+import { Avatar, Tooltip, readStoredTheme } from '../Extras'
+import { AuthContext, UserContext } from '../../App'
+import Notifications from './Notifications'
 import Feedback from '../Feedback'
+import Search from './Search'
 
 import Cookies from 'universal-cookie';
 

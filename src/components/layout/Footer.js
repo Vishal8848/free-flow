@@ -1,7 +1,10 @@
-import { useContext, useState} from 'react';
+// Default
+import { useContext, useState} from 'react'
 import { Link } from 'react-router-dom'
-import { AuthContext } from '../../App';
+
+// Imports
 import Notifications from './Notifications'
+import { AuthContext } from '../../App'
 
 const Footer = () => {
 

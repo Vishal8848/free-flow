@@ -1,9 +1,14 @@
-import { Avatar, formatBytes } from "../Extras";
-import Banner from '../Banner'
+// Default
 import { useEffect, useState } from "react";
 import { Link } from 'react-router-dom'
-import { firebaseUploadImage } from '../../firebase/firebaseBulk'
+
+// Firebase
 import { firebaseCreatePost, firebaseUpdate } from "../../firebase/firebaseStore"
+import { firebaseUploadImage } from '../../firebase/firebaseBulk'
+
+// Imports
+import { Avatar, formatBytes } from "../Extras"
+import Banner from '../Banner'
 
 const CreatePost = ({ width, user }) => {
 

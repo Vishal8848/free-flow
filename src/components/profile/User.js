@@ -1,5 +1,8 @@
+// Default
 import { useState } from "react"
-import { firebaseUser, firebaseUpdateUser } from "../../firebase/firebaseStore";
+
+// Firebase
+import { firebaseUser, firebaseUpdateUser } from "../../firebase/firebaseStore"
 
 const User = ({ auth, data, setProfile, setStatus, setEditor }) => {
 

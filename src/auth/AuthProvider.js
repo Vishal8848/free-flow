@@ -1,5 +1,10 @@
-import { firebaseGoogleLogin } from "../firebase/firebaseAuth"
+// Default
 import { useContext } from "react"
+
+// Firebase
+import { firebaseGoogleLogin } from "../firebase/firebaseAuth"
+
+// Imports
 import { AuthContext } from "../App"
 
 const AuthProvider = () => {

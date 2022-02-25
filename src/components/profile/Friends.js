@@ -1,6 +1,9 @@
-import { Avatar } from '../Extras'
-import { Link } from 'react-router-dom';
+// Default
+import { Link } from 'react-router-dom'
+
+// Imports
 import friendsImg from '../../assets/friends.png'
+import { Avatar } from '../Extras'
 
 const Friend = ({ data, mutual, side }) => {
 

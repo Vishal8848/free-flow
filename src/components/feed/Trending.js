@@ -1,9 +1,14 @@
+// Default
 import { useState, useEffect } from "react"
 import { Link } from 'react-router-dom'
+
+// Firebase
+import { firebaseTrendingPost } from '../../firebase/firebaseStore'
+
+// Imports
+import trendImage from '../../assets/trend.png'
 import { Avatar, parseTime } from "../Extras"
 import TypeWriter from 'typewriter-effect'
-import { firebaseTrendingPost } from '../../firebase/firebaseStore'
-import trendImage from '../../assets/trend.png'
 
 const Trending = () => {
 

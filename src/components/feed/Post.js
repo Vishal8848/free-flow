@@ -1,7 +1,12 @@
+// Default
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Avatar, parseTime } from '../Extras'
+
+// Firebase
 import { firebasePostReaction, firebaseAddComment, firebaseUpdate } from '../../firebase/firebaseStore'
+
+// Imports
+import { Avatar, parseTime } from '../Extras'
 
 const Comment = ({ data }) => {
 

@@ -1,8 +1,13 @@
+// Default
 import { useState, useEffect } from 'react'
-import { firebaseUser, firebaseUpdateQuery } from '../../firebase/firebaseStore';
+
+// Firebase
+import { firebaseUser, firebaseUpdateQuery } from '../../firebase/firebaseStore'
 import { onSnapshot } from 'firebase/firestore'
+
+// Imports
 import updatesImg from '../../assets/updates.png'
-import { Avatar, parseTime } from "../Extras";
+import { Avatar, parseTime } from "../Extras"
 
 const Update = ({ data }) => {
 

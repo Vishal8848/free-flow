@@ -1,7 +1,12 @@
+// Default
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Avatar, parseTime } from '../Extras'
+
+// Firebase
 import { firebaseFriendRequests, firebaseUpdateRequest } from '../../firebase/firebaseStore'
+
+// Imports
+import { Avatar, parseTime } from '../Extras'
 import notifyImg from '../../assets/mail.png'
 
 const Notification = ({ you, data, acceptRequest }) => {

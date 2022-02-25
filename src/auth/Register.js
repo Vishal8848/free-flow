@@ -1,6 +1,11 @@
+// Default
 import { useState} from 'react'
+
+// Firebase
+import { firebaseRegister } from '../firebase/firebaseAuth'
+
+// Imports
 import { Loader } from '../components/Extras'
-import { firebaseRegister } from '../firebase/firebaseAuth';
 
 // Regex
 const Name = new RegExp(/^[a-zA-Z0-9 ]+$/);

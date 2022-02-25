@@ -1,3 +1,4 @@
+// Default
 import { useState, useLayoutEffect } from 'react'
 
 const useWindow = () => {

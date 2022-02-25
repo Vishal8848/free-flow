@@ -1,8 +1,13 @@
+// Default
 import { useState, useEffect } from 'react'
-import { firebaseChatQuery, firebaseUser, firebaseCreateMessage } from '../../firebase/firebaseStore';
-import { Avatar, parseTime } from "../Extras";
 import { Link } from 'react-router-dom'
-import { onSnapshot } from 'firebase/firestore';
+
+// Firebase
+import { firebaseChatQuery, firebaseUser, firebaseCreateMessage } from '../../firebase/firebaseStore'
+import { onSnapshot } from 'firebase/firestore'
+
+// Imports
+import { Avatar, parseTime } from "../Extras"
 import chatImage from '../../assets/chat.png'
 
 const Message = ({ data, self }) => {

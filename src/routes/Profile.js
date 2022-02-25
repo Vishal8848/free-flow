@@ -1,19 +1,24 @@
+// Default
 import { useState, useEffect, useRef, useContext } from 'react'
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
-import { getInitial, formatBytes } from '../components/Extras'
+
+// Firebase
 import { firebaseUploadImage } from '../firebase/firebaseBulk'
+
+// Imports
+import { getInitial, formatBytes } from '../components/Extras'
 import PostCard from '../components/profile/PostCard'
 import Content from '../components/profile/Content'
 import Friends from '../components/profile/Friends'
 import Visitor from '../components/profile/Visitor'
-import User from '../components/profile/User'
-import useProfile from '../hooks/useProfile'
+import creationImg from '../assets/creation.png'
 import Header from '../components/layout/Header'
 import Footer from '../components/layout/Footer'
-import { AuthContext } from '../App'
 import profileImg from '../assets/profile.png'
-import creationImg from '../assets/creation.png'
+import User from '../components/profile/User'
+import useProfile from '../hooks/useProfile'
 import savedImg from '../assets/saved.png'
+import { AuthContext } from '../App'
 
 // Created Posts 
 const Posts = ({ user, data }) => {

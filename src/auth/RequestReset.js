@@ -1,6 +1,11 @@
+// Default
 import { useState } from 'react';
+
+// Firebase
+import { firebaseResetRequest } from '../firebase/firebaseAuth'
+
+// Imports
 import { Loader } from '../components/Extras'
-import { firebaseResetRequest } from '../firebase/firebaseAuth';
 
 // Captcha Creation
 const charSet = "aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ0123456789";

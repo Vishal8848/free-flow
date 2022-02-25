@@ -1,16 +1,21 @@
+// Default
 import { useState, useEffect, useContext } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+
+// Firebase
 import { firebaseAllPosts } from '../firebase/firebaseStore'
+
+// Imports
 import CreatePost from '../components/feed/CreatePost'
 import Trending from '../components/feed/Trending'
+import { AuthContext, UserContext } from '../App'
 import Updates from '../components/feed/Updates'
+import Header from '../components/layout/Header'
+import Footer from '../components/layout/Footer'
+import feedImage from '../assets/posts.png'
 import Chat from '../components/feed/Chat'
 import Post from '../components/feed/Post'
 import useWindow from '../hooks/useWindow'
-import Header from '../components/layout/Header'
-import Footer from '../components/layout/Footer'
-import { AuthContext, UserContext } from '../App'
-import feedImage from '../assets/posts.png'
 
 const Feed = () => {
 

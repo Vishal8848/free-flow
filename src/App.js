@@ -1,12 +1,15 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+// Default
 import { useState, useMemo, createContext } from 'react'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+
+// Imports
 import useProfile from './hooks/useProfile'
 import Profile from './routes/Profile'
 import Home from './routes/Home'
 import Feed from './routes/Feed'
 
-import Hash from 'object-hash'
 import Cookies from 'universal-cookie'
+import Hash from 'object-hash'
 
 const cookies  = new Cookies()
 
@@ -41,6 +44,7 @@ function App() {
             <Route path="/feed" element={<Feed/>} />
             <Route path="/profile/:uid" element={<Profile />}/>
             <Route path="/profile" element={<Navigate to="/profile/default"/>}/>
+            <Route path="/*" element={<Navigate to="/feed" />}/>
           </Routes>
         </UserContext.Provider>
       </AuthContext.Provider>

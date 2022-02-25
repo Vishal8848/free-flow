@@ -1,4 +1,7 @@
+// Default
 import { Link } from 'react-router-dom'
+
+// Imports
 import { Avatar, parseTime } from '../Extras'
 
 const PostCard = ({ user, data, save = false }) => {

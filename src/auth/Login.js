@@ -1,8 +1,14 @@
+// Default
 import { useState, useContext } from 'react';
-import { AuthContext } from '../App';
-import AuthProvider from './AuthProvider'
-import { Loader } from '../components/Extras'
+
+// Firebase
 import { firebaseLogin } from '../firebase/firebaseAuth'
+
+// Imports
+import { Loader } from '../components/Extras'
+import AuthProvider from './AuthProvider'
+import { AuthContext } from '../App'
+
 
 const Login = ({ shiftAuth }) => {
 

@@ -1,12 +1,17 @@
+// Default
 import { useState, useEffect, useContext } from "react"
 import { useNavigate } from "react-router-dom"
+
+// Firebase
+import { firebaseEnablePersistence } from "../firebase/firebaseStore"
+
+// Imports
 import { Freeflow } from "../components/Extras"
 import RequestReset from '../auth/RequestReset'
 import Banner from '../components/Banner'
 import Register from '../auth/Register'
 import Login from '../auth/Login'
 import { AuthContext } from "../App"
-import { firebaseEnablePersistence } from "../firebase/firebaseStore"
 
 const Authentication = ({ Inform }) => {
 

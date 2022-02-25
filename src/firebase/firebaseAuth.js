@@ -2,8 +2,8 @@ import { getAuth, signOut, signInWithEmailAndPassword, createUserWithEmailAndPas
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore/lite'
 import firebase from './firebase'
 
-import Hash from 'object-hash'
 import Cookies from 'universal-cookie'
+import Hash from 'object-hash'
 
 const cookies = new Cookies()
 

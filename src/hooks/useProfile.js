@@ -1,4 +1,7 @@
+// Default
 import { useState, useEffect } from 'react'
+
+// Firebase
 import { firebaseUser, firebaseFriends, firebasePostCards } from '../firebase/firebaseStore'
 
 const useProfile = (id, uid) => {

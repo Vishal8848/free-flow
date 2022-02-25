@@ -1,7 +1,10 @@
+// Default
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
+
+// Imports
 import useWindow from '../hooks/useWindow'
 import TypeWriter from 'typewriter-effect'
-import { Link } from 'react-router-dom'
 
 const Feedback = ({ uid, setView }) => {
 
