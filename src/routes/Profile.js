@@ -231,12 +231,12 @@ const Profile = () => {
                             name: user.fname + ' ' + user.lname,
                             theme: user.theme,
                             dp: user.dp
-                        }} data={posts}/> :
+                        }} data={posts} theme={theme}/> :
                         active[2] ? <Friends user={{
                             uid: uid,
                             friends: user.friends
                         }} data={friends}/> :
-                        active[3] && <Saved data={saved}/> :
+                        active[3] && <Saved data={saved} theme={theme}/> :
                         <div className={`notice text-muted theme-${theme}-inner px-5`}>
                             { profileImg && <img src={profileImg} alt="Profile" width="150px" height="150px" style={{ marginBottom: "50px" }}/> }
                             <br/><strong>Your Profile</strong><br/>

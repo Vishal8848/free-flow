@@ -25,7 +25,7 @@ const Header = ({ setUserCount }) => {
         const cookies = new Cookies();
         cookies.remove('access')
         cookies.remove('commit')
-        cookies.set('last', Date.now().toString())
+        cookies.set('last', Date.now().toString(), { path: '/' })
         firebaseLogout().then(() => setAuth({ status: false, data: null }))
     }
 
