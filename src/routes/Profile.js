@@ -200,7 +200,7 @@ const Profile = () => {
                     </div>
 
                     {   auth.data && (uid === auth.data.uid) &&
-                        <div className={`editor-check form-check theme-${theme}-switch form-switch pb-2`}>
+                        <div className={`editor-check form-check theme-switch form-switch pb-2`}>
                             <label className="form-check-label me-5 pt-1 pe-2" htmlFor="editorMode">Edit</label>
                             <input className="form-check-input" role="switch" type="checkbox" id="editorMode"
                                 checked={editor} onChange={(e) => { setEditor(e.target.checked); if(active !== 0) setActiveState(0) } }/>

@@ -67,12 +67,12 @@ const Header = ({ setUserCount }) => {
 
                     <div className={`item me-3 system theme-${theme}-middle shadow`}>
                         <Link to="/feed" className="nav-link"><i className={`fas fa-home fa-lg theme-${theme}-middle`}></i></Link>
-                        <Tooltip body="Home"/>
+                        <Tooltip theme={theme} body="Home"/>
                     </div>
 
                     <div className={`item me-3 system position-relative theme-${theme}-middle shadow`}>
                         <i className={`fas fa-bell fa-lg theme-${theme}-middle`} onClick={() => setNotify(!notify)}></i>
-                        { notify ? <Notifications uid={auth.data && auth.data.uid} top/> : <Tooltip body="Notifications"/> }
+                        { notify ? <Notifications uid={auth.data && auth.data.uid} top/> : <Tooltip theme={theme} body="Notifications"/> }
                     </div>
 
                     <div className="dropdown">
@@ -103,7 +103,7 @@ const Header = ({ setUserCount }) => {
                                 <div className={`dropdown-item form-check theme-switch form-switch pb-2 theme-${theme}-middle`}>
                                     <label className="form-check-label" htmlFor="themeColor"><i className={`fas fa-${ theme ? 'moon' : 'sun' } me-2`}></i>Dark Mode</label>
                                     <input className="form-check-input" role="switch" type="checkbox" id="themeColor"
-                                        checked={theme === 'dark'} onChange={(e) => setTheme(e.target.checked)}/>
+                                        checked={theme === 'dark'} onChange={(e) => setTheme(e.target.checked ? 'dark' : 'light')}/>
                                 </div>
                                 <div className={`dropdown-item pt-2 theme-${theme}-middle`} style={{ cursor: "pointer" }} onClick={() => userLogout()}>
                                     <i className="fas fa-sign-out-alt me-2"></i>Logout
