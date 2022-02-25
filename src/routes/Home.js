@@ -10,8 +10,8 @@ import { Freeflow } from "../components/Extras"
 import RequestReset from '../auth/RequestReset'
 import Banner from '../components/Banner'
 import Register from '../auth/Register'
-import Login from '../auth/Login'
 import { AuthContext } from "../App"
+import Login from '../auth/Login'
 
 const Authentication = ({ Inform }) => {
 

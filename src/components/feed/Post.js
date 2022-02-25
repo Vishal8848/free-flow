@@ -1,5 +1,5 @@
 // Default
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 // Firebase
@@ -7,6 +7,7 @@ import { firebasePostReaction, firebaseAddComment, firebaseUpdate } from '../../
 
 // Imports
 import { Avatar, parseTime } from '../Extras'
+import { ThemeContext } from '../../App'
 
 const Comment = ({ data }) => {
 
@@ -42,6 +43,8 @@ const Comment = ({ data }) => {
 }
 
 const Post = ({ user, data }) => {
+
+    const { theme } = useContext(ThemeContext);
 
     // Likes and Saves Handler
     const liked = data.likes.some(like => like === user.uid), saved = data.saved.some(save => save === user.uid);
@@ -89,9 +92,9 @@ const Post = ({ user, data }) => {
     }
 
     return ( data &&
-        <div className="post theme-middle rounded rounded-3 mb-3 shadow">
+        <div className={`post theme-${theme}-middle rounded rounded-3 mb-3 shadow`}>
             
-            <div className="post-header px-3 px-md-4 py-2 py-md-3 theme-middle">
+            <div className={`post-header px-3 px-md-4 py-2 py-md-3 theme-${theme}-middle`}>
             
                 <Link to={`/profile/${data.creator.split("").reverse().join("")}`}>
                     <div className="post-creator">
@@ -109,19 +112,19 @@ const Post = ({ user, data }) => {
             </div>
             
             <div className="post-body">
-                <div className="content theme-inner text-muted">
+                <div className={`content theme-${theme}-inner text-muted`}>
                     { data.content }
                 </div>
                 { data.URL && <div className="image bg-dark" style={{ background: `url(${data.URL}) center center / cover no-repeat` }}></div> }
             </div>
             
             <div className="post-actions">
-                <div className="py-3 px-2 text-center theme-middle text-danger" onClick={() => handleReaction('like')}>
+                <div className={`py-3 px-2 text-center theme-${theme}-middle text-danger`} onClick={() => handleReaction('like')}>
                     <i className="fas fa-heart fa-lg me-2" style={{ fontWeight: like ? 'unset' : 'normal' }}></i>
                     <strong>{ liked ? (!like ? data.likes.length - 1 : data.likes.length > 0 && data.likes.length) : (like ? data.likes.length + 1 : data.likes.length > 0 && data.likes.length) }</strong>
                     &nbsp; Like{ like ? 'd' : data.likes.length > 1 ? 's' : '' }
                 </div>
-                <div className="py-3 px-2 text-center theme-middle text-success" onClick={() => handleReaction('save')}>
+                <div className={`py-3 px-2 text-center theme-${theme}-middle text-success`} onClick={() => handleReaction('save')}>
                     <i className="fas fa-bookmark fa-lg me-2" style={{ fontWeight: save ? 'unset' : 'normal' }}></i>
                     <strong>{ saved ? (!save ? data.saved.length - 1 : data.saved.length > 0 && data.saved.length) : (save ? data.saved.length + 1 : data.saved.length > 0 && data.saved.length) }</strong>
                     &nbsp; Save{ save ? 'd' : data.saved.length > 1 ? 's' : '' }
@@ -129,18 +132,18 @@ const Post = ({ user, data }) => {
             </div>
             
             { comments &&
-            <div className="post-comments theme-inner">
+            <div className={`post-comments theme-${theme}-inner`}>
                 {   comments && comments.sort((x, y) => parseInt(x.commentedAt) - parseInt(y.commentedAt)).map(comment => (
                         <Comment data={comment} key={comment.commentedAt}/>
                     ))
                 }
             </div>  }
             
-            <div className="post-create-comment theme-middle px-2 px-md-4 py-3">
+            <div className={`post-create-comment theme-${theme}-middle px-2 px-md-4 py-3`}>
                 <Link to={`/profile/${user.uid.split("").reverse().join("")}`}>
                     <Avatar image={user.dp} name={user.name} scale='md' theme={user.theme}/>
                 </Link>
-                <input id={`new-comment-${data.pid}`} className="w-75 theme-middle" placeholder="Add your comment"
+                <input id={`new-comment-${data.pid}`} className={`w-75 theme-${theme}-middle`} placeholder="Add your comment"
                     value={newComment.comment} onChange={(e) => { newComment.comment = e.target.value; setNewComment({...newComment}) }}/>
                 <div className="submit-comment" onClick={() => addNewComment()} style={{ cursor: "pointer" }}>
                     <i className="fas fa-paper-plane fa-lg"></i>

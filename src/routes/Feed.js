@@ -8,7 +8,7 @@ import { firebaseAllPosts } from '../firebase/firebaseStore'
 // Imports
 import CreatePost from '../components/feed/CreatePost'
 import Trending from '../components/feed/Trending'
-import { AuthContext, UserContext } from '../App'
+import { AuthContext, ThemeContext, UserContext } from '../App'
 import Updates from '../components/feed/Updates'
 import Header from '../components/layout/Header'
 import Footer from '../components/layout/Footer'
@@ -18,6 +18,8 @@ import Post from '../components/feed/Post'
 import useWindow from '../hooks/useWindow'
 
 const Feed = () => {
+
+    const { theme } = useContext(ThemeContext)
 
     // Authorize auth or Redirect
     const setRoute = useNavigate();
@@ -74,7 +76,7 @@ const Feed = () => {
     
     return ( user && <>
         <Header setUserCount={setUserCount}/>
-        <div className="container-fluid feed row gx-0 gx-md-4 m-auto justify-content-center theme-outer">
+        <div className={`container-fluid feed row gx-0 gx-md-4 m-auto justify-content-center theme-${theme}-outer`}>
             
             {   auth.data && ((!feed.restrict && feed.state === 0) || (feed.restrict && feed.state === 1)) &&
                 <div className="col-md-3 mt-md-3">
@@ -91,21 +93,21 @@ const Feed = () => {
                     {   !feed.restrict &&
                         <div className="feed-stats mt-3 animate__animated animate__slideInLeft">
                             <div className="stat-set mb-3">
-                                <div className="stat theme-middle py-2 me-2 shadow" style={{ borderRadius: "10px" }}>
+                                <div className={`stat theme-${theme}-middle py-2 me-2 shadow`} style={{ borderRadius: "10px" }}>
                                     <h1 id='user-count'>{ userCount }</h1>
                                     <span className="feed-title ps-3 text-muted fw-bold">Users</span>
                                 </div>
-                                <div className="stat theme-middle py-2 ms-2 shadow" style={{ borderRadius: "10px" }}>
+                                <div className={`stat theme-${theme}-middle py-2 ms-2 shadow`} style={{ borderRadius: "10px" }}>
                                     <h1 id='chat-count'>{ chatCount }</h1>
                                     <span className="feed-title ps-3 text-muted fw-bold">Ripples</span>
                                 </div>
                             </div>
                             <div className="stat-set mt-3">
-                                <div className="stat theme-middle py-2 me-2 shadow" style={{ borderRadius: "10px" }}>
+                                <div className={`stat theme-${theme}-middle py-2 me-2 shadow`} style={{ borderRadius: "10px" }}>
                                     <h1 id='post-count'>{ postCount }</h1>
                                     <span className="feed-title ps-3 text-muted fw-bold">Waves</span>
                                 </div>
-                                <div className="stat theme-middle py-2 ms-2 shadow" style={{ borderRadius: "10px" }}>
+                                <div className={`stat theme-${theme}-middle py-2 ms-2 shadow`} style={{ borderRadius: "10px" }}>
                                     <h1 id='comment-count'>{ commentCount }</h1>
                                     <span className="feed-title ps-3 text-muted fw-bold">Wavelets</span>
                                 </div>

@@ -1,5 +1,5 @@
 // Default
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { Link } from 'react-router-dom'
 
 // Firebase
@@ -9,8 +9,11 @@ import { firebaseTrendingPost } from '../../firebase/firebaseStore'
 import trendImage from '../../assets/trend.png'
 import { Avatar, parseTime } from "../Extras"
 import TypeWriter from 'typewriter-effect'
+import { ThemeContext } from "../../App"
 
 const Trending = () => {
+
+    const { theme } = useContext(ThemeContext)
 
     const [ trend, setTrend ] = useState(null)
     
@@ -21,9 +24,9 @@ const Trending = () => {
     }, [])
 
     return (
-        <div className="trend theme-middle shadow animate__animated animate__slideInRight">
+        <div className={`trend theme-${theme}-middle shadow animate__animated animate__slideInRight`}>
         {   trend ? <>
-            <div className="trend-header px-3 py-2 theme-middle">
+            <div className={`trend-header px-3 py-2 theme-${theme}-middle`}>
             <Link to={`/profile/${trend.creator.split("").reverse().join("")}`}>
                 <Avatar image={trend.dp} name={trend.name} scale="md" theme={trend.theme}/>
             </Link>
@@ -57,7 +60,7 @@ const Trending = () => {
                     </div>
                 </div>
             </div>
-            <div className="trend-body theme-inner">
+            <div className={`trend-body theme-${theme}-inner`}>
                 <div className="image" style={{ background: `url(${trend.URL}) center center / cover no-repeat` }}>
                     {   !trend.URL && 
                         <div className="text-center pt-5">
@@ -70,7 +73,7 @@ const Trending = () => {
                     { trend.content.substring(0, 50) + ' ...' }
                 </div>
             </div>
-            <div className="trend-status p-3 text-danger theme-middle">
+            <div className={`trend-status p-3 text-danger theme-${theme}-middle`}>
                 <i className="fas fa-heart me-2"></i> <strong>{ trend.likes.length } &nbsp; Likes</strong>
             </div></> :
             <div className="notice text-muted px-5" style={{ borderRadius: "10px", height: "375px" }}>

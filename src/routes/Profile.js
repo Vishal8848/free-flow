@@ -18,17 +18,17 @@ import profileImg from '../assets/profile.png'
 import User from '../components/profile/User'
 import useProfile from '../hooks/useProfile'
 import savedImg from '../assets/saved.png'
-import { AuthContext } from '../App'
+import { AuthContext, ThemeContext } from '../App'
 
 // Created Posts 
-const Posts = ({ user, data }) => {
+const Posts = ({ user, data, theme }) => {
     return ( 
-        <div className="post-set theme-middle">
+        <div className={`post-set theme-${theme}-middle`}>
             {   (data && data.length > 0) ?
                 data.sort((x, y) => parseInt(y.createdAt) - parseInt(x.createdAt)).map(post => (
-                    <PostCard user={user} data={post} key={post.createdAt}/>
+                    <PostCard user={user} theme={theme} data={post} key={post.createdAt}/>
                 )) :
-                <div className="notice text-muted theme-inner px-5" style={{ width: "100%" }}>
+                <div className={`notice text-muted theme-${theme}-inner px-5`} style={{ width: "100%" }}>
                     { creationImg && <img src={creationImg} alt="Creation" width="100px" height="100px" style={{ marginBottom: "25px" }}/> }
                     <br/><strong>Your Waves</strong><br/>
                     The waves you created live here
@@ -39,14 +39,14 @@ const Posts = ({ user, data }) => {
 }
 
 // Saved Posts
-const Saved = ({ data }) => {
+const Saved = ({ data, theme }) => {
     return ( 
-        <div className="saved-posts theme-middle">
+        <div className={`saved-posts theme-${theme}-middle`}>
             {   (data && data.length > 0) ?
                 data.map(post => (
-                    <PostCard data={post} save={true} key={post.creator}/>
+                    <PostCard data={post} theme={theme} save={true} key={post.creator}/>
                 ))  :
-                <div className="notice text-muted theme-inner px-5" style={{ width: "100%" }}>
+                <div className={`notice text-muted theme-${theme}-inner px-5`} style={{ width: "100%" }}>
                     { savedImg && <img src={savedImg} alt="Saved" width="100px" height="100px" style={{ marginBottom: "25px" }}/> }
                     <br/><strong>Saved Waves</strong><br/>
                     The waves you saved live here
@@ -57,6 +57,8 @@ const Saved = ({ data }) => {
 }
 
 const Profile = () => {
+
+    const { theme } = useContext(ThemeContext)
 
     // Requested Profile UID
     const { uid: routeId } = useParams();
@@ -121,9 +123,9 @@ const Profile = () => {
 
     return ( <>
         <Header setUserCount={null}/>
-        <div className="container-fluid profile theme-outer">
+        <div className={`container-fluid profile theme-${theme}-outer`}>
         
-            <><div className="profile-header m-auto mt-3 shadow theme-middle animate__animated animate__slideInDown">
+            <><div className={`profile-header m-auto mt-3 shadow theme-${theme}-middle animate__animated animate__slideInDown`}>
                 { user &&
                 <div className="profile-bg" style={{ background: `url(${bg ? bg : user.bg}) center center / cover no-repeat` }}>
                     {   auth.data && (uid === auth.data.uid) &&
@@ -137,7 +139,7 @@ const Profile = () => {
                     }
                 </div> }
                 { user && <>
-                <div className="profile-info pt-4 pb-5 theme-middle">
+                <div className={`profile-info pt-4 pb-5 theme-${theme}-middle`}>
                     <Content data={{ 
                         name: user.fname + ' ' + user.lname,
                         friends: user.friends.length - 1,
@@ -166,9 +168,9 @@ const Profile = () => {
 
             </div>
 
-            <div className="profile-body m-auto shadow position-relative theme-middle">
+            <div className={`profile-body m-auto shadow position-relative theme-${theme}-middle`}>
                 { user &&
-                <div className="profile-nav theme-middle shadow">
+                <div className={`profile-nav theme-${theme}-middle shadow`}>
                     <ul className="pnav-list my-2 mx-3">
                         <li className={`pnav-item py-3 ${ active[0] ? 'active border' : '' }`} onClick={() => setActiveState(0)}>
                             <i className="fas fa-user fa-lg"></i>
@@ -189,7 +191,7 @@ const Profile = () => {
                     </ul>
                 </div> }
 
-                <div className="profile-content mt-3 p-3 theme-middle">
+                <div className={`profile-content mt-3 p-3 theme-${theme}-middle`}>
                     
                     <div className="profile-title mt-5">
                         <span className="fs-3">
@@ -198,7 +200,7 @@ const Profile = () => {
                     </div>
 
                     {   auth.data && (uid === auth.data.uid) &&
-                        <div className="editor-check form-check theme-switch form-switch pb-2">
+                        <div className={`editor-check form-check theme-${theme}-switch form-switch pb-2`}>
                             <label className="form-check-label me-5 pt-1 pe-2" htmlFor="editorMode">Edit</label>
                             <input className="form-check-input" role="switch" type="checkbox" id="editorMode"
                                 checked={editor} onChange={(e) => { setEditor(e.target.checked); if(active !== 0) setActiveState(0) } }/>
@@ -222,7 +224,8 @@ const Profile = () => {
                             education: user.education,
                             dob: user.dob,
                             hobbies: user.hobbies,
-                            latest: (friends && friends.length > 1) ? friends[friends.length - 1] : null
+                            latest: (friends && friends.length > 1) ? friends[friends.length - 1] : null,
+                            theme: theme
                         }}/>) :
                         active[1] ? <Posts user={{
                             name: user.fname + ' ' + user.lname,
@@ -234,7 +237,7 @@ const Profile = () => {
                             friends: user.friends
                         }} data={friends}/> :
                         active[3] && <Saved data={saved}/> :
-                        <div className="notice text-muted theme-inner px-5">
+                        <div className={`notice text-muted theme-${theme}-inner px-5`}>
                             { profileImg && <img src={profileImg} alt="Profile" width="150px" height="150px" style={{ marginBottom: "50px" }}/> }
                             <br/><strong>Your Profile</strong><br/>
                             This is where everything starts

@@ -19,7 +19,7 @@ const Visitor = ({ data }) => {
         <div className="visitor my-3 row">
             <div className="col-md-6">
                 <div className="v-set">
-                    <div className="v-head theme-middle">
+                    <div className="v-head">
                         <i className="fas fa-gift fa-3x"></i>
                     </div>
                     <div className="v-body">

@@ -1,5 +1,5 @@
 // Default
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 // Firebase
@@ -8,11 +8,12 @@ import { firebaseSearchUsers, firebaseMakeRequest, getIndexByValue } from '../..
 // Imports
 import searchImg from '../../assets/community.png'
 import { Avatar } from '../Extras'
+import { ThemeContext } from '../../App'
 
-const SearchUser = ({ data, request, handleRequest }) => {
+const SearchUser = ({ data, theme, request, handleRequest }) => {
 
     return (
-        <div className={`search-user p-2 theme-middle`}>
+        <div className={`search-user p-2 theme-${theme}-middle`}>
             <Link to={`/profile/${data.uid.split("").reverse().join("")}`}>
                 <Avatar image={data.dp} name={data.name} scale="square-sm" theme={data.theme}/>
             </Link>
@@ -28,6 +29,8 @@ const SearchUser = ({ data, request, handleRequest }) => {
 }
 
 const Search = ({ search, uid, visible, setUserCount }) => {
+
+    const { theme } = useContext(ThemeContext)
 
     const [ users, setUsers ] = useState(null);
     
@@ -62,12 +65,12 @@ const Search = ({ search, uid, visible, setUserCount }) => {
     }
 
     return (
-        <div className="search p-2 theme-middle shadow" style={{ visibility: visible ? "visible" : "hidden" }}>
+        <div className={`search p-2 theme-${theme}-middle shadow`} style={{ visibility: visible ? "visible" : "hidden" }}>
             <span className="feed-title ps-3 text-muted fw-bold">Search Results</span>
             {   (users && users.length > 0) ?
                 SS.length > 0 ?
                 users.filter(user => stringMatch(user.name, SS)).map(user => (
-                    <SearchUser data={user} request={user.isFriend} key={user.uid} handleRequest={handleRequest}/>
+                    <SearchUser data={user} theme={theme} request={user.isFriend} key={user.uid} handleRequest={handleRequest}/>
                 )) : 
                 <div className="notice text-muted px-5" style={{ borderRadius: "10px", paddingTop: "25px", paddingBottom: "25px" }}>
                     { searchImg && <img src={searchImg} alt="Search" width="100px" height="100px" style={{ marginBottom: "25px" }}/> }

@@ -400,18 +400,32 @@ div:hover > .tool-tip {
 .s-1 {  animation: S1 2s infinite;  }
 .s-2 {  animation: S2 2s infinite;  }
 
-/* Theme */
-.theme-outer  {
+/* Theme Light */
+.theme-light-outer  {
     background-color: rgb(225, 225, 225);
 }
-.theme-middle  {
+.theme-light-middle  {
     background-color: rgb(255, 255, 255);
 }
-.theme-inner  {
+.theme-light-inner  {
     background-color: rgb(240, 240, 240);
 }
-.theme-outer, .theme-middle, .theme-inner {
+.theme-light-outer, .theme-light-middle, .theme-light-inner {
     color: rgb(25, 25, 25);
+}
+
+/* Theme Dark */
+.theme-dark-outer  {
+    background-color: rgb(24, 25, 26);
+}
+.theme-dark-middle  {
+    background-color: rgb(28, 30, 33);
+}
+.theme-dark-inner  {
+    background-color: rgb(32, 35, 40);
+}
+.theme-dark-outer, .theme-dark-middle, .theme-dark-inner {
+    color: rgb(238, 238, 238);
 }
 
 /* Responsiveness */
@@ -429,6 +443,14 @@ div:hover > .tool-tip {
     .footer-mob {
         display: flex;
     }
+}
+
+/* Root */
+:root {
+    --theme-outer: rgb(225, 225, 225);
+    --theme-middle: rgb(255, 255, 255);
+    --theme-inner: rgb(240, 240, 240);
+    --theme-text: rgb(25, 25, 25);
 }
 
 /* Scrollbar CSS */

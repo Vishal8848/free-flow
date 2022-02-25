@@ -1,5 +1,5 @@
 // Default
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 // Firebase
@@ -9,6 +9,7 @@ import { onSnapshot } from 'firebase/firestore'
 // Imports
 import { Avatar, parseTime } from "../Extras"
 import chatImage from '../../assets/chat.png'
+import { ThemeContext } from '../../App'
 
 const Message = ({ data, self }) => {
 
@@ -41,6 +42,8 @@ const Message = ({ data, self }) => {
 }
 
 const Chat = ({user, setChatCount}) => {
+
+    const { theme } = useContext(ThemeContext);
 
     let [ chat, setChat ] = useState([])
     const messageInitial = { content: "", uid: user.uid, name: user.name, theme: user.theme, dp: user.dp };
@@ -100,30 +103,30 @@ const Chat = ({user, setChatCount}) => {
     })
 
     return ( chat && <>
-        <div className="chat shadow theme-middle animate__animated animate__slideInLeft">
-            <div id="chat-box" className="chat-content theme-inner">
+        <div className={`chat shadow theme-${theme}-middle animate__animated animate__slideInLeft`}>
+            <div id="chat-box" className={`chat-content theme-${theme}-inner`}>
             {   net ?
                 (chat && chat.length > 0) ?
                 chat.map(msg => (
                     <Message data={msg} self={msg.uid === user.uid} key={msg.createdAt}/>
                 )) :
-                <div className="notice text-muted theme-inner px-5">
+                <div className={`notice text-muted theme-${theme}-inner px-5`}>
                     { chatImage && <img src={chatImage} alt="Chat" width="100px" height="100px" style={{ marginBottom: "25px" }}/> }
                     <br/><strong>Pond Messenger</strong><br/>
                     Your ripples are visible to everyone online now
                 </div> :
-                <div className="notice text-muted theme-inner px-5">
+                <div className={`notice text-muted theme-${theme}-inner px-5`}>
                     { chatImage && <img src={chatImage} alt="Chat" width="100px" height="100px" style={{ marginBottom: "25px" }}/> }
                     <br/><strong>Pond Messenger</strong><br/>
                     Check your internet connection and try again
                 </div>
             }
             </div>
-            <div className="chat-create ps-2 py-3 theme-middle">
+            <div className={`chat-create ps-2 py-3 theme-${theme}-middle`}>
                 <Link to={`/profile/${user.uid}`}>
                     <Avatar image={user.dp} name={user.name} scale="sm" theme={user.theme}/>
                 </Link>
-                <input id="new-msg" className="w-75 theme-middle" placeholder="Send a ripple"
+                <input id="new-msg" className={`w-75 theme-${theme}-middle`} placeholder="Send a ripple"
                     value={message.content} onChange={(e) => { message.content = e.target.value; setMessage({...message}) }}/>
                 <div className="submit-msg" onClick={() => sendMessage()}>
                     <i className="fas fa-chevron-right fa-lg text-muted" style={{ WebkitTextStroke: "1.5px" }}></i>

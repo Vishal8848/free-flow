@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom'
 import { firebaseLogout } from '../../firebase/firebaseAuth'
 
 // Imports
-import { Avatar, Tooltip, readStoredTheme } from '../Extras'
-import { AuthContext, UserContext } from '../../App'
+import { Avatar, Tooltip } from '../Extras'
+import { AuthContext, ThemeContext, UserContext } from '../../App'
 import Notifications from './Notifications'
 import Feedback from '../Feedback'
 import Search from './Search'
@@ -15,6 +15,8 @@ import Search from './Search'
 import Cookies from 'universal-cookie';
 
 const Header = ({ setUserCount }) => {
+
+    const { theme, setTheme } = useContext(ThemeContext)
 
     const { auth, setAuth } = useContext(AuthContext);
     const { user } = useContext(UserContext);
@@ -27,34 +29,21 @@ const Header = ({ setUserCount }) => {
         firebaseLogout().then(() => setAuth({ status: false, data: null }))
     }
 
-    const mode = readStoredTheme();
-
     const [ view, setView ]  = useState(false);
 
     const [ search, setSearch ] = useState({ open: false, input: "" });
-    const [ theme, setTheme ] = useState(mode);
     const [ notify, setNotify ] = useState(false);
 
     useEffect(() => {
-        if(theme)  {
-            window.localStorage.setItem('theme', JSON.stringify({ dark: true, at: Date.now() }))
-            document.styleSheets[3].cssRules[59].style.backgroundColor = "rgb(24, 25, 26)"
-            document.styleSheets[3].cssRules[60].style.backgroundColor = "rgb(28, 30, 33)"
-            document.styleSheets[3].cssRules[61].style.backgroundColor = "rgb(32, 35, 40)"
-            document.styleSheets[3].cssRules[62].style.color = "rgb(238, 238, 238)"
-        }   else {
-            window.localStorage.setItem('theme', JSON.stringify({ dark: false, at: Date.now() }))
-            document.styleSheets[3].cssRules[59].style.backgroundColor = "rgb(225, 225, 225)"
-            document.styleSheets[3].cssRules[60].style.backgroundColor = "rgb(255, 255, 255)"
-            document.styleSheets[3].cssRules[61].style.backgroundColor = "rgb(240, 240, 240)"
-            document.styleSheets[3].cssRules[62].style.color = "rgb(25, 25, 25)"
-        }
+
+        window.localStorage.setItem('theme', JSON.stringify({ dark: theme === 'dark', at: Date.now() }))
+        
     }, [theme]);
 
     return ( <>
-        <nav className="navbar header navbar-expand-lg navbar-light mb-md-3 shadow-sm fixed-top theme-middle">
+        <nav className={`navbar header navbar-expand-lg navbar-light mb-md-3 shadow-sm fixed-top theme-${theme}-middle`}>
             {   user ?
-            <div className="container-fluid theme-middle px-3">
+            <div className={`container-fluid theme-${theme}-middle px-3`}>
 
                 <div className="brand me-2 animate__animated animate__fadeIn">
                     {   search.open ?
@@ -63,26 +52,26 @@ const Header = ({ setUserCount }) => {
                     }
                 </div>
 
-                <div className="search-form me-md-auto ms-md-2 theme-middle animate__animated animate__fadeIn">
-                    <input id="search" type="search" className={`form-control ${ search.open && 'search-focus' } rounded-pill theme-inner`} placeholder="Search Freeflow"
+                <div className={`search-form me-md-auto ms-md-2 theme-${theme}-middle animate__animated animate__fadeIn`}>
+                    <input id="search" type="search" className={`form-control ${ search.open && 'search-focus' } rounded-pill theme-${theme}-inner`} placeholder="Search Freeflow"
                         onFocusCapture={() => { search.open = true; setSearch({...search}) }} autoComplete="off"
                         value={search.input} onChange={(e) => { search.input = e.target.value; setSearch({...search}) }}/>
                     <Search search={search.input} uid={auth.data && auth.data.uid} visible={search.open ? true : false} setUserCount={setUserCount}/>
                 </div>
 
                 <div className="brand system me-auto animate__animated animate__fadeInDown">
-                    <Link to="/feed" className="navbar-brand theme-middle"> Freeflow </Link>
+                    <Link to="/feed" className={`navbar-brand theme-${theme}-middle`}> Freeflow </Link>
                 </div>
 
                 <div className="user-menu animate__animated animate__fadeIn">
 
-                    <div className="item me-3 system theme-middle shadow">
-                        <Link to="/feed" className="nav-link"><i className="fas fa-home fa-lg theme-middle"></i></Link>
+                    <div className={`item me-3 system theme-${theme}-middle shadow`}>
+                        <Link to="/feed" className="nav-link"><i className={`fas fa-home fa-lg theme-${theme}-middle`}></i></Link>
                         <Tooltip body="Home"/>
                     </div>
 
-                    <div className="item me-3 system position-relative theme-middle shadow">
-                        <i className="fas fa-bell fa-lg theme-middle" onClick={() => setNotify(!notify)}></i>
+                    <div className={`item me-3 system position-relative theme-${theme}-middle shadow`}>
+                        <i className={`fas fa-bell fa-lg theme-${theme}-middle`} onClick={() => setNotify(!notify)}></i>
                         { notify ? <Notifications uid={auth.data && auth.data.uid} top/> : <Tooltip body="Notifications"/> }
                     </div>
 
@@ -93,9 +82,9 @@ const Header = ({ setUserCount }) => {
                         </div>
 
                         {   auth.status &&
-                        <div className="dropdown-menu dropdown-menu-end theme-middle" aria-labelledby="user-drop">
-                            <div className="tint tint-tr theme-middle"></div>
-                            <div className="actions-partition text-start theme-middle">
+                        <div className={`dropdown-menu dropdown-menu-end theme-${theme}-middle`} aria-labelledby="user-drop">
+                            <div className={`tint tint-tr theme-${theme}-middle`}></div>
+                            <div className={`actions-partition text-start theme-${theme}-middle`}>
                                 <Link to={`/profile/${auth.data.uid.split("").reverse().join("")}`} className="dropdown-item pb-2">
                                     <i className="fas fa-user me-2"></i>Profile
                                 </Link>
@@ -108,15 +97,15 @@ const Header = ({ setUserCount }) => {
                                 <Link to={`/profile/${auth.data.uid.split("").reverse().join("")}?type=saved`} className="dropdown-item pb-2">
                                     <i className="fas fa-bookmark me-2"></i>Saved
                                 </Link>
-                                <div className="dropdown-item pb-2 theme-middle" onClick={() => setView(true)} style={{ cursor: "pointer" }}>
+                                <div className={`dropdown-item pb-2 theme-${theme}-middle`} onClick={() => setView(true)} style={{ cursor: "pointer" }}>
                                     <i className="fas fa-pen-alt fa-rotate-270 me-2"></i>Feedback
                                 </div>
-                                <div className="dropdown-item form-check theme-switch form-switch pb-2 theme-middle">
+                                <div className={`dropdown-item form-check theme-switch form-switch pb-2 theme-${theme}-middle`}>
                                     <label className="form-check-label" htmlFor="themeColor"><i className={`fas fa-${ theme ? 'moon' : 'sun' } me-2`}></i>Dark Mode</label>
                                     <input className="form-check-input" role="switch" type="checkbox" id="themeColor"
-                                        checked={theme} onChange={(e) => setTheme(e.target.checked)}/>
+                                        checked={theme === 'dark'} onChange={(e) => setTheme(e.target.checked)}/>
                                 </div>
-                                <div className="dropdown-item pt-2 theme-middle" style={{ cursor: "pointer" }} onClick={() => userLogout()}>
+                                <div className={`dropdown-item pt-2 theme-${theme}-middle`} style={{ cursor: "pointer" }} onClick={() => userLogout()}>
                                     <i className="fas fa-sign-out-alt me-2"></i>Logout
                                 </div>
                             </div>

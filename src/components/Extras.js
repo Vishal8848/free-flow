@@ -43,10 +43,10 @@ export const Loader = ({ show }) => {
     );
 }
 
-export const Tooltip = ({ body }) => {
+export const Tooltip = ({ body, theme }) => {
     return ( 
-        <div className="tool-tip theme-middle shadow-sm">
-            <div className="tint theme-middle tint-tm"></div>
+        <div className={`tool-tip theme-${theme}-middle shadow-sm`}>
+            <div className={`tint theme-${theme}-middle tint-tm`}></div>
             <div className="tooltip-content px-2">{ body }</div>
         </div>
     );

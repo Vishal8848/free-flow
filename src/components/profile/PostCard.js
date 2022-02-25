@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom'
 // Imports
 import { Avatar, parseTime } from '../Extras'
 
-const PostCard = ({ user, data, save = false }) => {
+const PostCard = ({ user, data, theme, save = false }) => {
 
     const { date } = parseTime(data.createdAt)
 
     return ( 
-        <div className="postcard m-md-3 mt-3 theme-outer">
-            <div className="postcard-header px-3 py-2 theme-inner">
+        <div className={`postcard m-md-3 mt-3 theme-${theme}-outer`}>
+            <div className={`postcard-header px-3 py-2 theme-${theme}-inner`}>
                 {   save ?
                     <Link to={`/profile/${data.creator.split("").reverse().join("")}`}>
                         <Avatar image={user ? user.dp : data.dp} name={user ? user.name : data.name} scale="md" theme={user ? user.theme : data.theme}/>
@@ -31,7 +31,7 @@ const PostCard = ({ user, data, save = false }) => {
                     </div>
                 </div>
             </div>
-            <div className="postcard-body theme-inner">
+            <div className={`postcard-body theme-${theme}-inner`}>
                 {  data.URL ? 
                     <div className="image bg-dark" style={{ background: `url(${data.URL}) center center / cover no-repeat` }}></div> :
                     <div className="image text-center pt-5">
@@ -43,7 +43,7 @@ const PostCard = ({ user, data, save = false }) => {
                     { [data.content.substring(0, 50), ' ...' ] }
                 </div>
             </div>
-            <div className="postcard-status p-3 text-danger theme-inner">
+            <div className={`postcard-status p-3 text-danger theme-${theme}-inner`}>
                 <i className="fas fa-heart me-2"></i> <strong>{ data.totalLikes } Likes</strong>
             </div>
         </div>

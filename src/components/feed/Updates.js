@@ -1,5 +1,5 @@
 // Default
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 
 // Firebase
 import { firebaseUser, firebaseUpdateQuery } from '../../firebase/firebaseStore'
@@ -8,8 +8,11 @@ import { onSnapshot } from 'firebase/firestore'
 // Imports
 import updatesImg from '../../assets/updates.png'
 import { Avatar, parseTime } from "../Extras"
+import { ThemeContext } from '../../App'
 
 const Update = ({ data }) => {
+
+    const { theme } = useContext(ThemeContext)
 
     const { date, time, status } = parseTime(data.createdAt);
     let message = "";
@@ -20,7 +23,7 @@ const Update = ({ data }) => {
     }
 
     return (
-        <div className="update mb-2 theme-middle shadow-sm">
+        <div className={`update mb-2 theme-${theme}-middle shadow-sm`}>
             <div className="update-by">
                 <Avatar image={data.dp} name={data.name} scale="md" theme={data.theme}/>
                 <div className="u-content px-3">
