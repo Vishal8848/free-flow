@@ -52,27 +52,30 @@ const Updates = ({user}) => {
     const [ net, setNet ] = useState(true);
 
     useEffect(() => {
+        let unSubUpdates = () => {};
         const Abort = new AbortController();
-        const unSubUpdates = onSnapshot(firebaseUpdateQuery(user.friends.filter(friend => friend !== user.uid)), async (data) => {
+        if(user.friends.filter(friend => friend !== user.uid).length > 0)   {
+            unSubUpdates = onSnapshot(firebaseUpdateQuery(user.friends.filter(friend => friend !== user.uid)), async (data) => {
             
-            setNet(true)
-            let result = [], unique = [];
-
-            data.forEach(update => result.push({ ...update.data() }));
-
-            result = result.sort((a, b) => parseInt(b.createdAt) - parseInt(a.createdAt))
-            
-            unique = result.map(update => update.uid).filter((v, i, a) => a.indexOf(v) === i)
-
-            for(const uid of unique)    {
-                const res = await firebaseUser(uid, true);
-
-                if(!res.error)
-                    result = result.map(update => update.uid === uid ? { ...update, ...res.data } : { ...update })
-            }
-
-            setUpdates([...result])
-        }, err => setNet(false))
+                setNet(true)
+                let result = [], unique = [];
+    
+                data.forEach(update => result.push({ ...update.data() }));
+    
+                result = result.sort((a, b) => parseInt(b.createdAt) - parseInt(a.createdAt))
+                
+                unique = result.map(update => update.uid).filter((v, i, a) => a.indexOf(v) === i)
+    
+                for(const uid of unique)    {
+                    const res = await firebaseUser(uid, true);
+    
+                    if(!res.error)
+                        result = result.map(update => update.uid === uid ? { ...update, ...res.data } : { ...update })
+                }
+    
+                setUpdates([...result])
+            }, err => setNet(false))
+        }
         return () => {
             unSubUpdates()
             Abort.abort()
