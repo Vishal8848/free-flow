@@ -48,7 +48,7 @@ const Header = ({ setUserCount }) => {
                 <div className="brand me-2 animate__animated animate__fadeIn">
                     {   search.open ?
                         <i className="fas fa-chevron-left fa-lg text-primary pt-2 mx-2" onClick={() => { search.open = false; setSearch({...search}) }} style={{ cursor:"pointer" }}></i> :
-                        <Link to="/feed"> <i className="fab fa-facebook fa-2x text-primary"></i> </Link> 
+                        <Link to="/feed"> <i className="fas fa-star fa-2x text-warning"></i> </Link> 
                     }
                 </div>
 
