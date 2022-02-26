@@ -22,6 +22,8 @@ function App() {
 
   let access = null
 
+  console.log("Hi, If you have any issues or errors (sorry for the inconvenience), try refreshing the page...")
+
   // Reading Cookies
   const commit = cookies.get('commit'), accessKey = cookies.get('access');
 

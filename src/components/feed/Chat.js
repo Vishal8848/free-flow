@@ -24,12 +24,12 @@ const Message = ({ data, self }) => {
                 <div className="m-head">
                     <div className="m-creator ps-2">
                         <Link to={`/profile/${data.uid.split("").reverse().join("")}`}>
-                            { name.length > 15 ? name.split(' ')[0].length > 15 ? name.substring(0, 10) + ' ...' : name.split(' ')[0] : name}
+                            { name && name.length > 15 ? name.split(' ')[0].length > 15 ? name.substring(0, 10) + ' ...' : name.split(' ')[0] : name}
                         </Link>
                     </div>
                     <div className="m-time text-muted">
-                        { name.length < 10 && time }
-                        { name.length < 10 && <i className="fas fa-circle px-1 align-middle" style={{ fontSize: "5px" }}></i> }
+                        { name && name.length < 10 && time }
+                        { name && name.length < 10 && <i className="fas fa-circle px-1 align-middle" style={{ fontSize: "5px" }}></i> }
                         { status !== "" ? status : date }
                     </div>
                 </div>
@@ -82,7 +82,7 @@ const Chat = ({user, setChatCount}) => {
             setChat([...result])
 
             const chatBox = document.getElementById('chat-box');
-            chatBox.scrollTop = chatBox.scrollHeight;
+            if(chatBox) chatBox.scrollTop = chatBox.scrollHeight;
 
         }, err => setNet(false))
         return () => {

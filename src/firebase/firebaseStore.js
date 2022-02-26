@@ -18,14 +18,9 @@ export const firebaseEnablePersistence = async () => {
     try {
         await enableMultiTabIndexedDbPersistence(store);
 
-        console.log("Persistence Successful")
+        console.log("Persistence Enabled")
 
-    }   catch(err) {
-        if(err.code === 'failed-precondition')
-            console.log("Persistence Failed: (multiple-instances)")
-        else if(err.code === 'unimplemented')
-            console.log("Persistence Failed: (browser-incompatible)")
-    }
+    }   catch(err) { }
 
 }
 
