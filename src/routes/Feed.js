@@ -130,7 +130,7 @@ const Feed = () => {
                     </div>
 
                     <div className="feed-post mt-3">
-                        <div className="posts-set animate__animated animate__slideInUp">
+                        <div className="posts-set">
                         {   posts ? posts.sort((x, y) => parseInt(y.createdAt) - parseInt(x.createdAt)).map(post => (
                                 <Post user={{
                                     name: user.fname + ' ' + user.lname,

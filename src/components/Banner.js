@@ -36,8 +36,8 @@ const Banner = ({ status }) => {
     ]
     
     return ( 
-        <div id="banner-modal" className={`${info[status].code !== 2 && 'modal-container'} animate__animated animate__fadeInDown`} style={ view ? { display: "block" } : { display: "none" } } >
-            <div className="i-modal shadow animate__animated animate__fadeInDown">
+        <div id="banner-modal" className={`${info[status].code !== 2 && 'modal-container'}`} style={ view ? { display: "block" } : { display: "none" } } >
+            <div className="i-modal shadow animate__animated animate__slideInDown">
                 <div className={`i-modal-header text-light px-4 py-3 d-flex align-items-center justify-content-between bg-${info[status].skin}`}>
                     <div>{ info[status].title }</div>
                     <div onClick={() => setView(false)} style={{ cursor: "pointer" }}><i className="fas fa-times"></i></div>

@@ -59,6 +59,8 @@ const Updates = ({user}) => {
             let result = [], unique = [];
 
             data.forEach(update => result.push({ ...update.data() }));
+
+            result = result.sort((a, b) => parseInt(b.createdAt) - parseInt(a.createdAt))
             
             unique = result.map(update => update.uid).filter((v, i, a) => a.indexOf(v) === i)
 

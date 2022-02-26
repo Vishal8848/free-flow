@@ -6,7 +6,7 @@ import { firebaseLogin } from '../firebase/firebaseAuth'
 
 // Imports
 import { Loader } from '../components/Extras'
-import AuthProvider from './AuthProvider'
+import GoogleProvider from './GoogleProvider'
 import { AuthContext } from '../App'
 
 
@@ -122,7 +122,7 @@ const Login = ({ shiftAuth }) => {
             
             </div>
 
-            <AuthProvider />
+            <GoogleProvider />
 
             <Loader show={load}/>
         </div>

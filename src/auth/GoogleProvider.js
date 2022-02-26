@@ -7,7 +7,7 @@ import { firebaseGoogleLogin } from "../firebase/firebaseAuth"
 // Imports
 import { AuthContext } from "../App"
 
-const AuthProvider = () => {
+const GoogleProvider = () => {
 
     const { setAuth } = useContext(AuthContext);
 
@@ -32,4 +32,4 @@ const AuthProvider = () => {
     </>);
 }
  
-export default AuthProvider;
+export default GoogleProvider;

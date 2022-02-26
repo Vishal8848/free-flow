@@ -31,15 +31,17 @@ const CreatePost = ({ width, user }) => {
     }
 
     const submitPost = () => {
-        if(Validate())
+        if(Validate())  {
+            if(inform.state)    setInform({ state: false, code: 2 })
             firebaseCreatePost(post).then(res => {
                 if(!res.error && post.hasImage)   
                     firebaseUploadImage(res.data, image.blob, 'posts');
-                setInform({ state: true, code: 2 })
                 firebaseUpdate(user.uid, 'post')
+                setInform({ state: true, code: 2 })
                 setPost(initial)
                 openForm(false)
             })
+        }
     }
 
     const updateField = (key, value) => {
@@ -69,7 +71,11 @@ const CreatePost = ({ width, user }) => {
                     <Avatar image={user.dp} name={user.name} scale="md" theme={user.theme}/>
                 </Link>
             }
-            <div className={`w-100 fs-6 px-3 py-2 ms-md-3 rounded-pill border-dark theme-${theme}-inner text-muted`} onClick={() => form ? openForm(false) : openForm(true)}>Create New Wave</div>
+            <div className={`w-100 fs-6 px-3 py-2 ms-md-3 rounded-pill border-dark theme-${theme}-inner text-muted`} 
+                onClick={() => { 
+                    form ? openForm(false) : openForm(true) 
+                    if(inform.state) setInform({ state: false, code: 2 })
+                }}>Create New Wave</div>
             <div className="vr mx-3"></div>
             <i className="fas fa-paper-plane text-primary fa-lg me-3" title="Create Wave" onClick={() => submitPost()}></i>
         </div>
