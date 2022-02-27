@@ -12,11 +12,10 @@ Don't hesitate to have a look at [Freeflow](https://free-flow-vp.web.app)
 - **Make Friends:** Search for other _Freeflow_ users and send them a friend request. Accept or acknowledge them from the notification bar(top right of header).
 
 ## :framed_picture: Samples
-
-[Mobile Feed](/samples/mobile-feed.jpeg)
-[Feed](/samples/feed.jpeg)
-[Mobile Notification](/samples/mobile-notification.jpeg)
-[Standard](/samples/standard.jpeg)
+[Mobile Feed](/samples/mobile-feed.jpeg) | 
+[Feed](/samples/feed.jpeg) | 
+[Mobile Notification](/samples/mobile-notification.jpeg) | 
+[Standard](/samples/standard.jpeg) | 
 
 ## :desktop_computer: The Stunt
 
