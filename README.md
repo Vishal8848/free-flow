@@ -21,7 +21,7 @@ Don't hesitate to have a look at [Freeflow](https://free-flow-vp.web.app)
 
 This app is created using **React** and **Firebase**. This has a registered service worker and thus is a installable and fully functional PWA (Progressive Web Application).
 
-> On a mobile? No worries. The browser instantly prompts for an `install app` button as soon as you reach the site.
+> On a mobile? No worries. The browser instantly prompts for an `install app` button when you reach the site.
 
 #### The React Part
 - State management along with HMR (Hot Module Replacement)
