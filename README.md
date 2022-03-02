@@ -1,7 +1,8 @@
 # Freeflow
 
 A user-first social media platform dedicated for interpersonal communication. This app allows people to interact with each other with the goal of keeping them connected across :iphone: devices and :earth_asia: geographical origins. 
-Don't hesitate to have a look at [Freeflow](https://free-flow-vp.web.app) or download the ZIP from the **free-flow-vp** release and install the APK.
+Don't hesitate to have a look at [Freeflow](https://free-flow-vp.web.app).
+To have a standalone application, download and install the APK named **Freeflow.apk** from the release section
 
 ## :fire: Features
 
